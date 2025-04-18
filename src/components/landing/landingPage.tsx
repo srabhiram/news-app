@@ -1,12 +1,12 @@
-import React from 'react'
-import Nabar from './Nabar'
+"use client";
+import React from "react";
 
 const LandingPage = () => {
   return (
-  <div>
-    <Nabar />
-  </div>
-  )
-}
+    <>
+    <p>Landing page</p>
+    </>
+  );
+};
 
-export default LandingPage
+export default LandingPage;
