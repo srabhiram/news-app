@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export interface NewsArticle {
   id: string;
-  newsTtile: string;
+  newsTitle: string;
   description: string;
   image: string;
   district: string;
