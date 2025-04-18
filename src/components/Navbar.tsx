@@ -3,6 +3,14 @@ import { districts, navbarItems } from "@/lib/navbar-items";
 import Link from "next/link";
 import React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -19,23 +27,51 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/redux/store";
+import { resetAuthState } from "@/redux/features/users/authSlice";
 
-export default function Navbar() {
+function Navbar() {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
-  const { user } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch<AppDispatch>();
+  const { success, user } = useSelector((state: RootState) => state.auth);
+  const isLoggedIn = success && user !== null;
   return (
     <nav>
-      <ul className=" bg-gray-800 text-white p-4">
+      <ul className=" bg-[#3D3BF3] text-white p-4">
         <div className="flex items-center justify-between space-x-4">
-          <li className="text-2xl font-bold font-sans">News</li>
-          <Link href="/login" className="font-Gidugu font-bold text-xl text-center bg-gray-50 text-gray-800 rounded-xl px-4 py-1 hover:bg-gray-800 hover:text-white transition duration-300 ease-in-out">
-            {user ? `Welcome, ${user.name}` : "లాగిన్"}
+          <Link href="/" className="text-2xl font-bold font-sans">
+            News
           </Link>
+
+          {isLoggedIn ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger className="bg-gray-50 text-gray-950 capitalize px-4 py-1 rounded-md">
+                {user?.name}
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel className="font-sans">
+                  My Account
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {user.isAdmin && (
+                  <Link href="/admin" className="w-full">
+                    <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                  </Link>
+                )}
+                <DropdownMenuItem className="bg-red-300 px-3 py-1 rounded-md" onClick={()=>dispatch(resetAuthState())}>
+                  లాగ్ అవుట్
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Link href="/login" className="bg-blue-50 text-black px-3 py-1 rounded-md">
+              లాగిన్
+            </Link>
+          )}
         </div>
-        <div className="flex items-center justify-between mt-4 mx-2">
+        <div className="flex items-center justify-between sm:mx-56 mt-4 mx-2">
           {navbarItems.map((item) => (
             <Link key={item.id} href={item.href}>
               <li className="font-Gidugu text-xl tracking-wide hover:bg-gray-50 hover:text-gray-400 transition duration-300 ease-in-out">
@@ -99,3 +135,4 @@ export default function Navbar() {
     </nav>
   );
 }
+export default React.memo(Navbar);

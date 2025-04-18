@@ -3,6 +3,7 @@
 
 import { loginUser } from "@/redux/features/users/authSlice";
 import { AppDispatch, RootState } from "@/redux/store";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,7 +15,7 @@ export default function LoginPage() {
   });
   const [formError, setFormError] = React.useState("");
   const dispatch = useDispatch<AppDispatch>();
-  const { error, loading, success } = useSelector(
+  const { error, loading } = useSelector(
     (state: RootState) => state.auth
   );
   const router = useRouter();
@@ -38,21 +39,21 @@ export default function LoginPage() {
         email: "",
         password: "",
       });
-    } catch (error: any) {
-      console.error("Login error:", error.message);
-    } finally {
-      console.log(success);
-      if (success) {
+      console.log(error);
+      if (!loading && !error) {
         // Redirect to home page or perform any other action
         router.push("/");
       }
-    }
+    } catch (error: any) {
+      console.error("Login error:", error.message);
+    } 
+    
   };
   return (
     <>
       <div className="flex items-center justify-center h-full mt-10  mx-auto">
         <form
-          className="flex border-2 flex-col items-center justify-center h-fit bg-slate-100 m-2 p-5 rounded-lg shadow-md w-96"
+          className="flex border-2 flex-col items-center justify-center h-fit bg-white/10  m-2 p-5 rounded-lg shadow-md w-96"
           onSubmit={handleSubmit}
         >
           {formError && <p className="text-red-500">{formError}</p>}
@@ -76,16 +77,16 @@ export default function LoginPage() {
           />
           <button
             type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded"
+            className="bg-blue-500 text-white px-4 py-2 rounded cursor-pointer"
             disabled={loading}
           >
-            {loading ? "Loading..." : "లాగిన్"}
+           <span className="font-PottiSreeramulu font-semibold"> {loading ? "Loading..." : "లాగిన్"}</span>
           </button>
-          <p className="mt-4">
+          <p className="mt-4 font-gidugu font-bold">
             లాగిన్ చేయడానికి మీకు ఖాతా లేదు?{" "}
-            <a href="/signup" className="text-blue-500">
+            <Link href="/signup" className="text-blue-500">
               సైన్ అప్ చేయండి
-            </a>
+            </Link>
           </p>
         </form>
       </div>

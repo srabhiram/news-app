@@ -2,6 +2,7 @@
 "use client";
 import { signupUser } from "@/redux/features/users/authSlice";
 import { AppDispatch, RootState } from "@/redux/store";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -52,14 +53,16 @@ export default function SignupPage() {
   };
   return (
     <>
-      <div>
-        <h1>సైన్ అప్ చేయండి</h1>
-        {formError && <p className="text-red-500">{formError}</p>}
-        {error && <p className="text-red-500">{error}</p>}
+      <div className="flex items-center justify-center h-full mt-10  mx-auto">
         <form
-          className="flex border-2 flex-col items-center justify-center h-fit bg-slate-100 m-2 p-5 rounded-lg shadow-md w-96"
+          className="flex border-2 gap-2 flex-col items-center justify-center h-fit  m-2 p-5 rounded-lg shadow-md w-96"
           onSubmit={handleSubmit}
         >
+          <h2 className="text-xl font-bold font-PottiSreeramulu my-2">
+            సైన్ అప్ చేయండి
+          </h2>
+          {formError && <p className="text-red-500">{formError}</p>}
+          {error && <p className="text-red-500">{error}</p>}
           <input
             type="text"
             placeholder="యూజర్ పేరు"
@@ -91,6 +94,12 @@ export default function SignupPage() {
           >
             {loading ? "Loading..." : "సైన్ అప్"}
           </button>
+          <p>
+            <span className="font-PottiSreeramulu">మీకు ఇప్పటికే ఖాతా ఉందా?</span>{" "}
+            <Link href="/login" className="text-blue-500 font-semibold">
+              లాగిన్ చేయండి
+            </Link>
+          </p>
         </form>
       </div>
     </>

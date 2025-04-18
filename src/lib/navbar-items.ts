@@ -2,7 +2,7 @@ export const navbarItems = [
     {
         id: 1,
         name: "హోమ్",
-        href: "#home",
+        href: "/",
     },
     {
         id: 2,
