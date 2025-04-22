@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import "./globals.css";
 import ClientProvider from "@/components/ClientProvider";
 
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -29,10 +30,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased  text-gray-900 dark:bg-gray-900 dark:text-gray-100`}
       >
-       <ClientProvider>
-        <Navbar />
-        {children}
-       </ClientProvider>
+        <ClientProvider>
+          <Navbar />
+          {children}
+        </ClientProvider>
       </body>
     </html>
   );

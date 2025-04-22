@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 export interface NewsArticle {
   id: string;
   newsTitle: string;
-  description: string;
+  content: string;
   image: string;
   district: string;
   author: string;
@@ -12,6 +13,13 @@ export interface NewsArticle {
   likes: number;
   createdAt: string;
   updatedAt: string;
+}
+export interface NewsData{
+  newsTitle: string;
+  content: string;
+  image: File | null;
+  district: string;
+  author: string;
 }
 export interface NewsState {
   loading: boolean;
@@ -31,20 +39,12 @@ const initialState: NewsState = {
 // Define the news slice
 export const addNews = createAsyncThunk(
   "news/addNews",
-  async (newsData: NewsArticle, { rejectWithValue }) => {
+  async (formData: FormData, { rejectWithValue }) => {
     try {
-      const response = await fetch("/api/news/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newsData),
+      const response = await axios.post("/api/news/add", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to add news article");
-      }
-      return data; // Expecting { message: string, newsArticle: NewsArticle }
+      return response.data; // Expecting { message: string, newsArticle: NewsArticle }
     } catch (error: any) {
       return rejectWithValue(error.message || "Something went wrong");
     }

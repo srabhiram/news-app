@@ -2,7 +2,7 @@ import mongoose, { Schema, Document } from "mongoose";
 // Define the News interface
 export interface NewsModel extends Document {
   newsTitle: string;
-  description: string;
+  content: string;
   image: string;
   district: string;
   author: string;
@@ -15,7 +15,7 @@ export interface NewsModel extends Document {
 const newsSchema: Schema = new Schema(
   {
     newsTitle: { type: String, required: true },
-    description: { type: String, required: true },
+    content: { type: String, required: true },
     image: { type: String, required: true },
     district: { type: String, required: true },
     author: { type: String, required: true },
@@ -26,6 +26,8 @@ const newsSchema: Schema = new Schema(
   },
   { timestamps: true } // Automatically add createdAt and updatedAt fields
 );
+
+
 // Create the News model
 const News =
   mongoose.models.News || mongoose.model<NewsModel>("News", newsSchema);
