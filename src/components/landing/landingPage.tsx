@@ -7,8 +7,7 @@ import { getNews } from "@/redux/features/news/news-slice";
 import { AppDispatch, RootState } from "@/redux/store";
 import { formatDistanceToNow } from "date-fns";
 
-const fallbackImageUrl =
-  "https://media.istockphoto.com/id/1369150014/vector/breaking-news-with-world-map-background-vector.jpg?s=612x612&w=0&k=20&c=9pR2-nDBhb7cOvvZU_VdgkMmPJXrBQ4rB1AkTXxRIKM=";
+
 
 const LandingPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -33,7 +32,7 @@ const LandingPage = () => {
               className="border p-4 mb-4 rounded-lg shadow-md"
             >
               <Image
-                src={article?.image || fallbackImageUrl}
+                src={article?.image}
                 alt={article.newsTitle}
                 width={200}
                 height={100}
