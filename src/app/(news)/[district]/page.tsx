@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default function page({params: { district }}: { params: { district: string } }) {    
+export default function page() {    
 
   return (
-    <div>{district}</div>
+    <div>blpg</div>
   )
 }
