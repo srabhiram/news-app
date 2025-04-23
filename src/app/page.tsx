@@ -1,7 +1,11 @@
-import LandingPage from "@/components/landing/landingPage";
+import LatestNewsCard from "@/components/news-card/latest-news-card";
+import LoadingSvg from "@/components/svg/loadingSVG";
+import { Suspense } from "react";
 
 export default function Home() {
-  return (<LandingPage/>
-
+  return (
+    <Suspense fallback={<LoadingSvg />}>
+      <LatestNewsCard />
+    </Suspense>
   );
 }

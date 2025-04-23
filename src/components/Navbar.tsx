@@ -30,6 +30,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { resetAuthState } from "@/redux/features/users/authSlice";
+import { useRouter } from "next/navigation";
 
 function Navbar() {
   const [open, setOpen] = React.useState(false);
@@ -37,6 +38,18 @@ function Navbar() {
   const dispatch = useDispatch<AppDispatch>();
   const { success, user } = useSelector((state: RootState) => state.auth);
   const isLoggedIn = success && user !== null;
+  console.log(value)
+  const router = useRouter();
+  const handleDistrictSelect = (currentValue: string) => {
+    const selected = currentValue === value ? "" : currentValue;
+    setValue(selected);
+    setOpen(false);
+    if (selected) {
+      router.push(`/districts/${selected}`); // <-- your redirect path
+    }else{
+      router.push('/')
+    }
+  }
   return (
     <nav>
       <ul className=" bg-[#3D3BF3] text-white p-4">
@@ -109,10 +122,8 @@ function Navbar() {
                       <CommandItem
                         key={framework.value}
                         value={framework.value}
-                        onSelect={(currentValue) => {
-                          setValue(currentValue === value ? "" : currentValue);
-                          setOpen(false);
-                        }}
+                        onSelect={handleDistrictSelect}
+                      
                       >
                         {framework.label}
                         <Check

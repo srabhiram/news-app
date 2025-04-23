@@ -5,7 +5,12 @@ const nextConfig: NextConfig = {
     remotePatterns:[
       {
         protocol:"https",
-        hostname: "media.istockphoto.com",
+        hostname: "res.cloudinary.com",
+
+      },
+      {
+        protocol:"https",
+        hostname: "qnewsimages.s3.ap-south-1.amazonaws.com"
       }
     ]
   }

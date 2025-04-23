@@ -16,7 +16,7 @@ export default function AddNewsPage() {
     author: "",
   });
   const fileInputRef = React.useRef<HTMLInputElement>(null);
-  const {loading} = useSelector((state: RootState) => state.news);
+  const { loading } = useSelector((state: RootState) => state.news);
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const handleChange = (
@@ -47,21 +47,26 @@ export default function AddNewsPage() {
     formData.append("image", newsArticle.image as Blob); // Cast to Blob for FormData
     formData.append("district", newsArticle.district);
     formData.append("author", newsArticle.author);
-    
 
-    dispatch(addNews(formData));
+    try {
+      dispatch(addNews(formData));
 
-    setNewsArticle({
-      newsTitle: "",
-      content: "",
-      image: null,
-      district: "",
-      author: "",
-    });
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+      setNewsArticle({
+        newsTitle: "",
+        content: "",
+        image: null,
+        district: "",
+        author: "",
+      });
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+      router.push("/?refresh=true");
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("An error occurred while submitting the form. Please try again.");
+      return;
     }
-    router.push("/")
   };
 
   return (

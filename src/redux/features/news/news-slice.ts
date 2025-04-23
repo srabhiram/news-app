@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export interface NewsArticle {
-  id: string;
+  _id: string;
   newsTitle: string;
   content: string;
   image: string;
@@ -14,7 +14,7 @@ export interface NewsArticle {
   createdAt: string;
   updatedAt: string;
 }
-export interface NewsData{
+export interface NewsData {
   newsTitle: string;
   content: string;
   image: File | null;
@@ -65,7 +65,7 @@ export const getNews = createAsyncThunk(
       if (!response.ok) {
         throw new Error(data.error || "Failed to fetch news articles");
       }
-      return data // Expecting { message: string, newsArticles: NewsArticle[] }
+      return data; // Expecting { message: string, newsArticles: NewsArticle[] }
     } catch (error: any) {
       return rejectWithValue(error.message || "Something went wrong");
     }
@@ -93,20 +93,34 @@ export const deleteNews = createAsyncThunk(
 );
 export const updateNews = createAsyncThunk(
   "news/updateNews",
-  async (newsData: NewsArticle, { rejectWithValue }) => {
+  async (formData: FormData, { rejectWithValue }) => {
+    const newsId = formData.get("id") as string;
     try {
-      const response = await fetch(`/api/news/update/${newsData.id}`, {
-        method: "PUT",
+      const response = await axios.put(`/api/news/update/${newsId}`, formData,  {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      return response.data; // Expecting { message: string, newsArticle: NewsArticle }
+    } catch (error: any) {
+      return rejectWithValue(error.message || "Something went wrong");
+    }
+  }
+);
+
+export const getNewsByDistrict = createAsyncThunk(
+  "news/getNewsByDistrict",
+  async (districtName: string, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`/api/news/${districtName}`, {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(newsData),
       });
       const data = await response.json();
       if (!response.ok) {
-        throw new Error(data.error || "Failed to update news article");
+        throw new Error(data.error || "Failed to fetch news articles");
       }
-      return data; // Expecting { message: string, newsArticle: NewsArticle }
+      return data; // Expecting { message: string, newsArticles: NewsArticle[] }
     } catch (error: any) {
       return rejectWithValue(error.message || "Something went wrong");
     }
@@ -150,6 +164,18 @@ export const newsSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
+      .addCase(getNewsByDistrict.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getNewsByDistrict.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.newsArticles = action.payload.newsArticles;
+      })
+      .addCase(getNewsByDistrict.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
       .addCase(deleteNews.pending, (state) => {
         state.loading = true;
       })
@@ -159,7 +185,7 @@ export const newsSlice = createSlice({
         state.message = action.payload.message;
         // Remove the deleted news article from the list
         state.newsArticles = state.newsArticles.filter(
-          (article) => article.id !== action.payload.newsId
+          (article) => article._id !== action.payload.newsId
         );
       })
       .addCase(deleteNews.rejected, (state, action) => {

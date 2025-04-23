@@ -1,5 +1,5 @@
 import LoadingSvg from "@/components/svg/loadingSVG";
 
-export default function Loading() {
+export default async function Loading() {
   return <LoadingSvg />;
 }

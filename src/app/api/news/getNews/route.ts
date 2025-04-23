@@ -5,7 +5,6 @@ export async function GET() {
   try {
     await connectDB();
     const news = await News.find({}).sort({ createdAt: -1 });
-    console.log("Fetched news articles:", news);
     return new Response(JSON.stringify({ newsArticles: news }), { status: 200 });
   } catch (error) {
     console.error("Error fetching news articles:", error);
