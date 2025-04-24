@@ -23,7 +23,7 @@ export default function LoginPage() {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { email, password } = formData;
     if (!email || !password) {
@@ -32,17 +32,14 @@ export default function LoginPage() {
     }
     // Perform login logic here
     try {
-      dispatch(loginUser({ email, password }));
+      await dispatch(loginUser({ email, password }));
 
       setFormError("");
       setFormData({
         email: "",
         password: "",
       });
-      if (!loading && !error) {
-        // Redirect to home page or perform any other action
-        router.push("/");
-      }
+     await router.push("/");
     } catch (error: any) {
       console.error("Login error:", error.message);
     } 

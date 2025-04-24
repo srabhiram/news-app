@@ -32,6 +32,7 @@ import { getTokenData } from "@/helpers/getTokenData";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { resetAuthState } from "@/redux/features/users/authSlice";
+import { FaUser } from "react-icons/fa";
 
 // Define the type for currentUser
 interface User {
@@ -85,23 +86,23 @@ function Navbar() {
 
           {isLoggedIn ? (
             <DropdownMenu>
-              <DropdownMenuTrigger className="bg-gray-50 text-gray-950 capitalize px-4 py-1 rounded-md">
-                {currentUser?.name}
+              <DropdownMenuTrigger className="bg-black/20 border-2 border-white flex gap-2 items-center text-white   capitalize px-4 py-1 rounded-md font-semibold">
+               <span><FaUser/></span> {currentUser?.name}
               </DropdownMenuTrigger>
-              <DropdownMenuContent>
+              <DropdownMenuContent className="space-y-3 ">
                 <DropdownMenuLabel className="font-sans">
                   My Account
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {currentUser.isAdmin && (
                   <Link href="/admin/dashboard" className="w-full">
-                    <DropdownMenuItem className="border-2 my-1 rounded">
+                    <DropdownMenuItem className="border-2 rounded">
                       Dashboard
                     </DropdownMenuItem>
                   </Link>
                 )}
                 <DropdownMenuItem
-                  className="bg-red-500 text-white px-3 py-1 rounded"
+                  className="bg-red-500 text-white mt-2 rounded"
                   onClick={() => {
                     removeTokenCookie(); // Remove token cookie on logout
                   }}
@@ -133,7 +134,7 @@ function Navbar() {
                 variant="outline"
                 role="combobox"
                 aria-expanded={open}
-                className="w-[150px] bg-gray-50 text-gray-900 border-0 justify-between font-Gidugu text-xl overflow-hidden"
+                className="w-[120px] bg-transparent text-white flex items-center justify-between font-Gidugu text-xl overflow-hidden"
               >
                 {value
                   ? districts.find((framework) => framework.value === value)
