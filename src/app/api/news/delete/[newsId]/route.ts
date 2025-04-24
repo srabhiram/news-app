@@ -6,9 +6,9 @@ import cloudinary from "@/lib/cloudinary"; // import your cloudinary config
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { newsId: string } }
+  { params }: { params: Promise<{ newsId: string }> }
 ) {
-  const { newsId } = params;
+  const { newsId } = await params;
 
   try {
     await connectDB();

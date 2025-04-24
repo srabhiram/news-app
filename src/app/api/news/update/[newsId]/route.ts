@@ -4,7 +4,7 @@ import News from "@/db/models/news.models";
 import cloudinary from "@/lib/cloudinary";
 import { NextRequest } from "next/server";
 
-export async function PUT(req: NextRequest, {params}: {params :{newsId: string}}) {
+export async function PUT(req: NextRequest, {params}: {params: Promise<{newsId: string}>}) {
     await connectDB();
   const { newsId } = await params;
    const body = await req.formData();
