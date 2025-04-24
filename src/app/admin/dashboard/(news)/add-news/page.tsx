@@ -49,7 +49,7 @@ export default function AddNewsPage() {
     formData.append("author", newsArticle.author);
 
     try {
-      dispatch(addNews(formData));
+      await dispatch(addNews(formData));
 
       setNewsArticle({
         newsTitle: "",

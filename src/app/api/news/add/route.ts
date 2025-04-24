@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
       district,
       author,
     });
-
+console.log("New news article:", newNews);
     return new Response(JSON.stringify(newNews), { status: 201 });
   } catch (error: any) {
     console.error("Error creating news:", error);

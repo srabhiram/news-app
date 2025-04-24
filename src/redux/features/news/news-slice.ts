@@ -96,9 +96,10 @@ export const updateNews = createAsyncThunk(
   async (formData: FormData, { rejectWithValue }) => {
     const newsId = formData.get("id") as string;
     try {
-      const response = await axios.put(`/api/news/update/${newsId}`, formData,  {
+      const response = await axios.put(`/api/news/update/${newsId}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+      console.log(response.data)
       return response.data; // Expecting { message: string, newsArticle: NewsArticle }
     } catch (error: any) {
       return rejectWithValue(error.message || "Something went wrong");
@@ -106,8 +107,8 @@ export const updateNews = createAsyncThunk(
   }
 );
 
-export const getNewsByDistrict = createAsyncThunk(
-  "news/getNewsByDistrict",
+export const getNewsByParam = createAsyncThunk(
+  "news/getNewsByParam",
   async (districtName: string, { rejectWithValue }) => {
     try {
       const response = await fetch(`/api/news/${districtName}`, {
@@ -118,7 +119,7 @@ export const getNewsByDistrict = createAsyncThunk(
       });
       const data = await response.json();
       if (!response.ok) {
-        throw new Error(data.error || "Failed to fetch news articles");
+        throw new Error(data.error);
       }
       return data; // Expecting { message: string, newsArticles: NewsArticle[] }
     } catch (error: any) {
@@ -146,11 +147,14 @@ export const newsSlice = createSlice({
         state.loading = false;
         state.success = true;
         state.message = action.payload.message;
-        state.newsArticles.push(action.payload.newsArticle);
+        // state.newsArticles.push(action.payload.newsArticle);
       })
       .addCase(addNews.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+        state.success = false;
+        state.message = "";
+        state.newsArticles = [];
       })
       .addCase(getNews.pending, (state) => {
         state.loading = true;
@@ -163,18 +167,41 @@ export const newsSlice = createSlice({
       .addCase(getNews.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+        state.success = false;
+        state.message = "";
+        state.newsArticles = [];
       })
-      .addCase(getNewsByDistrict.pending, (state) => {
+      .addCase(getNewsByParam.pending, (state) => {
         state.loading = true;
       })
-      .addCase(getNewsByDistrict.fulfilled, (state, action) => {
+      .addCase(getNewsByParam.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
         state.newsArticles = action.payload.newsArticles;
       })
-      .addCase(getNewsByDistrict.rejected, (state, action) => {
+      .addCase(getNewsByParam.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+        state.success = false;
+        state.message = "";
+        state.newsArticles = [];
+      })
+      .addCase(updateNews.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateNews.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.message = action.payload.message;
+        // Update the news article in the list
+        // state.newsArticles = action.payload.newsArticles;
+      })
+      .addCase(updateNews.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+        state.success = false;
+        state.message = "";
+        state.newsArticles = [];
       })
       .addCase(deleteNews.pending, (state) => {
         state.loading = true;
@@ -191,6 +218,9 @@ export const newsSlice = createSlice({
       .addCase(deleteNews.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+        state.success = false;
+        state.message = "";
+        state.newsArticles = [];
       });
   },
 });

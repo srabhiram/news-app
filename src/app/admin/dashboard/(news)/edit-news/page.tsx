@@ -11,7 +11,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { getNews, NewsArticle, updateNews } from "@/redux/features/news/news-slice";
+import {
+  getNews,
+  NewsArticle,
+  updateNews,
+} from "@/redux/features/news/news-slice";
 import { useRouter } from "next/navigation";
 import { districts } from "@/lib/navbar-items";
 export default function EditNewsPage() {
@@ -53,7 +57,7 @@ export default function EditNewsPage() {
 
     setNewsArticle((prev) => ({ ...prev, image: file }));
   };
-const handleEditClick = (articles: NewsArticle) => {
+  const handleEditClick = (articles: NewsArticle) => {
     setNewsArticle({
       newsTitle: articles.newsTitle,
       content: articles.content,
@@ -76,7 +80,7 @@ const handleEditClick = (articles: NewsArticle) => {
     formData.append("id", id);
 
     try {
-      dispatch(updateNews(formData));
+      await dispatch(updateNews(formData));
 
       setNewsArticle({
         newsTitle: "",
@@ -88,7 +92,7 @@ const handleEditClick = (articles: NewsArticle) => {
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
-      router.push("/?refresh=true");
+      router.push("/");
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("An error occurred while submitting the form. Please try again.");
@@ -100,35 +104,38 @@ const handleEditClick = (articles: NewsArticle) => {
       <h1 className="text-2xl font-PottiSreeramulu font-bold mt-1 mb-6">
         Edit News
       </h1>
-      <div className="border p-4 mb-4 rounded-lg shadow-md">
+      <div className="border p-2 mb-4 rounded-lg shadow-md">
         {newsArticles.length === 0 ? (
           <p className="text-gray-500 italic">No news articles available.</p>
         ) : (
           newsArticles.map((articles) => (
-            <div key={articles?._id} className="mb-4">
-              <Image
-                src={articles?.image}
-                alt={articles?.newsTitle}
-                width={200}
-                height={100}
-                className="rounded"
-              />
-
-              <h2 className="text-xl font-bold mt-2">{articles?.newsTitle}</h2>
-              <p className="text-sm text-gray-600 mb-1">
-                <span className="font-semibold capitalize">
-                  {articles?.author}
-                </span>{" "}
-                •{" "}
-                <span>
-                  {new Date(articles?.createdAt).toLocaleDateString()}
-                </span>
-              </p>
-              <p className="text-gray-700 font-PottiSreeramulu">
-                {articles?.content}
-              </p>
+            <div key={articles?._id} className="flex items-center gap-3 mb-1 ">
+              {articles?.image && (
+                  <Image
+                    src={articles?.image}
+                    alt={articles?.newsTitle}
+                    width={200}
+                    height={100}
+                    unoptimized
+                    className="rounded w-28 h-28 object-contain mr-2 flex-shrink-0"
+                  />
+              )}
+              <div>
+                  {" "}
+                  <h2 className="text-sm sm:text-xl font-bold">
+                    {articles?.newsTitle}
+                  </h2>
+                <p className="text-xs text-gray-600 mt-1">
+                  •{" "}
+                  <span>
+                    {new Date(articles?.createdAt).toLocaleDateString()}
+                  </span>
+                </p>
+              </div>
               <Dialog>
-                <DialogTrigger onClick={()=>handleEditClick(articles)}>Edit</DialogTrigger>
+                <DialogTrigger className="bg-blue-500 px-3 py-2 rounded-md text-white" onClick={() => handleEditClick(articles)}>
+                  Edit
+                </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>Are you absolutely sure?</DialogTitle>
@@ -151,7 +158,7 @@ const handleEditClick = (articles: NewsArticle) => {
                             name="newsTitle"
                             value={newsArticle.newsTitle}
                             onChange={handleChange}
-                            className="mt-1 block p-1 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                            className="mt-1 block p-2 w-full  border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                             required
                             aria-required="true"
                           />
@@ -166,7 +173,7 @@ const handleEditClick = (articles: NewsArticle) => {
                           <textarea
                             id="content"
                             name="content"
-                            rows={4}
+                            rows={6}
                             value={newsArticle.content}
                             onChange={handleChange}
                             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
@@ -187,7 +194,7 @@ const handleEditClick = (articles: NewsArticle) => {
                             name="author"
                             value={newsArticle.author}
                             onChange={handleChange}
-                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                            className="mt-1 block p-1 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                             required
                             aria-required="true"
                           />
@@ -206,7 +213,7 @@ const handleEditClick = (articles: NewsArticle) => {
                             accept="image/*"
                             ref={fileInputRef}
                             onChange={handleFileChange}
-                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                            className="mt-1 p-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                             required
                             aria-required="true"
                           />
@@ -235,7 +242,7 @@ const handleEditClick = (articles: NewsArticle) => {
                             name="district"
                             value={newsArticle.district}
                             onChange={handleChange}
-                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                            className="mt-1 p-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                             required
                             aria-required="true"
                           >
@@ -249,7 +256,11 @@ const handleEditClick = (articles: NewsArticle) => {
                         </div>
                         <button
                           type="submit"
-                          className={`px-4 py-2 w-full bg-blue-600 text-white rounded-md hover:bg-blue-700 cursor-not-allowed
+                          className={`px-4 py-2 w-full bg-blue-600 text-white rounded-md hover:bg-blue-700 ${
+                            loading
+                              ? "cursor-not-allowed opacity-50"
+                              : "cursor-pointer"
+                          }
                     `}
                           disabled={loading}
                           aria-disabled={loading ? "true" : "false"}

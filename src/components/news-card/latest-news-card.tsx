@@ -1,51 +1,52 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/redux/store";
-import { getNews } from "@/redux/features/news/news-slice";
+import { NewsArticle } from "@/redux/features/news/news-slice";
+import Link from "next/link";
 
-export default function LatestNewsCard() {
-  const {  newsArticles, success } = useSelector(
-    (state: RootState) => state.news
-  );
-  const dispatch = useDispatch<AppDispatch>();
-  useEffect(() => {
-    dispatch(getNews());
-  }, [dispatch, success]);
-  
+export default function LatestNewsCard({
+  newsArticles, success
+}: {
+  newsArticles: NewsArticle[];
+  success:  boolean;
+}) {
+  console.log(success)
   return (
     <div>
-      <h1 className="text-2xl font-PottiSreeramulu font-bold mt-1 mb-6">
+      <h1 className="text-2xl font-PottiSreeramulu font-bold mt-3 ml-2 mb-4">
         తాజా వార్తలు
       </h1>
-      <div className="border p-4 mb-4 rounded-lg shadow-md">
-        {newsArticles.length === 0 ? (
+      <div className="border p-1 mx-1 mb-1 rounded-lg shadow-md">
+        {!success ? (
           <p className="text-gray-500 italic">No news articles available.</p>
         ) : (
-          newsArticles.map((article) => (
-            <div key={article?._id} className="mb-4">
+          newsArticles?.map((article) => (
+            <div key={article?._id} className="flex items-center mb-1 ">
               {article?.image && (
-                <Image
-                  src={article?.image}
-                  alt={article?.newsTitle}
-                  width={200}
-                  height={100}
-                  unoptimized
-                  className="rounded"
-                />
+                <Link href={`news/${article?._id}`} className="flex-shrink-0">
+                  <Image
+                    src={article?.image}
+                    alt={article?.newsTitle}
+                    width={200}
+                    height={100}
+                    unoptimized
+                    className="rounded w-28 h-28 object-contain mr-2 "
+                  />
+                </Link>
               )}
-              <h2 className="text-xl font-bold mt-2">{article?.newsTitle}</h2>
-              <p className="text-sm text-gray-600 mb-1">
-                <span className="font-semibold capitalize">
-                  {article?.author}
-                </span>{" "}
-                •{" "}
-                <span>{new Date(article?.createdAt).toLocaleDateString()}</span>
-              </p>
-              <p className="text-gray-700 font-PottiSreeramulu">
-                {article?.content}
-              </p>
+              <div>
+                <Link href={`news/${article?._id}`} className="hover:underline">
+                  {" "}
+                  <h2 className="text-sm sm:text-xl font-bold">
+                    {article?.newsTitle}
+                  </h2>
+                </Link>{" "}
+                <p className="text-xs text-gray-600 mt-1">
+                  •{" "}
+                  <span>
+                    {new Date(article?.createdAt).toLocaleDateString()}
+                  </span>
+                </p>
+              </div>
             </div>
           ))
         )}

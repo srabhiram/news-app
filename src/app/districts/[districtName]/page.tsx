@@ -1,17 +1,24 @@
-'use client';
-import { getNewsByDistrict } from '@/redux/features/news/news-slice';
-import { AppDispatch } from '@/redux/store';
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux';
+"use client";
+import LatestNewsCard from "@/components/news-card/latest-news-card";
+import { getNewsByParam } from "@/redux/features/news/news-slice";
+import { AppDispatch, RootState } from "@/redux/store";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-export default  function DistrictPage({ params }: {params: Promise<{ districtName: string }> }) {
-    const  {districtName} = React.use(params);
-    console.log(districtName)
-    const dispatch = useDispatch<AppDispatch>();
-    useEffect(()=>{
-        dispatch(getNewsByDistrict(districtName))
-    },[dispatch, districtName])
+export default function DistrictPage({
+  params,
+}: {
+  params: Promise<{ districtName: string }>;
+}) {
+  const { districtName } = React.use(params);
+  console.log(districtName);
+  const { newsArticles, success } = useSelector((state: RootState) => state.news);
+
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(getNewsByParam(districtName));
+  }, [dispatch, districtName, success]);
   return (
-    <div>{districtName}</div>
-  )
+    <LatestNewsCard newsArticles={newsArticles} success={success} /> // Placeholder for news articles, replace with actual data from Redux store
+  );
 }
