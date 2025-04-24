@@ -11,14 +11,13 @@ export default function DistrictPage({
   params: Promise<{ districtName: string }>;
 }) {
   const { districtName } = React.use(params);
-  console.log(districtName);
-  const { newsArticles, success } = useSelector((state: RootState) => state.news);
+  const { newsArticles, success, loading } = useSelector((state: RootState) => state.news);
 
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(getNewsByParam(districtName));
   }, [dispatch, districtName, success]);
   return (
-    <LatestNewsCard newsArticles={newsArticles} success={success} /> // Placeholder for news articles, replace with actual data from Redux store
+    <LatestNewsCard newsArticles={newsArticles} success={success} loading={loading} /> // Placeholder for news articles, replace with actual data from Redux store
   );
 }

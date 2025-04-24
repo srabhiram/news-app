@@ -32,7 +32,6 @@ export default function DeleteNewsPage() {
       .unwrap()
       .then(() => {
         // Optionally, you can show a success message or perform any other actions after deletion
-        console.log("News article deleted successfully");
       })
       .catch((error) => {
         // Handle any errors that occur during deletion

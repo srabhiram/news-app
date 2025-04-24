@@ -2,22 +2,37 @@
 import Image from "next/image";
 import { NewsArticle } from "@/redux/features/news/news-slice";
 import Link from "next/link";
+import NewsCardSkeleton from "../skeletons/news-card";
 
 export default function LatestNewsCard({
-  newsArticles, success
+  newsArticles,
+  success,
+  loading,
 }: {
   newsArticles: NewsArticle[];
-  success:  boolean;
-}) {
-  console.log(success)
+  success: boolean;
+  loading: boolean;
+}): React.JSX.Element {
+  if (newsArticles?.length === 0 && !success) {
+    return (
+      <div className="z-50">
+        <h1 className="text-2xl font-PottiSreeramulu font-bold mt-3 ml-2 mb-4">
+          తాజా వార్తలు
+        </h1>
+        <div className="border p-1 mx-1 mb-1 rounded-lg shadow-md">
+          <p className="text-gray-500 italic">No news articles available.</p>
+        </div>
+      </div>
+    );
+  }
   return (
-    <div>
+    <div className="z-50">
       <h1 className="text-2xl font-PottiSreeramulu font-bold mt-3 ml-2 mb-4">
         తాజా వార్తలు
       </h1>
       <div className="border p-1 mx-1 mb-1 rounded-lg shadow-md">
-        {!success ? (
-          <p className="text-gray-500 italic">No news articles available.</p>
+        {loading ? (
+          <NewsCardSkeleton />
         ) : (
           newsArticles?.map((article) => (
             <div key={article?._id} className="flex items-center mb-1 ">
@@ -34,7 +49,10 @@ export default function LatestNewsCard({
                 </Link>
               )}
               <div>
-                <Link href={`news/${article?._id}`} className="hover:underline">
+                <Link
+                  href={`/news/${article?._id}`}
+                  className="hover:underline"
+                >
                   {" "}
                   <h2 className="text-sm sm:text-xl font-bold">
                     {article?.newsTitle}

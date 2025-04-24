@@ -15,7 +15,7 @@ export default function SignupPage() {
   });
   const [formError, setFormError] = React.useState("");
   const dispatch = useDispatch<AppDispatch>();
-  const { error, loading, success } = useSelector(
+  const { error, loading } = useSelector(
     (state: RootState) => state.auth
   );
   const router = useRouter();
@@ -34,7 +34,6 @@ export default function SignupPage() {
     try {
       dispatch(signupUser({ name: username, email, password }));
 
-      console.log(success);
       setFormError("");
       setFormData({
         username: "",

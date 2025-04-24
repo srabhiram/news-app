@@ -39,7 +39,6 @@ export default function LoginPage() {
         email: "",
         password: "",
       });
-      console.log(error);
       if (!loading && !error) {
         // Redirect to home page or perform any other action
         router.push("/");

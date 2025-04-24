@@ -31,7 +31,6 @@ export async function DELETE(
     // Delete image from Cloudinary
     if (publicId) {
       await cloudinary.uploader.destroy(publicId);
-      console.log("Deleted image from Cloudinary:", publicId);
     }
 
     const updatedNewsList = await News.find({});

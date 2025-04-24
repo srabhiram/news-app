@@ -7,7 +7,6 @@ import cloudinary from "@/lib/cloudinary";
 export async function POST(request: NextRequest) {
   await connectDB();
   const body = await request.formData();
-  console.log("body", body);
   const newsTitle = body.get("newsTitle");
   const content = body.get("content");
   const file = body.get("image") as File;
@@ -20,7 +19,6 @@ export async function POST(request: NextRequest) {
   }
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
-  console.log("buffer", buffer);
   try {
     const uploadResult = await new Promise((resolve, reject) => {
       cloudinary.uploader

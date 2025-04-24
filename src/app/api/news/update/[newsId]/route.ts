@@ -8,7 +8,6 @@ export async function PUT(req: NextRequest, {params}: {params: Promise<{newsId: 
     await connectDB();
   const { newsId } = await params;
    const body = await req.formData();
-    console.log("body", body);
     const newsTitle = body.get("newsTitle");
     const content = body.get("content");
     const file = body.get("image") as File;
@@ -21,7 +20,6 @@ export async function PUT(req: NextRequest, {params}: {params: Promise<{newsId: 
     }
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    console.log("buffer", buffer);
     try {
       const uploadResult = await new Promise((resolve, reject) => {
         cloudinary.uploader

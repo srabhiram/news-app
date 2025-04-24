@@ -1,7 +1,7 @@
 "use client";
 import { districts, navbarItems } from "@/lib/navbar-items";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import {
   DropdownMenu,
@@ -27,32 +27,57 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useRouter } from "next/navigation";
+import { getTokenData } from "@/helpers/getTokenData";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { resetAuthState } from "@/redux/features/users/authSlice";
-import { useRouter } from "next/navigation";
+
+// Define the type for currentUser
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  isAdmin: boolean;
+}
 
 function Navbar() {
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
-  const dispatch = useDispatch<AppDispatch>();
-  const { success, user } = useSelector((state: RootState) => state.auth);
-  const isLoggedIn = success && user !== null;
-  console.log(user?.isAdmin)
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("");
+  // Define currentUser as User | null
+  const [currentUser, setCurrentUser] = useState<User | null>(null); // Set state type to User | null
   const router = useRouter();
+  const { success } = useSelector((state: RootState) => state.auth);
+  // Update currentUser whenever the token changes
+  useEffect(() => {
+    const userData = getTokenData();
+    setCurrentUser(userData); // This will work now because currentUser can be User | null
+  }, [success]);
+
+  const isLoggedIn = currentUser !== null;
+  const dispatch = useDispatch<AppDispatch>();
+  // Function to remove the cookie
+  const removeTokenCookie = async () => {
+    document.cookie =
+      "userToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    await dispatch(resetAuthState());
+    await router.push("/login"); // Redirect to login page after logout
+  };
+
   const handleDistrictSelect = (currentValue: string) => {
     const selected = currentValue === value ? "" : currentValue;
     setValue(selected);
     setOpen(false);
     if (selected) {
       router.push(`/districts/${selected}`); // <-- your redirect path
-    }else{
-      router.push('/')
+    } else {
+      router.push("/");
     }
-  }
+  };
+
   return (
     <nav>
-      <ul className=" bg-[#3D3BF3] text-white p-4">
+      <ul className="bg-[#3D3BF3] text-white p-4">
         <div className="flex items-center justify-between space-x-4">
           <Link href="/" className="text-2xl font-bold font-sans">
             News
@@ -61,25 +86,35 @@ function Navbar() {
           {isLoggedIn ? (
             <DropdownMenu>
               <DropdownMenuTrigger className="bg-gray-50 text-gray-950 capitalize px-4 py-1 rounded-md">
-                {user?.name}
+                {currentUser?.name}
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuLabel className="font-sans">
                   My Account
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                {user.isAdmin && (
+                {currentUser.isAdmin && (
                   <Link href="/admin/dashboard" className="w-full">
-                    <DropdownMenuItem className=" border-2 my-1 rounded">Dashboard</DropdownMenuItem>
+                    <DropdownMenuItem className="border-2 my-1 rounded">
+                      Dashboard
+                    </DropdownMenuItem>
                   </Link>
                 )}
-                <DropdownMenuItem className="bg-red-500 text-white px-3 py-1 rounded" onClick={()=>dispatch(resetAuthState())}>
+                <DropdownMenuItem
+                  className="bg-red-500 text-white px-3 py-1 rounded"
+                  onClick={() => {
+                    removeTokenCookie(); // Remove token cookie on logout
+                  }}
+                >
                   లాగ్ అవుట్
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Link href="/login" className="bg-blue-50 text-black px-3 py-1 rounded-md">
+            <Link
+              href="/login"
+              className="bg-blue-50 text-black px-3 py-1 rounded-md"
+            >
               లాగిన్
             </Link>
           )}
@@ -108,7 +143,7 @@ function Navbar() {
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-[200px] p-0">
-              <Command className=" ">
+              <Command>
                 <CommandInput
                   placeholder="జిల్లా పేరు...."
                   className="h-9 text-xl font-Gidugu"
@@ -123,7 +158,6 @@ function Navbar() {
                         key={framework.value}
                         value={framework.value}
                         onSelect={handleDistrictSelect}
-                      
                       >
                         {framework.label}
                         <Check
@@ -146,4 +180,5 @@ function Navbar() {
     </nav>
   );
 }
+
 export default React.memo(Navbar);

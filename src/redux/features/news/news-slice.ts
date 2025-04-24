@@ -61,7 +61,6 @@ export const getNews = createAsyncThunk(
         },
       });
       const data = await response.json();
-      console.log("Fetched news articles:", data);
       if (!response.ok) {
         throw new Error(data.error || "Failed to fetch news articles");
       }
@@ -99,7 +98,6 @@ export const updateNews = createAsyncThunk(
       const response = await axios.put(`/api/news/update/${newsId}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      console.log(response.data)
       return response.data; // Expecting { message: string, newsArticle: NewsArticle }
     } catch (error: any) {
       return rejectWithValue(error.message || "Something went wrong");
