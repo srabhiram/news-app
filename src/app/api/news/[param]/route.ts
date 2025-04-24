@@ -5,7 +5,7 @@ import connectDB from "@/db/connectDB";
 import mongoose from "mongoose";
 export async function GET(
   req: NextRequest,
-  { params }: { params: { param: string } }
+  { params }: { params: Promise<{ param: string }> }
 ) {
   connectDB();
   let newsArticles: any[] = [];
