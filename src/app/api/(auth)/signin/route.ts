@@ -40,6 +40,7 @@ export async function POST(req: NextRequest) {
       _id: user._id,
       name: user.name,
       email: user.email,
+      isAdmin: user.isAdmin,
       password: user.password, // Include password if needed, but it's generally not recommended
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,

@@ -38,7 +38,7 @@ function Navbar() {
   const dispatch = useDispatch<AppDispatch>();
   const { success, user } = useSelector((state: RootState) => state.auth);
   const isLoggedIn = success && user !== null;
-  console.log(value)
+  console.log(user?.isAdmin)
   const router = useRouter();
   const handleDistrictSelect = (currentValue: string) => {
     const selected = currentValue === value ? "" : currentValue;
@@ -69,11 +69,11 @@ function Navbar() {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {user.isAdmin && (
-                  <Link href="/admin" className="w-full">
-                    <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                  <Link href="/admin/dashboard" className="w-full">
+                    <DropdownMenuItem className=" border-2 my-1 rounded">Dashboard</DropdownMenuItem>
                   </Link>
                 )}
-                <DropdownMenuItem className="bg-red-300 px-3 py-1 rounded-md" onClick={()=>dispatch(resetAuthState())}>
+                <DropdownMenuItem className="bg-red-500 text-white px-3 py-1 rounded" onClick={()=>dispatch(resetAuthState())}>
                   లాగ్ అవుట్
                 </DropdownMenuItem>
               </DropdownMenuContent>

@@ -41,15 +41,11 @@ export default function SignupPage() {
         email: "",
         password: "",
       });
+      router.push("/login");
     } catch (error: any) {
       console.error("Signup error:", error.message);
-    } finally {
-      console.log(success);
-      if (success) {
-        // Redirect to home page or perform any other action
-        router.push("/");
-      }
-    }
+    } 
+    
   };
   return (
     <>
