@@ -3,13 +3,9 @@
 import { NewsArticle } from "@/redux/features/news/news-slice";
 import SingleNewsPage from "./SingleNewsPage";
 
-type Props = {
-  params: {
-    newsId: string;
-  };
-};
 
-export async function generateMetadata({ params }: Props) {
+
+export async function generateMetadata({ params }: {params : Promise<{newsId:string}>}) {
   const { newsId } = await params;
   console.log(newsId);
 
@@ -74,7 +70,7 @@ export async function generateMetadata({ params }: Props) {
 }
 
 // ✅ Page component
-export default async function NewsIdPage({ params }: Props) {
+export default async function NewsIdPage({ params }: {params : Promise<{newsId:string}>}) {
   const param = await params;
   return <SingleNewsPage params={param} />;
 }
