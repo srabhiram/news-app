@@ -10,6 +10,7 @@ export async function GET(
   connectDB();
   let newsArticles: any[] = [];
   const { param } = await params;
+  
   console.log(param);
   if (mongoose.Types.ObjectId.isValid(param)) {
     const id = param;

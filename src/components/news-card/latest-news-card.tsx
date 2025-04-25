@@ -6,34 +6,21 @@ import NewsCardSkeleton from "../skeletons/news-card";
 
 export default function LatestNewsCard({
   newsArticles,
-  success,
   loading,
 }: {
   newsArticles: NewsArticle[];
   success: boolean;
   loading: boolean;
-}): React.JSX.Element {
-  if (newsArticles?.length === 0 && !success) {
-    return (
-      <div className="z-50">
-        <h1 className="text-2xl font-PottiSreeramulu font-bold mt-3 ml-2 mb-4">
-          తాజా వార్తలు
-        </h1>
-        <div className="border p-1 mx-1 mb-1 rounded-lg shadow-md">
-          <p className="text-gray-500 italic">No news articles available.</p>
-        </div>
-      </div>
-    );
-  }
+}) {
   return (
-    <div className="z-50">
+    <div className="">
       <h1 className="text-2xl font-PottiSreeramulu font-bold mt-3 ml-2 mb-4">
         తాజా వార్తలు
       </h1>
       <div className="border p-1 mx-1 mb-1 rounded-lg shadow-md">
         {loading ? (
           <NewsCardSkeleton />
-        ) : (
+        ) : newsArticles.length != 0 ? (
           newsArticles?.map((article) => (
             <div key={article?._id} className="flex items-center mb-1 ">
               {article?.image && (
@@ -67,6 +54,8 @@ export default function LatestNewsCard({
               </div>
             </div>
           ))
+        ) : (
+          <p className="text-gray-500 italic">No news articles available.</p>
         )}
       </div>
     </div>

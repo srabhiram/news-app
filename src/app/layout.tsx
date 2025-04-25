@@ -33,7 +33,9 @@ export default function RootLayout({
       >
         <ClientProvider>
           <Navbar />
-          {children}
+         <main className="min-h-screen mt-4">
+         {children}
+         </main>
           <Footer />
         </ClientProvider>
       </body>

@@ -33,6 +33,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { resetAuthState } from "@/redux/features/users/authSlice";
 import { FaUser } from "react-icons/fa";
+import Image from "next/image";
 
 // Define the type for currentUser
 interface User {
@@ -77,11 +78,11 @@ function Navbar() {
   };
 
   return (
-    <nav>
+    <nav className="sticky top-0 z-50 bg-white shadow-md">
       <ul className="bg-[#3D3BF3] text-white p-4">
         <div className="flex items-center justify-between space-x-4">
-          <Link href="/" className="text-2xl font-bold font-sans">
-            News
+          <Link href="/" className="text-2xl font-bold font-sans shrink-0">
+           <Image src={`/images/logo.png`} alt="logo" width={50} height={10} className="w-20 h-15 "/> 
           </Link>
 
           {isLoggedIn ? (

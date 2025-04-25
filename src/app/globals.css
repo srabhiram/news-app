@@ -130,7 +130,5 @@
     @apply bg-background text-foreground;
     }
 }
-body{
-    padding-bottom: 8rem !important;
-}
+
 
