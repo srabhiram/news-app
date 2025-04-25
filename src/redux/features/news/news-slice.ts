@@ -11,6 +11,7 @@ export interface NewsArticle {
   author: string;
   comments: string[];
   likes: number;
+  views:number,
   createdAt: string;
   updatedAt: string;
 }

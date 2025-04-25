@@ -21,12 +21,16 @@ const newsSchema: Schema = new Schema(
     author: { type: String, required: true },
     comments: { type: [String], default: [] },
     likes: { type: Number, default: 0 }, // Updated from String[] to Number
+    views:{type: Number, default: 0},
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
   },
   { timestamps: true } // Automatically add createdAt and updatedAt fields
 );
-
+// // delete scheme cache
+// if (mongoose.models.News) {
+//   delete mongoose.models.News;
+// }
 
 // Create the News model
 const News =
