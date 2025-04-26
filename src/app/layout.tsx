@@ -6,7 +6,7 @@ import Navbar from "@/components/Navbar";
 import "./globals.css";
 import ClientProvider from "@/components/ClientProvider";
 import Footer from "@/components/Footer";
-import GoogleAdSense from "./GoogleAdSense";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +33,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased  text-gray-900 dark:bg-gray-900 dark:text-gray-100`}
       >
+        <Script
+          id="adsense-script"
+          strategy="afterInteractive"
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${process.env.NEXT_PUBLIC_GOOGLE_AD}`}
+          crossOrigin="anonymous"
+        />
         <ClientProvider>
           <Navbar />
           <main className="min-h-screen mt-4">
@@ -44,7 +51,6 @@ export default function RootLayout({
           <Footer />
         </ClientProvider>
       </body>
-      <GoogleAdSense/>
     </html>
   );
 }
