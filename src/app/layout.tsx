@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Head from "next/head";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -7,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import "./globals.css";
 import ClientProvider from "@/components/ClientProvider";
 import Footer from "@/components/Footer";
+import GoogleAdSense from "./GoogleAdSense";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,14 +30,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Head>
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4136835535009118"
-          crossOrigin="anonymous"
-        ></script>
-      </Head>
-
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased  text-gray-900 dark:bg-gray-900 dark:text-gray-100`}
       >
@@ -45,12 +37,14 @@ export default function RootLayout({
           <Navbar />
           <main className="min-h-screen mt-4">
             {children}
+
             <Analytics />
             <SpeedInsights />
           </main>
           <Footer />
         </ClientProvider>
       </body>
+      <GoogleAdSense/>
     </html>
   );
 }
