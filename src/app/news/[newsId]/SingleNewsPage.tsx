@@ -7,26 +7,12 @@ import { format, formatDistanceToNow } from "date-fns";
 import { FaWhatsapp, FaLink, FaShareAlt } from "react-icons/fa";
 import { EyeIcon } from "lucide-react";
 import SingleNewsCardSkeleton from "@/components/skeletons/single-news-card";
-import { getNewsByParam } from "@/redux/features/news/news-slice";
+import { getNewsByParam, NewsArticle } from "@/redux/features/news/news-slice";
 import { AppDispatch, RootState } from "@/redux/store";
 
-// Define interfaces
-interface NewsArticle {
-  _id: string;
-  newsTitle: string;
-  image: string;
-  createdAt: string;
-  author: string;
-  district?: string;
-  content?: string;
-  views?: number;
-}
 
-interface SingleNewsPageProps {
-  params: { newsId: string };
-}
-
-export default function SingleNewsPage({ params }: SingleNewsPageProps) {
+export default function SingleNewsPage({ params }:   {params: { newsId: string }}
+) {
   const { newsId } = params;
   const dispatch = useDispatch<AppDispatch>();
   const { newsArticles, loading } = useSelector((state: RootState) => state.news);
