@@ -18,6 +18,6 @@ export default function DistrictPageClient({
     dispatch(getNewsByParam(districtName));
   }, [dispatch, districtName, success]);
   return (
-    <LatestNewsCard newsArticles={newsArticles} success={success} loading={loading} /> // Placeholder for news articles, replace with actual data from Redux store
+    <LatestNewsCard newsArticles={newsArticles} loading={loading} /> // Placeholder for news articles, replace with actual data from Redux store
   );
 }
