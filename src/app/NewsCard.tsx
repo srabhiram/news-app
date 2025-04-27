@@ -16,7 +16,6 @@ export default function NewsCard() {
   return (
     <LatestNewsCard
     newsArticles={newsArticles}
-    success={success}
     loading={loading}
   />
   )
