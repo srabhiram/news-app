@@ -122,7 +122,7 @@ export default function EditNewsPage() {
               )}
               <div>
                   {" "}
-                  <h2 className="text-sm sm:text-xl font-bold">
+                  <h2 className="text-xs sm:text-xl font-semibold">
                     {articles?.newsTitle}
                   </h2>
                 <p className="text-xs text-gray-600 mt-1">

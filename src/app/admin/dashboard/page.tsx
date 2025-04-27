@@ -1,5 +1,5 @@
 import React from 'react'
-import AdminDashboard from './Dasboard'
+import AdminDashboard from './Dashboard'
 
 export default function Dashboardpage() {
   return (

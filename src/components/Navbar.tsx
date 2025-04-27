@@ -92,11 +92,18 @@ function Navbar() {
           </Link>
 
           {/* User Menu */}
-          <div className="flex items-center">
+          <div className="flex items-center gap-2">
+          {currentUser?.isAdmin && (
+                    <Link href="/admin/dashboard">
+                      <Button variant={"outline"} className="border-2 rounded-md cursor-pointer text-sm  bg-transparent">
+                        Dashboard
+                      </Button>
+                    </Link>
+                  )}
             {isLoggedIn ? (
               <DropdownMenu>
-                <DropdownMenuTrigger className="bg-black/20 border-2 border-white flex items-center gap-1 text-white capitalize px-2 py-1 rounded-md text-xs sm:text-sm font-semibold">
-                  <FaUser className="w-3 h-3 sm:w-4 sm:h-4" />
+                <DropdownMenuTrigger className="bg-transparent border-2  flex items-center gap-1 text-white capitalize px-4 py-2 rounded-md text-xs font-semibold hover:cursor-pointer hover:bg-white hover:text-black hover:transition-all hover:ease-in-out">
+                  <FaUser className="w-3 h-3 sm:w-4 sm:h-3" />
                   <span>{currentUser?.name}</span>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-40 sm:w-48">
@@ -104,13 +111,7 @@ function Navbar() {
                     My Account
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  {currentUser.isAdmin && (
-                    <Link href="/admin/dashboard">
-                      <DropdownMenuItem className="border-2 rounded cursor-pointer text-sm">
-                        Dashboard
-                      </DropdownMenuItem>
-                    </Link>
-                  )}
+                  
                   <DropdownMenuItem
                     className="bg-red-500 text-white mt-2 rounded cursor-pointer text-sm"
                     onClick={removeTokenCookie}

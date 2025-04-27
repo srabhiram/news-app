@@ -50,33 +50,31 @@ export default function DeleteNewsPage() {
           <p className="text-gray-500 italic">No news articles available.</p>
         ) : (
           newsArticles.map((articles) => (
-            <div key={articles?._id} className="mb-4">
-              <Image
-                src={articles?.image}
-                alt={articles?.newsTitle}
-                width={200}
-                height={100}
-                className="rounded"
-              />
-
-              <h2 className="text-xl font-bold mt-2">{articles?.newsTitle}</h2>
-              <p className="text-sm text-gray-600 mb-1">
-                <span className="font-semibold capitalize">
-                  {articles?.author}
-                </span>{" "}
-                •{" "}
-                <span>
-                  {new Date(articles?.createdAt).toLocaleDateString()}
-                </span>
-              </p>
-              <p className="text-gray-700 font-PottiSreeramulu">
-                {articles?.content}
-              </p>
+            <div key={articles?._id} className="flex items-center gap-3 mb-1 ">
+              {articles?.image && (
+                <Image
+                  src={articles?.image}
+                  alt={articles?.newsTitle}
+                  width={200}
+                  height={100}
+                  unoptimized
+                  className="rounded w-28 h-28 object-contain mr-2 flex-shrink-0"
+                />
+              )}
+              <div>
+                {" "}
+                <h2 className="text-xs sm:text-xl font-semibold">
+                  {articles?.newsTitle}
+                </h2>
+                <p className="text-xs text-gray-600 mt-1">
+                  •{" "}
+                  <span>
+                    {new Date(articles?.createdAt).toLocaleDateString()}
+                  </span>
+                </p>
+              </div>
               <AlertDialog>
-                <AlertDialogTrigger
-                  className="bg-red-500 px-3 py-1 text-white rounded"
-                 
-                >
+                <AlertDialogTrigger className="bg-red-500 px-2 py-1 text-white rounded">
                   Delete
                 </AlertDialogTrigger>
                 <AlertDialogContent>
@@ -91,7 +89,10 @@ export default function DeleteNewsPage() {
                   </AlertDialogHeader>
                   <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction className="bg-red-500"  onClick={() => handleDelete(articles?._id)}>
+                    <AlertDialogAction
+                      className="bg-red-500"
+                      onClick={() => handleDelete(articles?._id)}
+                    >
                       Delete
                     </AlertDialogAction>
                   </AlertDialogFooter>
