@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
@@ -22,9 +22,17 @@ export default function SingleNewsPage({ params }:   {params: { newsId: string }
   const [views, setViews] = useState<number>(0);
 
   // Fetch news article
-  useEffect(() => {
-    dispatch(getNewsByParam(newsId));
-  }, [dispatch, newsId]);
+  const fetchNews = useCallback((newsId:string) => {
+      dispatch(getNewsByParam(newsId)).unwrap().catch((error) => {
+        console.error("Error fetching news articles:", error);
+      });
+    }, [dispatch]);
+  
+    useEffect(() => {
+      const abortController = new AbortController();
+      fetchNews(newsId);
+      return abortController.abort()
+    }, [fetchNews,newsId]);
 
   // Fetch related posts
   useEffect(() => {

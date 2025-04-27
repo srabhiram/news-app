@@ -1,7 +1,7 @@
 "use client";
 import { AppDispatch, RootState } from "@/redux/store";
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Dialog,
@@ -21,13 +21,6 @@ import { districts } from "@/lib/navbar-items";
 export default function EditNewsPage() {
   const { newsArticles } = useSelector((state: RootState) => state.news);
   const dispatch = useDispatch<AppDispatch>();
-  useEffect(() => {
-    dispatch(getNews())
-      .unwrap()
-      .catch((error) => {
-        console.error("Error fetching news articles:", error);
-      });
-  }, [dispatch]);
   const [newsArticle, setNewsArticle] = React.useState({
     newsTitle: "",
     content: "",
@@ -38,6 +31,17 @@ export default function EditNewsPage() {
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const { loading } = useSelector((state: RootState) => state.news);
   const router = useRouter();
+  const fetchNews = useCallback(() => {
+      dispatch(getNews()).unwrap().catch((error) => {
+        console.error("Error fetching news articles:", error);
+      });
+    }, [dispatch]);
+  
+    useEffect(() => {
+      const abortController = new AbortController();
+      fetchNews();
+      return abortController.abort();
+    }, [fetchNews]);
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement

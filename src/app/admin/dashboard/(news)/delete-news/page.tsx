@@ -2,7 +2,7 @@
 import { deleteNews, getNews } from "@/redux/features/news/news-slice";
 import { AppDispatch, RootState } from "@/redux/store";
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   AlertDialog,
@@ -19,13 +19,17 @@ import {
 export default function DeleteNewsPage() {
   const { newsArticles } = useSelector((state: RootState) => state.news);
   const dispatch = useDispatch<AppDispatch>();
-  useEffect(() => {
-    dispatch(getNews())
-      .unwrap()
-      .catch((error) => {
-        console.error("Error fetching news articles:", error);
-      });
+  const fetchNews = useCallback(() => {
+    dispatch(getNews()).unwrap().catch((error) => {
+      console.error("Error fetching news articles:", error);
+    });
   }, [dispatch]);
+
+  useEffect(() => {
+    const abortController = new AbortController();
+    fetchNews();
+    return abortController.abort()
+  }, [fetchNews]);
   const handleDelete = (id: string) => {
     // Dispatch the deleteNews action with the article ID
     dispatch(deleteNews(id))
