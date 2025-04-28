@@ -109,7 +109,8 @@ export default function SingleNewsPage({ params }:   {params: { newsId: string }
             alt={article.newsTitle}
             width={800}
             height={400}
-            className="rounded-md w-full h-[200px] sm:h-[300px] lg:h-[450px] object-cover my-4"
+            className="rounded-md w-full my-4"
+            
             priority
           />
           <div>
@@ -150,7 +151,7 @@ export default function SingleNewsPage({ params }:   {params: { newsId: string }
                 )}
               </div>
             </div>
-            <p className="text-sm sm:text-base lg:text-lg text-gray-700 mt-4 tracking-wide leading-7">{article.content}</p>
+            <p className="text-sm sm:text-base lg:text-lg text-gray-700 mt-4 tracking-wide leading-7 text-justify font-PottiSreeramulu">{article.content}</p>
           </div>
         </div>
 
@@ -167,7 +168,7 @@ export default function SingleNewsPage({ params }:   {params: { newsId: string }
                 <Link
                   key={post._id}
                   href={`/news/${post._id}`}
-                  className="flex items-center bg-white border rounded-lg shadow-sm hover:shadow-md transition-shadow"
+                  className="flex items-center bg-white  rounded-lg mb-1 border-b transition-shadow"
                 >
                   <div className="flex-shrink-0">
                     <Image
@@ -175,7 +176,7 @@ export default function SingleNewsPage({ params }:   {params: { newsId: string }
                       alt={post.newsTitle}
                       width={100}
                       height={60}
-                      className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-l-lg"
+                      className="  rounded-lg"
                       loading="lazy"
                     />
                   </div>

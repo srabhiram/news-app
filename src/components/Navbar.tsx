@@ -93,13 +93,16 @@ function Navbar() {
 
           {/* User Menu */}
           <div className="flex items-center gap-2">
-          {currentUser?.isAdmin && (
-                    <Link href="/admin/dashboard">
-                      <Button variant={"outline"} className="border-2 rounded-md cursor-pointer text-sm  bg-transparent">
-                        Dashboard
-                      </Button>
-                    </Link>
-                  )}
+            {currentUser?.isAdmin && (
+              <Link href="/admin/dashboard">
+                <Button
+                  variant={"outline"}
+                  className="border-2 rounded-md cursor-pointer text-sm  bg-transparent"
+                >
+                  Dashboard
+                </Button>
+              </Link>
+            )}
             {isLoggedIn ? (
               <DropdownMenu>
                 <DropdownMenuTrigger className="bg-transparent border-2  flex items-center gap-1 text-white capitalize px-4 py-2 rounded-md text-xs font-semibold hover:cursor-pointer hover:bg-white hover:text-black hover:transition-all hover:ease-in-out">
@@ -111,19 +114,19 @@ function Navbar() {
                     My Account
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  
+
                   <DropdownMenuItem
-                    className="bg-red-500 text-white mt-2 rounded cursor-pointer text-sm"
+                    className="hover:bg-red-600 hover:text-white text-black mt-2 rounded cursor-pointer text-sm font-sans font-semibold"
                     onClick={removeTokenCookie}
                   >
-                    లాగ్ అవుట్
+                    Logout
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
               <Link
                 href="/login"
-                className="bg-blue-50 text-black px-2 py-1 rounded-md text-xs sm:text-sm flex items-center"
+                className="bg-transparent border text-white font-semibold px-4 py-2 rounded-md text-xs sm:text-sm flex items-center hover:bg-white hover:text-black"
               >
                 లాగిన్
               </Link>
@@ -139,7 +142,7 @@ function Navbar() {
                 <li key={item.id}>
                   <Link
                     href={item.href}
-                    className="font-Gidugu text-base sm:text-lg tracking-wide hover:bg-gray-50 hover:text-gray-400 transition duration-300 ease-in-out block py-1 px-2"
+                    className="font-Gidugu text-base sm:text-lg tracking-wide rounded-md hover:text-black  hover:bg-white transition duration-300 ease-in-out block py-2 px-4"
                   >
                     {item.name}
                   </Link>
@@ -153,7 +156,7 @@ function Navbar() {
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className="w-[100px] sm:w-[120px] bg-transparent text-white flex items-center justify-between font-Gidugu text-base sm:text-lg border-white py-1 h-8 sm:h-9"
+                    className="w-[100px] sm:w-[150px] bg-transparent text-white flex items-center justify-between font-Gidugu text-base sm:text-lg border-white py-1 h-8 sm:h-9 overflow-hidden"
                   >
                     {value
                       ? districts.find((framework) => framework.value === value)

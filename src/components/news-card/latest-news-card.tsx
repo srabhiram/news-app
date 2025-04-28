@@ -21,7 +21,7 @@ export default function LatestNewsCard({ newsArticles, loading }: LatestNewsCard
       <h1 className="text-2xl md:text-3xl font-PottiSreeramulu font-bold mt-6 ml-2 mb-4">
         తాజా వార్తలు
       </h1>
-      <div className="border p-2 mx-1 mb-4 rounded-lg shadow-md">
+      <div className=" p-2 mx-1 mb-4 rounded-lg">
         {loading ? (
           <NewsCardSkeleton />
         ) : newsArticles.length > 0 ? (
@@ -30,7 +30,7 @@ export default function LatestNewsCard({ newsArticles, loading }: LatestNewsCard
               <Link
                 key={article._id}
                 href={`/news/${article._id}`}
-                className="flex flex-row sm:flex-row items-center mb-4 hover:bg-gray-50 p-2 rounded"
+                className="flex flex-row sm:flex-row items-center hover:bg-gray-50 p-2 rounded max-sm:border-b"
                 aria-label={`Read more about ${article.newsTitle}`}
               >
                 {article.image && (
@@ -38,11 +38,11 @@ export default function LatestNewsCard({ newsArticles, loading }: LatestNewsCard
                     <Image
                       src={article.image}
                       alt={article.newsTitle}
-                      width={150}
+                      width={100}
                       height={100}
-                      unoptimized
-                      className="rounded w-20 h-20 sm:w-32 sm:h-32 lg:w-40 lg:h-40 object-cover"
-                      loading="lazy"
+                      
+                      className="rounded"
+                      priority
                     />
                   </div>
                 )}
