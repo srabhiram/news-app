@@ -3,6 +3,7 @@ import { districts, navbarItems } from "@/lib/navbar-items";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
+import { TfiWrite } from "react-icons/tfi";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -78,15 +79,15 @@ function Navbar() {
   return (
     <nav className="sticky top-0 z-50 bg-white shadow-md">
       <div className="bg-[#3D3BF3] text-white px-3 py-2">
-        <div className="container mx-auto flex items-center justify-between">
+        <div className="container mx-auto flex items-center justify-between space-x-3">
           {/* Logo */}
           <Link href="/" className="flex items-center shrink-0">
             <Image
               src="/images/logo.png"
               alt="Website Logo"
-              width={50}
+              width={90}
               height={50}
-              className="w-12 h-10 sm:w-16 sm:h-12"
+              className="rounded-full"
               priority
             />
           </Link>
@@ -99,7 +100,10 @@ function Navbar() {
                   variant={"outline"}
                   className="border-2 rounded-md cursor-pointer text-sm  bg-transparent"
                 >
-                  Dashboard
+                  <TfiWrite
+                  className="w-15"/>
+
+                  <span className="hidden sm:inline-block">Dashboard</span>
                 </Button>
               </Link>
             )}
@@ -139,12 +143,12 @@ function Navbar() {
           <div className="flex items-center justify-between overflow-x-auto whitespace-nowrap">
             <ul className="flex items-center gap-2 sm:gap-4">
               {navbarItems.map((item) => (
-                <li key={item.id}>
+                <li key={item?.id}>
                   <Link
-                    href={item.href}
+                    href={item?.href}
                     className="font-Gidugu text-base sm:text-lg tracking-wide rounded-md hover:text-black  hover:bg-white transition duration-300 ease-in-out block py-2 px-4"
                   >
-                    {item.name}
+                    {item?.name}
                   </Link>
                 </li>
               ))}

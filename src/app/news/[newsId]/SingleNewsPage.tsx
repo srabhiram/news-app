@@ -41,7 +41,7 @@ export default function SingleNewsPage({ params }:   {params: { newsId: string }
       try {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/api/news/${newsArticles[0].district}`,
-          { method: "GET", headers: { "Content-Type": "application/json" }, cache: "no-store" }
+          { method: "GET", headers: { "Content-Type": "application/json" } }
         );
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         const { newsArticles: posts } = await response.json();
@@ -94,10 +94,11 @@ export default function SingleNewsPage({ params }:   {params: { newsId: string }
     setIsShareOpen((prev) => (prev === articleId ? null : articleId));
   };
 
-  if (loading) return <SingleNewsCardSkeleton />;
-  if (!newsArticles.length) return <p className="text-gray-500 italic text-center">No news articles available.</p>;
+  if (loading || !newsArticles.length) return <SingleNewsCardSkeleton />;
+  // if (!newsArticles.length) return <p className="text-gray-500 italic text-center">No news articles available.</p>;
 
   const article = newsArticles[0];
+  
 
   return (
     <div className="container mx-auto px-4 py-6">
@@ -105,8 +106,8 @@ export default function SingleNewsPage({ params }:   {params: { newsId: string }
         {/* Main Article */}
         <div className="w-full lg:w-3/5">
           <Image
-            src={article.image || "/images/fallback.jpg"}
-            alt={article.newsTitle}
+            src={article?.image || "/images/fallback.jpg"}
+            alt={article?.newsTitle}
             width={800}
             height={400}
             className="rounded-md w-full my-4"
@@ -115,26 +116,26 @@ export default function SingleNewsPage({ params }:   {params: { newsId: string }
           />
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg sm:text-2xl lg:text-3xl font-bold font-PottiSreeramulu">{article.newsTitle}</h2>
+              <h2 className="text-lg sm:text-2xl lg:text-3xl font-bold font-PottiSreeramulu">{article?.newsTitle}</h2>
             </div>
             <div className="flex items-center justify-between mt-2 border-b pb-2">
               <p className="text-xs sm:text-sm text-gray-600">
-                <span className="capitalize font-bold">{article.author}</span> •{" "}
-                {format(new Date(article.createdAt), "dd MMM yyyy hh:mm a")}
+                <span className="capitalize font-bold">{article?.author}</span> •{" "}
+                {format(new Date(article?.createdAt), "dd MMM yyyy hh:mm a")}
               </p>
-              <div className="flex items-center space-x-2">
+              <div className="relative flex items-center space-x-2">
                 <EyeIcon className="w-4 sm:w-5" />
-                <span className="font-semibold">{views || article.views || 0}</span>
+                <span className="font-semibold">{views || article?.views || 0}</span>
                 <button
                   onClick={() => toggleShareOptions(article._id)}
-                  className="p-2 text-gray-600 hover:text-gray-800"
+                  className="p-2 text-gray-600 hover:text-gray-800 hover:bg-black/10 hover:cursor-pointer hover:rounded-full"
                   title="Share"
                   aria-label="Share article"
                 >
                   <FaShareAlt className="w-4 sm:w-5" />
                 </button>
-                {isShareOpen === article._id && (
-                  <div className="absolute top-10 right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-3 flex flex-col gap-2 z-10">
+                {isShareOpen === article?._id && (
+                  <div className="absolute top-10 -right-1 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-3 flex flex-col gap-2 z-10">
                     <button
                       onClick={() => handleWhatsAppShare(article)}
                       className="flex items-center gap-2 px-3 py-1.5 bg-green-500 text-white rounded-md hover:bg-green-600 text-sm"
@@ -151,7 +152,7 @@ export default function SingleNewsPage({ params }:   {params: { newsId: string }
                 )}
               </div>
             </div>
-            <p className="text-sm sm:text-base lg:text-lg text-gray-700 mt-4 tracking-wide leading-7 text-justify font-PottiSreeramulu">{article.content}</p>
+            <p className="text-sm sm:text-base lg:text-lg text-gray-700 mt-4 tracking-wide leading-7 text-justify font-PottiSreeramulu">{article?.content}</p>
           </div>
         </div>
 
@@ -160,7 +161,7 @@ export default function SingleNewsPage({ params }:   {params: { newsId: string }
           <h3 className="text-xl sm:text-2xl font-bold font-PottiSreeramulu mb-6">సంబంధిత వార్తలు</h3>
           {error ? (
             <p className="text-red-500">{error}</p>
-          ) : relatedPosts.length === 0 ? (
+          ) : relatedPosts?.length === 0 ? (
             <p className="text-gray-500 italic">No related posts available.</p>
           ) : (
             <div className="max-h-[600px] lg:max-h-[80vh] overflow-y-auto pr-4 space-y-4">
