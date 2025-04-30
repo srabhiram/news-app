@@ -16,14 +16,14 @@ export default function SignupPage() {
   const [formError, setFormError] = React.useState("");
   const dispatch = useDispatch<AppDispatch>();
   const { error, loading } = useSelector(
-    (state: RootState) => state.auth
+    (state: RootState) => state.auth.signup
   );
   const router = useRouter();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { username, email, password } = formData;
     if (!username || !email || !password) {
@@ -32,7 +32,7 @@ export default function SignupPage() {
     }
     // Perform signup logic here
     try {
-      dispatch(signupUser({ name: username, email, password }));
+      await dispatch(signupUser({ name: username, email, password })).unwrap();
 
       setFormError("");
       setFormData({
@@ -40,11 +40,11 @@ export default function SignupPage() {
         email: "",
         password: "",
       });
-      router.push("/login");
+
+      router.replace("/login");
     } catch (error: any) {
       console.error("Signup error:", error.message);
-    } 
-    
+    }
   };
   return (
     <>
@@ -90,7 +90,9 @@ export default function SignupPage() {
             {loading ? "Loading..." : "సైన్ అప్"}
           </button>
           <p>
-            <span className="font-PottiSreeramulu">మీకు ఇప్పటికే ఖాతా ఉందా?</span>{" "}
+            <span className="font-PottiSreeramulu">
+              మీకు ఇప్పటికే ఖాతా ఉందా?
+            </span>{" "}
             <Link href="/login" className="text-blue-500 font-semibold">
               లాగిన్ చేయండి
             </Link>

@@ -16,7 +16,7 @@ export default function LoginPage() {
   const [formError, setFormError] = React.useState("");
   const dispatch = useDispatch<AppDispatch>();
   const { error, loading } = useSelector(
-    (state: RootState) => state.auth
+    (state: RootState) => state.auth.signin
   );
   const router = useRouter();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,18 +32,19 @@ export default function LoginPage() {
     }
     // Perform login logic here
     try {
-      await dispatch(loginUser({ email, password }));
+      await dispatch(loginUser({ email, password })).unwrap();
 
       setFormError("");
       setFormData({
         email: "",
         password: "",
       });
-     await router.push("/");
+  
+       router.replace("/")
+  
     } catch (error: any) {
       console.error("Login error:", error.message);
     } 
-    
   };
   return (
     <>

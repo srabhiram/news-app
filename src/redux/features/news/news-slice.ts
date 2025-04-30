@@ -15,13 +15,7 @@ export interface NewsArticle {
   createdAt: string;
   updatedAt: string;
 }
-export interface NewsData {
-  newsTitle: string;
-  content: string;
-  image: File | null;
-  district: string;
-  author: string;
-}
+
 export interface NewsState {
   loading: boolean;
   error: string | null;
@@ -63,7 +57,7 @@ export const getNews = createAsyncThunk(
       });
       const data = await response.json();
       if (!response.ok) {
-        throw new Error(data.error || "Failed to fetch news articles");
+        return rejectWithValue(data.error || "Something went wrong");
       }
       return data; // Expecting { message: string, newsArticles: NewsArticle[] }
     } catch (error: any) {
@@ -83,7 +77,7 @@ export const deleteNews = createAsyncThunk(
       });
       const data = await response.json();
       if (!response.ok) {
-        throw new Error(data.error || "Failed to delete news article");
+        return rejectWithValue(data.error || "Something went wrong");
       }
       return data; // Expecting { message: string, newsId: string }
     } catch (error: any) {
@@ -153,7 +147,6 @@ export const newsSlice = createSlice({
         state.error = action.payload as string;
         state.success = false;
         state.message = "";
-        state.newsArticles = [];
       })
       .addCase(getNews.pending, (state) => {
         state.loading = true;
@@ -200,7 +193,6 @@ export const newsSlice = createSlice({
         state.error = action.payload as string;
         state.success = false;
         state.message = "";
-        state.newsArticles = [];
       })
       .addCase(deleteNews.pending, (state) => {
         state.loading = true;
@@ -208,18 +200,13 @@ export const newsSlice = createSlice({
       .addCase(deleteNews.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        state.message = action.payload.message;
-        // Remove the deleted news article from the list
-        state.newsArticles = state.newsArticles.filter(
-          (article) => article._id !== action.payload.newsId
-        );
+        state.message = action.payload.message;        
       })
       .addCase(deleteNews.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
         state.success = false;
         state.message = "";
-        state.newsArticles = [];
       });
   },
 });

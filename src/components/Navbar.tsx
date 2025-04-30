@@ -48,7 +48,7 @@ function Navbar() {
   const [value, setValue] = useState("");
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const router = useRouter();
-  const { success } = useSelector((state: RootState) => state.auth);
+  const { success } = useSelector((state: RootState) => state.auth.signin);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -56,7 +56,7 @@ function Navbar() {
     setCurrentUser(userData);
   }, [success]);
 
-  const isLoggedIn = currentUser !== null;
+  const isLoggedIn = currentUser ? currentUser : null;
 
   const removeTokenCookie = async () => {
     document.cookie =

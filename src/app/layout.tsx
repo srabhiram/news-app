@@ -42,7 +42,7 @@ export default function RootLayout({
         />
         <ClientProvider>
           <Navbar />
-          <main className="min-h-screen mt-4 bg-white text-black dark:bg-black/80 dark:text-white">
+          <main className="min-h-screen mt-4  dark:bg-black/80 dark:text-white">
             {children}
 
             <Analytics />
