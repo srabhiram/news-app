@@ -18,8 +18,17 @@ export default function LatestNewsCard({
   const formattedDates = newsArticles.map((article) =>
     formatDistanceToNow(new Date(article.createdAt), { addSuffix: true })
   );
-if(!newsArticles.length) return <p>No News Found</p>
+// Show loading skeleton if loading or no articles
+if (loading && !newsArticles.length) {
   return (
+    <div className="container mx-auto px-4 dark:bg-black dark:text-white">
+      <h1 className="text-2xl md:text-3xl font-PottiSreeramulu font-bold mt-6 ml-2 mb-4">
+        తాజా వార్తలు
+      </h1>
+      <NewsCardSkeleton />
+    </div>
+  );
+}  return (
     <div className="container mx-auto px-4 dark:bg-black dark:text-white">
       <h1 className="text-2xl md:text-3xl font-PottiSreeramulu font-bold mt-6 ml-2 mb-4">
         తాజా వార్తలు
