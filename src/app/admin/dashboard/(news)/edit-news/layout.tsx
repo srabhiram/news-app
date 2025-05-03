@@ -7,6 +7,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import Link from "next/link";
 
 export default function EditLayout({
   children,
@@ -19,7 +20,7 @@ export default function EditLayout({
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/admin/dashboard" className="font-semibold">Dashboard</BreadcrumbLink>
+            <BreadcrumbLink className="font-semibold"><Link href={`/admin/dashboard`}>Dashboard</Link></BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
