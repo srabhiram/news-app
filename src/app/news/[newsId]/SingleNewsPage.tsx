@@ -1,38 +1,26 @@
 "use client";
-import { useEffect, useState, useMemo, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { format, formatDistanceToNow } from "date-fns";
 import { FaWhatsapp, FaLink, FaShareAlt } from "react-icons/fa";
 import { EyeIcon } from "lucide-react";
 import SingleNewsCardSkeleton from "@/components/skeletons/single-news-card";
-import { getNewsByParam, NewsArticle } from "@/redux/features/news/news-slice";
-import { AppDispatch, RootState } from "@/redux/store";
+import { NewsArticle } from "@/redux/features/news/news-slice";
+import { useSignleNews } from "@/hooks/UseSingleNews";
 
 
 export default function SingleNewsPage({ params }:   {params: { newsId: string }}
 ) {
   const { newsId } = params;
-  const dispatch = useDispatch<AppDispatch>();
-  const { newsArticles, loading } = useSelector((state: RootState) => state.news);
+ 
   const [relatedPosts, setRelatedPosts] = useState<NewsArticle[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [isShareOpen, setIsShareOpen] = useState<string | null>(null);
   const [views, setViews] = useState<number>(0);
 
-  // Fetch news article
-  const fetchNews = useCallback((newsId:string) => {
-      dispatch(getNewsByParam(newsId)).unwrap().catch((error) => {
-        console.error("Error fetching news articles:", error);
-      });
-    }, [dispatch]);
+  const {loading,newsArticles} = useSignleNews(newsId)
   
-    useEffect(() => {
-      const abortController = new AbortController();
-      fetchNews(newsId);
-      return abortController.abort()
-    }, [fetchNews,newsId]);
 
   // Fetch related posts
   useEffect(() => {
@@ -152,7 +140,9 @@ export default function SingleNewsPage({ params }:   {params: { newsId: string }
                 )}
               </div>
             </div>
-            <p className="text-sm sm:text-base lg:text-lg text-gray-700 mt-4 tracking-wide leading-7 text-justify font-PottiSreeramulu">{article?.content}</p>
+            <div>
+              <p className="text-sm sm:text-base lg:text-lg text-gray-700 mt-4 tracking-wide leading-7 text-justify font-PottiSreeramulu"><b className="capitalize">{article.district}</b>{": "}{article?.content}</p>
+            </div>
           </div>
         </div>
 

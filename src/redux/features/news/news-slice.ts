@@ -11,25 +11,57 @@ export interface NewsArticle {
   author: string;
   comments: string[];
   likes: number;
-  views:number,
+  views: number;
   createdAt: string;
   updatedAt: string;
 }
 
 export interface NewsState {
-  loading: boolean;
-  error: string | null;
-  success: boolean;
-  message: string;
-  newsArticles: NewsArticle[];
+  generalNews: {
+    loading: boolean;
+    error: string | null;
+    success: boolean;
+    message: string;
+    newsArticles: NewsArticle[];
+  };
+  districtNews: {
+    loading: boolean;
+    error: string | null;
+    success: boolean;
+    message: string;
+    newsArticles: NewsArticle[];
+  };
+  singleNews:{
+    loading: boolean;
+    error: string | null;
+    success: boolean;
+    message: string;
+    newsArticles: NewsArticle[];
+  }
 }
 
 const initialState: NewsState = {
-  loading: false,
-  error: null,
-  success: false,
-  message: "",
-  newsArticles: [],
+  generalNews: {
+    loading: false,
+    error: null,
+    success: false,
+    message: "",
+    newsArticles: [],
+  },
+  districtNews: {
+    loading: false,
+    error: null,
+    success: false,
+    message: "",
+    newsArticles: [],
+  },
+  singleNews:{
+    loading: false,
+    error: null,
+    success: false,
+    message: "",
+    newsArticles: [],
+  }
 };
 // Define the news slice
 export const addNews = createAsyncThunk(
@@ -100,11 +132,31 @@ export const updateNews = createAsyncThunk(
   }
 );
 
-export const getNewsByParam = createAsyncThunk(
-  "news/getNewsByParam",
+export const getNewsByDistrict = createAsyncThunk(
+  "news/getNewsByDistrict",
   async (districtName: string, { rejectWithValue }) => {
     try {
       const response = await fetch(`/api/news/${districtName}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error);
+      }
+      return data; // Expecting { message: string, newsArticles: NewsArticle[] }
+    } catch (error: any) {
+      return rejectWithValue(error.message || "Something went wrong");
+    }
+  }
+);
+export const getNewsById = createAsyncThunk(
+  "news/getNewsById",
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`/api/news/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -125,88 +177,103 @@ export const newsSlice = createSlice({
   initialState,
   reducers: {
     clearNewsState: (state) => {
-      state.loading = false;
-      state.error = null;
-      state.success = false;
-      state.message = "";
+      state.generalNews.loading = false;
+      state.generalNews.error = null;
+      state.generalNews.success = false;
+      state.generalNews.message = "";
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(addNews.pending, (state) => {
-        state.loading = true;
+        state.generalNews.loading = true;
       })
       .addCase(addNews.fulfilled, (state, action) => {
-        state.loading = false;
-        state.success = true;
-        state.message = action.payload.message;
+        state.generalNews.loading = false;
+        state.generalNews.success = true;
+        state.generalNews.message = action.payload.message;
         // state.newsArticles.push(action.payload.newsArticle);
       })
       .addCase(addNews.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-        state.success = false;
-        state.message = "";
+        state.generalNews.loading = false;
+        state.generalNews.error = action.payload as string;
+        state.generalNews.success = false;
+        state.generalNews.message = "";
       })
       .addCase(getNews.pending, (state) => {
-        state.loading = true;
+        state.generalNews.loading = true;
       })
       .addCase(getNews.fulfilled, (state, action) => {
-        state.loading = false;
-        state.success = true;
-        state.newsArticles = action.payload.newsArticles;
+        state.generalNews.loading = false;
+        state.generalNews.success = true;
+        state.generalNews.newsArticles = action.payload.newsArticles;
       })
       .addCase(getNews.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-        state.success = false;
-        state.message = "";
-        state.newsArticles = [];
+        state.generalNews.loading = false;
+        state.generalNews.error = action.payload as string;
+        state.generalNews.success = false;
+        state.generalNews.message = "";
+        state.generalNews.newsArticles = [];
+      })  
+      .addCase(getNewsByDistrict.pending, (state) => {
+        state.districtNews.loading = true;
       })
-      .addCase(getNewsByParam.pending, (state) => {
-        state.loading = true;
+      .addCase(getNewsByDistrict.fulfilled, (state, action) => {
+        state.districtNews.loading = false;
+        state.districtNews.success = true;
+        state.districtNews.newsArticles = action.payload.newsArticles;
       })
-      .addCase(getNewsByParam.fulfilled, (state, action) => {
-        state.loading = false;
-        state.success = true;
-        state.newsArticles = action.payload.newsArticles;
+      .addCase(getNewsByDistrict.rejected, (state, action) => {
+        state.districtNews.loading = false;
+        state.districtNews.error = action.payload as string;
+        state.districtNews.success = false;
+        state.districtNews.message = "";
+        state.districtNews.newsArticles = [];
       })
-      .addCase(getNewsByParam.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-        state.success = false;
-        state.message = "";
-        state.newsArticles = [];
+      .addCase(getNewsById.pending, (state) => {
+        state.singleNews.loading = true;
+      })
+      .addCase(getNewsById.fulfilled, (state, action) => {
+        state.singleNews.loading = false;
+        state.singleNews.success = true;
+        state.singleNews.newsArticles = action.payload.newsArticles;
+      })
+      .addCase(getNewsById.rejected, (state, action) => {
+        state.singleNews.loading = false;
+        state.singleNews.error = action.payload as string;
+        state.singleNews.success = false;
+        state.singleNews.message = "";
+        state.singleNews.newsArticles = [];
       })
       .addCase(updateNews.pending, (state) => {
-        state.loading = true;
+        state.generalNews.loading = true;
       })
       .addCase(updateNews.fulfilled, (state, action) => {
-        state.loading = false;
-        state.success = true;
-        state.message = action.payload.message;
+        state.generalNews.loading = false;
+        state.generalNews.success = true;
+        state.generalNews.message = action.payload.message;
         // Update the news article in the list
         // state.newsArticles = action.payload.newsArticles;
       })
       .addCase(updateNews.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-        state.success = false;
-        state.message = "";
+        state.generalNews.loading = false;
+        state.generalNews.error = action.payload as string;
+        state.generalNews.success = false;
+        state.generalNews.message = "";
       })
       .addCase(deleteNews.pending, (state) => {
-        state.loading = true;
+        state.generalNews.loading = true;
       })
       .addCase(deleteNews.fulfilled, (state, action) => {
-        state.loading = false;
-        state.success = true;
-        state.message = action.payload.message;        
+        state.generalNews.loading = false;
+        state.generalNews.success = true;
+        state.generalNews.message = action.payload.message;
       })
       .addCase(deleteNews.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-        state.success = false;
-        state.message = "";
+        state.generalNews.loading = false;
+        state.generalNews.error = action.payload as string;
+        state.generalNews.success = false;
+        state.generalNews.message = "";
       });
   },
 });
