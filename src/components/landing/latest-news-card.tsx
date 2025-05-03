@@ -1,5 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
-import Image from "next/image";
 import { NewsArticle } from "@/redux/features/news/news-slice";
 import Link from "next/link";
 import NewsCardSkeleton from "../skeletons/news-card";
@@ -47,14 +47,13 @@ if (loading && !newsArticles.length) {
                   aria-label={`Read more about ${article.newsTitle}`}
                 >
                   {article.image && (
-                    <div className="flex-shrink-0 mr-3 sm:mr-4">
-                      <Image
+                    <div className="flex-shrink-0 mr-2 w-1/3 sm:w-1/4 sm:mr-4">
+                      <img
                         src={article.image}
                         alt={article.newsTitle}
-                        width={100}
-                        height={100}
+                        
                         className="rounded"
-                        priority
+                        
                       />
                     </div>
                   )}

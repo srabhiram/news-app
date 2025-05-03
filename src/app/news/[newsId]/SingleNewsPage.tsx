@@ -1,6 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import { useEffect, useState, useMemo } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { format, formatDistanceToNow } from "date-fns";
 import { FaWhatsapp, FaLink, FaShareAlt } from "react-icons/fa";
@@ -92,16 +92,13 @@ export default function SingleNewsPage({ params }:   {params: { newsId: string }
     <div className="container mx-auto px-4 py-6">
       <div className="flex flex-col lg:flex-row lg:gap-8">
         {/* Main Article */}
-        <div className="w-full lg:w-3/5">
-          <Image
-            src={article?.image || "/images/fallback.jpg"}
-            alt={article?.newsTitle}
-            width={800}
-            height={400}
-            className="rounded-md w-full my-4"
-            
-            priority
-          />
+        <div className="w-full flex flex-col items-center justify-center">
+  <img
+    src={article?.image}
+    alt={article?.newsTitle}
+    className="rounded-md sm:w-1/2 my-4 mx-auto"
+  />
+
           <div>
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg sm:text-2xl lg:text-3xl font-bold font-PottiSreeramulu">{article?.newsTitle}</h2>
@@ -161,12 +158,11 @@ export default function SingleNewsPage({ params }:   {params: { newsId: string }
                   href={`/news/${post._id}`}
                   className="flex items-center bg-white  rounded-lg mb-1 border-b transition-shadow"
                 >
-                  <div className="flex-shrink-0">
-                    <Image
+                  <div className="flex-shrink-0 md:w-1/6 w-1/3">
+                    <img
                       src={post.image || "/images/fallback.jpg"}
                       alt={post.newsTitle}
-                      width={100}
-                      height={60}
+                      
                       className="  rounded-lg"
                       loading="lazy"
                     />
