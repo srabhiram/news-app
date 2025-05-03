@@ -1,9 +1,9 @@
 "use client";
 import { deleteNews, getNews } from "@/redux/features/news/news-slice";
-import { AppDispatch, RootState } from "@/redux/store";
+import { AppDispatch } from "@/redux/store";
 import Image from "next/image";
-import React, { useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useDispatch } from "react-redux";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,33 +15,18 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useGetNews } from "@/hooks/UsegetNews";
 
 export default function DeleteNewsPage() {
-  const { newsArticles } = useSelector((state: RootState) => state.news);
   const dispatch = useDispatch<AppDispatch>();
-  const fetchNews = useCallback(() => {
-    dispatch(getNews()).unwrap().catch((error) => {
-      console.error("Error fetching news articles:", error);
-    });
-  }, [dispatch]);
-
-  useEffect(() => {
-    const abortController = new AbortController();
-    fetchNews();
-    return abortController.abort()
-  }, [fetchNews]);
-  const handleDelete = (id: string) => {
-    // Dispatch the deleteNews action with the article ID
-    dispatch(deleteNews(id))
-      .unwrap()
-      .then(() => {
-        // Optionally, you can show a success message or perform any other actions after deletion
-      })
-      .catch((error) => {
-        // Handle any errors that occur during deletion
-        console.error("Error deleting news article:", error);
-      });
-    dispatch(getNews()).unwrap();
+  const { newsArticles, loading } = useGetNews();
+  const handleDelete = async (id: string) => {
+    try {
+      await dispatch(deleteNews(id)).unwrap();
+    } catch (error) {
+      console.error(error);
+    }
+    await dispatch(getNews()).unwrap();
   };
 
   return (
@@ -94,7 +79,8 @@ export default function DeleteNewsPage() {
                   <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
                     <AlertDialogAction
-                      className="bg-red-500"
+                      className={`bg-red-500 cursor-pointer ${loading && "bg-red-300 cursor-not-allowed"}`}
+                      disabled={loading}
                       onClick={() => handleDelete(articles?._id)}
                     >
                       Delete

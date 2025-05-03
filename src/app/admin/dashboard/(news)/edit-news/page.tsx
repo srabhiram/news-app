@@ -1,8 +1,8 @@
 "use client";
-import { AppDispatch, RootState } from "@/redux/store";
+import { AppDispatch } from "@/redux/store";
 import Image from "next/image";
-import React, { useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useDispatch } from "react-redux";
 import {
   Dialog,
   DialogContent,
@@ -12,14 +12,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import {
-  getNews,
   NewsArticle,
   updateNews,
 } from "@/redux/features/news/news-slice";
 import { useRouter } from "next/navigation";
 import { districts } from "@/lib/navbar-items";
+import { useGetNews } from "@/hooks/UsegetNews";
 export default function EditNewsPage() {
-  const { newsArticles } = useSelector((state: RootState) => state.news);
+  const {newsArticles, loading} = useGetNews()
   const dispatch = useDispatch<AppDispatch>();
   const [newsArticle, setNewsArticle] = React.useState({
     newsTitle: "",
@@ -29,19 +29,7 @@ export default function EditNewsPage() {
     author: "",
   });
   const fileInputRef = React.useRef<HTMLInputElement>(null);
-  const { loading } = useSelector((state: RootState) => state.news);
   const router = useRouter();
-  const fetchNews = useCallback(() => {
-      dispatch(getNews()).unwrap().catch((error) => {
-        console.error("Error fetching news articles:", error);
-      });
-    }, [dispatch]);
-  
-    useEffect(() => {
-      const abortController = new AbortController();
-      fetchNews();
-      return abortController.abort();
-    }, [fetchNews]);
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -260,10 +248,10 @@ export default function EditNewsPage() {
                         </div>
                         <button
                           type="submit"
-                          className={`px-4 py-2 w-full bg-blue-600 text-white rounded-md hover:bg-blue-700 ${
+                          className={`px-4 py-2 w-full bg-blue-600 text-white rounded-md hover:bg-blue-700 cursor-pointer ${
                             loading
-                              ? "cursor-not-allowed opacity-50"
-                              : "cursor-pointer"
+                              && "cursor-not-allowed opacity-50"
+                          
                           }
                     `}
                           disabled={loading}

@@ -16,7 +16,7 @@ export default function AddNewsPage() {
     author: "",
   });
   const fileInputRef = React.useRef<HTMLInputElement>(null);
-  const { loading } = useSelector((state: RootState) => state.news);
+  const { loading } = useSelector((state: RootState) => state.news.generalNews);
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const handleChange = (
