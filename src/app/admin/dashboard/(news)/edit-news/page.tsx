@@ -12,6 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import {
+  getNews,
   NewsArticle,
   updateNews,
 } from "@/redux/features/news/news-slice";
@@ -19,7 +20,7 @@ import { useRouter } from "next/navigation";
 import { districts } from "@/lib/navbar-items";
 import { useGetNews } from "@/hooks/UsegetNews";
 export default function EditNewsPage() {
-  const {newsArticles, loading} = useGetNews()
+  const { newsArticles, loading } = useGetNews();
   const dispatch = useDispatch<AppDispatch>();
   const [newsArticle, setNewsArticle] = React.useState({
     newsTitle: "",
@@ -84,6 +85,7 @@ export default function EditNewsPage() {
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
+      await dispatch(getNews());
       router.push("/");
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -103,20 +105,20 @@ export default function EditNewsPage() {
           newsArticles.map((articles) => (
             <div key={articles?._id} className="flex items-center gap-3 mb-1 ">
               {articles?.image && (
-                  <Image
-                    src={articles?.image}
-                    alt={articles?.newsTitle}
-                    width={200}
-                    height={100}
-                    unoptimized
-                    className="rounded w-28 h-28 object-contain mr-2 flex-shrink-0"
-                  />
+                <Image
+                  src={articles?.image}
+                  alt={articles?.newsTitle}
+                  width={200}
+                  height={100}
+                  unoptimized
+                  className="rounded w-28 h-28 object-contain mr-2 flex-shrink-0"
+                />
               )}
               <div>
-                  {" "}
-                  <h2 className="text-xs sm:text-xl font-semibold">
-                    {articles?.newsTitle}
-                  </h2>
+                {" "}
+                <h2 className="text-xs sm:text-xl font-semibold">
+                  {articles?.newsTitle}
+                </h2>
                 <p className="text-xs text-gray-600 mt-1">
                   •{" "}
                   <span>
@@ -125,7 +127,10 @@ export default function EditNewsPage() {
                 </p>
               </div>
               <Dialog>
-                <DialogTrigger className="bg-blue-500 px-3 py-2 rounded-md text-white" onClick={() => handleEditClick(articles)}>
+                <DialogTrigger
+                  className="bg-blue-500 px-3 py-2 rounded-md text-white"
+                  onClick={() => handleEditClick(articles)}
+                >
                   Edit
                 </DialogTrigger>
                 <DialogContent>
@@ -249,9 +254,7 @@ export default function EditNewsPage() {
                         <button
                           type="submit"
                           className={`px-4 py-2 w-full bg-blue-600 text-white rounded-md hover:bg-blue-700 cursor-pointer ${
-                            loading
-                              && "cursor-not-allowed opacity-50"
-                          
+                            loading && "cursor-not-allowed opacity-50"
                           }
                     `}
                           disabled={loading}

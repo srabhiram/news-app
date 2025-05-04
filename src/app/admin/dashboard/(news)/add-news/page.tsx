@@ -1,6 +1,6 @@
 "use client";
 import { districts } from "@/lib/navbar-items";
-import { addNews } from "@/redux/features/news/news-slice";
+import { addNews, getNews } from "@/redux/features/news/news-slice";
 import { AppDispatch, RootState } from "@/redux/store";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -61,7 +61,8 @@ export default function AddNewsPage() {
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
-      router.push("/?refresh=true");
+      await dispatch(getNews())
+      router.push("/");
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("An error occurred while submitting the form. Please try again.");
@@ -191,7 +192,7 @@ export default function AddNewsPage() {
           </div>
           <button
             type="submit"
-            className={`px-4 py-2 w-full bg-blue-600 text-white rounded-md hover:bg-blue-700 cursor-not-allowed
+            className={`px-4 py-2 w-full bg-blue-600 text-white rounded-md hover:bg-blue-700 
             `}
             disabled={loading}
             aria-disabled={loading ? "true" : "false"}
