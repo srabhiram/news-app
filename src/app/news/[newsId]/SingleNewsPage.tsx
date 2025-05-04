@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
@@ -8,6 +7,7 @@ import { EyeIcon } from "lucide-react";
 import SingleNewsCardSkeleton from "@/components/skeletons/single-news-card";
 import { NewsArticle } from "@/redux/features/news/news-slice";
 import { useSignleNews } from "@/hooks/UseSingleNews";
+import Image from "next/image";
 
 
 export default function SingleNewsPage({ params }:   {params: { newsId: string }}
@@ -82,8 +82,19 @@ export default function SingleNewsPage({ params }:   {params: { newsId: string }
     setIsShareOpen((prev) => (prev === articleId ? null : articleId));
   };
 
-  if (loading || !newsArticles.length) return <SingleNewsCardSkeleton />;
-  // if (!newsArticles.length) return <p className="text-gray-500 italic text-center">No news articles available.</p>;
+    // Show skeleton during loading
+    if (loading) {
+      return <SingleNewsCardSkeleton />;
+    }
+    
+    // Show "No news" if no articles after loading
+  if (newsArticles.length === 0 && !loading) {
+    return (
+      <div className="container mx-auto px-4 py-6">
+        <p className="text-gray-500 italic text-center">No news articles available.</p>
+      </div>
+    );
+  }
 
   const article = newsArticles[0];
   
@@ -93,9 +104,11 @@ export default function SingleNewsPage({ params }:   {params: { newsId: string }
       <div className="flex flex-col lg:flex-row lg:gap-8">
         {/* Main Article */}
         <div className="w-full flex flex-col items-center justify-center">
-  <img
+  <Image
     src={article?.image}
     alt={article?.newsTitle}
+    width={200}
+    height={200}
     className="rounded-md sm:w-1/2 my-4 mx-auto"
   />
 
@@ -159,10 +172,11 @@ export default function SingleNewsPage({ params }:   {params: { newsId: string }
                   className="flex items-center bg-white  rounded-lg mb-1 border-b transition-shadow"
                 >
                   <div className="flex-shrink-0 md:w-1/6 w-1/3">
-                    <img
+                    <Image
                       src={post.image || "/images/fallback.jpg"}
                       alt={post.newsTitle}
-                      
+                      width={200}
+                      height={200}
                       className="  rounded-lg"
                       loading="lazy"
                     />

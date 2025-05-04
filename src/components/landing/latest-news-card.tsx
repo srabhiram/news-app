@@ -1,9 +1,9 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 import { NewsArticle } from "@/redux/features/news/news-slice";
 import Link from "next/link";
 import NewsCardSkeleton from "../skeletons/news-card";
 import { formatDistanceToNow } from "date-fns";
+import Image from "next/image";
 
 interface LatestNewsCardProps {
   newsArticles: NewsArticle[];
@@ -18,8 +18,8 @@ export default function LatestNewsCard({
   const formattedDates = newsArticles.map((article) =>
     formatDistanceToNow(new Date(article.createdAt), { addSuffix: true })
   );
-// Show loading skeleton if loading or no articles
-if (loading && !newsArticles.length) {
+ // Show loading skeleton if loading
+ if (loading) {
   return (
     <div className="container mx-auto px-4 dark:bg-black dark:text-white">
       <h1 className="text-2xl md:text-3xl font-PottiSreeramulu font-bold mt-6 ml-2 mb-4">
@@ -28,15 +28,27 @@ if (loading && !newsArticles.length) {
       <NewsCardSkeleton />
     </div>
   );
-}  return (
+}
+
+// Show "No news found" if not loading and no articles
+if (newsArticles.length===0 && !loading) {
+  return (
+    <div className="container mx-auto px-4 dark:bg-black dark:text-white">
+      <h1 className="text-2xl md:text-3xl font-PottiSreeramulu font-bold mt-6 ml-2 mb-4">
+        తాజా వార్తలు
+      </h1>
+      <p>No news found</p>
+    </div>
+  );
+}
+
+  return (
     <div className="container mx-auto px-4 dark:bg-black dark:text-white">
       <h1 className="text-2xl md:text-3xl font-PottiSreeramulu font-bold mt-6 ml-2 mb-4">
         తాజా వార్తలు
       </h1>
       <div className="mb-4 rounded-lg">
-        {loading ? (
-          <NewsCardSkeleton />
-        ) : (
+        {
           newsArticles.length > 0 && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {newsArticles.map((article, index) => (
@@ -48,12 +60,13 @@ if (loading && !newsArticles.length) {
                 >
                   {article.image && (
                     <div className="flex-shrink-0 mr-2 w-1/3 sm:w-1/4 sm:mr-4">
-                      <img
+                      <Image
                         src={article.image}
                         alt={article.newsTitle}
-                        
+                        width={200}
+                        height={200}
+                        priority
                         className="rounded"
-                        
                       />
                     </div>
                   )}
@@ -69,7 +82,7 @@ if (loading && !newsArticles.length) {
               ))}
             </div>
           )
-        )}
+        }
       </div>
     </div>
   );
