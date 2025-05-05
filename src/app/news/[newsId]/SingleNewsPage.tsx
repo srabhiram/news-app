@@ -4,13 +4,11 @@ import Link from "next/link";
 import { format, formatDistanceToNow } from "date-fns";
 import { FaWhatsapp, FaLink, FaShareAlt } from "react-icons/fa";
 import { EyeIcon } from "lucide-react";
-import SingleNewsCardSkeleton from "@/components/skeletons/single-news-card";
 import { NewsArticle } from "@/redux/features/news/news-slice";
-import { useSignleNews } from "@/hooks/UseSingleNews";
 import Image from "next/image";
 
 
-export default function SingleNewsPage({ params }:   {params: { newsId: string }}
+export default function SingleNewsPage({ params, newsArticles }:   {params: { newsId: string }, newsArticles:NewsArticle[]}
 ) {
   const { newsId } = params;
  
@@ -19,7 +17,7 @@ export default function SingleNewsPage({ params }:   {params: { newsId: string }
   const [isShareOpen, setIsShareOpen] = useState<string | null>(null);
   const [views, setViews] = useState<number>(0);
 
-  const {loading,newsArticles} = useSignleNews(newsId)
+  // const {loading,newsArticles} = useSignleNews(newsId)
   
 
   // Fetch related posts
@@ -82,19 +80,19 @@ export default function SingleNewsPage({ params }:   {params: { newsId: string }
     setIsShareOpen((prev) => (prev === articleId ? null : articleId));
   };
 
-    // Show skeleton during loading
-    if (loading) {
-      return <SingleNewsCardSkeleton />;
-    }
+  //   // Show skeleton during loading
+  //   if (loading) {
+  //     return <SingleNewsCardSkeleton />;
+  //   }
     
-    // Show "No news" if no articles after loading
-  if (newsArticles.length === 0 && !loading) {
-    return (
-      <div className="container mx-auto px-4 py-6">
-        <p className="text-gray-500 italic text-center">No news articles available.</p>
-      </div>
-    );
-  }
+  //   // Show "No news" if no articles after loading
+  // if (newsArticles.length === 0 && !loading) {
+  //   return (
+  //     <div className="container mx-auto px-4 py-6">
+  //       <p className="text-gray-500 italic text-center">No news articles available.</p>
+  //     </div>
+  //   );
+  // }
 
   const article = newsArticles[0];
   

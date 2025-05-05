@@ -2,6 +2,7 @@
 
 import { NewsArticle } from "@/redux/features/news/news-slice";
 import SingleNewsPage from "./SingleNewsPage";
+import { getSingleNews } from "@/lib/getSingleNews";
 
 
 
@@ -10,16 +11,8 @@ export async function generateMetadata({ params }: {params : Promise<{newsId:str
   console.log(newsId);
 
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/news/${newsId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      cache: "no-store",
-    });
-
-    const { newsArticles } = await res.json();
-    const news: NewsArticle = newsArticles[0];
+    const newsArticle = await getSingleNews(newsId)
+    const news: NewsArticle = await newsArticle[0]
 
     // Trim content to the first 150 characters for description
     const trimmedContent = news.content ? news.content.substring(0, 150) : "Latest Telugu news and updates.";
@@ -33,7 +26,7 @@ export async function generateMetadata({ params }: {params : Promise<{newsId:str
         url: `${process.env.NEXT_PUBLIC_API_URL}/api/news/${newsId}`,
         images: [
           {
-            url: news.image || `https://yourdomain.com/api/og?title=${encodeURIComponent(news.newsTitle)}`,
+            url: news.image || `${process.env.NEXT_PUBLIC_API_URL}/api/og?title=${encodeURIComponent(news.newsTitle)}`,
             width: 1200,
             height: 630,
             alt: news.newsTitle,
@@ -72,5 +65,6 @@ export async function generateMetadata({ params }: {params : Promise<{newsId:str
 // ✅ Page component
 export default async function NewsIdPage({ params }: {params : Promise<{newsId:string}>}) {
   const param = await params;
-  return <SingleNewsPage params={param} />;
+  const newsArticle:NewsArticle[] = await getSingleNews(param.newsId)
+  return <SingleNewsPage params={param} newsArticles={newsArticle} />;
 }
