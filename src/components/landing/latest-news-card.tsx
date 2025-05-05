@@ -13,7 +13,7 @@ export default function LatestNewsCard({
   newsArticles
 }: LatestNewsCardProps) {
   // Memoize formatted dates to prevent recalculation on re-renders
-  const formattedDates = newsArticles.map((article) =>
+  const formattedDates = newsArticles?.map((article) =>
     formatDistanceToNow(new Date(article.createdAt), { addSuffix: true })
   );
 //  // Show loading skeleton if loading
@@ -28,17 +28,17 @@ export default function LatestNewsCard({
 //   );
 // }
 
-// // Show "No news found" if not loading and no articles
-// if (newsArticles.length===0 && !loading) {
-//   return (
-//     <div className="container mx-auto px-4 dark:bg-black dark:text-white">
-//       <h1 className="text-2xl md:text-3xl font-PottiSreeramulu font-bold mt-6 ml-2 mb-4">
-//         తాజా వార్తలు
-//       </h1>
-//       <p>No news found</p>
-//     </div>
-//   );
-// }
+// Show "No news found" if not loading and no articles
+if (!newsArticles) {
+  return (
+    <div className="container mx-auto px-4 dark:bg-black dark:text-white">
+      <h1 className="text-2xl md:text-3xl font-PottiSreeramulu font-bold mt-6 ml-2 mb-4">
+        తాజా వార్తలు
+      </h1>
+      <p>No news found</p>
+    </div>
+  );
+}
 
   return (
     <div className="container mx-auto px-4 dark:bg-black dark:text-white">
@@ -47,7 +47,7 @@ export default function LatestNewsCard({
       </h1>
       <div className="mb-4 rounded-lg">
         {
-          newsArticles.length > 0 && (
+          newsArticles && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {newsArticles?.map((article, index) => (
                 <Link
@@ -61,10 +61,11 @@ export default function LatestNewsCard({
                       <Image
                         src={article.image}
                         alt={article.newsTitle}
-                        width={200}
-                        height={200}
-                        priority
+                        width={500}
+                        height={0} // height is optional and will auto-adjust if you control via CSS
+                        style={{ height: "auto" }}
                         className="rounded"
+                        priority
                       />
                     </div>
                   )}

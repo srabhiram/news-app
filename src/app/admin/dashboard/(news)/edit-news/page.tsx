@@ -220,8 +220,9 @@ export default function EditNewsPage() {
                               <Image
                                 src={URL.createObjectURL(newsArticle.image)}
                                 alt="Preview"
-                                width={128}
-                                height={128}
+                                width={500}
+                                height={0} // height is optional and will auto-adjust if you control via CSS
+                                style={{ height: "auto" }}
                                 className="w-32 h-32 object-cover rounded-md"
                               />
                             </div>

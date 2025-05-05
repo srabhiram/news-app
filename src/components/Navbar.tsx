@@ -86,9 +86,10 @@ function Navbar() {
               src="/images/logo.png"
               alt="Website Logo"
               width={90}
-              height={50}
+              height={30} // height is optional and will auto-adjust if you control via CSS
+              style={{ height: "auto" }}
               className="rounded-full"
-              priority
+           priority
             />
           </Link>
 

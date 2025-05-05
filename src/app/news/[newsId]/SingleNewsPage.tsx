@@ -102,13 +102,15 @@ export default function SingleNewsPage({ params, newsArticles }:   {params: { ne
       <div className="flex flex-col lg:flex-row lg:gap-8">
         {/* Main Article */}
         <div className="w-full flex flex-col items-center justify-center">
-  <Image
-    src={article?.image}
-    alt={article?.newsTitle}
-    width={200}
-    height={200}
-    className="rounded-md sm:w-1/2 my-4 mx-auto"
-  />
+        <Image
+  src={article?.image}
+  alt={article?.newsTitle}
+  width={500}
+  height={0} // height is optional and will auto-adjust if you control via CSS
+  style={{ height: "auto" }}
+  className="rounded-md sm:w-1/2 my-4 mx-auto"
+/>
+
 
           <div>
             <div className="flex items-center justify-between mb-4">
@@ -173,10 +175,11 @@ export default function SingleNewsPage({ params, newsArticles }:   {params: { ne
                     <Image
                       src={post.image || "/images/fallback.jpg"}
                       alt={post.newsTitle}
-                      width={200}
-                      height={200}
+                      width={500}
+                      height={0} // height is optional and will auto-adjust if you control via CSS
+                      style={{ height: "auto" }}
                       className="  rounded-lg"
-                      loading="lazy"
+                      priority
                     />
                   </div>
                   <div className="flex-1 p-3">

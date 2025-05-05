@@ -45,9 +45,9 @@ export default function DeleteNewsPage() {
                 <Image
                   src={articles?.image}
                   alt={articles?.newsTitle}
-                  width={200}
-                  height={100}
-                  unoptimized
+                  width={500}
+                  height={0} // height is optional and will auto-adjust if you control via CSS
+                  style={{ height: "auto" }}
                   className="rounded w-28 h-28 object-contain mr-2 flex-shrink-0"
                 />
               )}
