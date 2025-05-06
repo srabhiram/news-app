@@ -46,3 +46,9 @@ export const navbarItems = [
         { value: "warangal_urban", label: "వరంగల్ అర్బన్" },
         { value: "yadadri", label: "యాదాద్రి భువనగిరి" },
     ];
+
+    export const distname = (dist: string) => {
+        const district = districts.find(d => d.value === dist);
+        return district ? district.label : dist;
+      };
+      
