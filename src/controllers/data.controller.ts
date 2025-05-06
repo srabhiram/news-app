@@ -3,6 +3,7 @@ import connectDB from "@/db/connectDB";
 import News from "@/db/models/news.models";
 import cloudinary from "@/lib/cloudinary";
 import { NextRequest, NextResponse } from "next/server";
+import logo from "@/../public/images/logo.png"
 
 export const AddNews = async (req: NextRequest) => {
   try {
@@ -43,6 +44,12 @@ export const AddNews = async (req: NextRequest) => {
                 crop: "limit",
                 quality: "auto",
                 fetch_format: "auto",
+              },
+              {
+                overlay:"logo_oecpww", // Replace with your logo's public ID (e.g., watermarks/logo)
+                gravity: "south_east", // Position the logo in the bottom-right corner
+                width: 200, // Adjust the logo width
+                opacity: 50, // Adjust the logo opacity (0-100)
               },
             ],
           },

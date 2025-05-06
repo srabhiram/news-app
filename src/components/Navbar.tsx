@@ -78,48 +78,46 @@ function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 shadow-md">
-      <div className="bg-[#3D3BF3] text-white px-3 py-2">
-        <div className="container mx-auto flex items-center justify-between space-x-3">
+      <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white px-4 py-3">
+        <div className="container mx-auto flex items-center justify-between gap-3">
           {/* Logo */}
           <Link href="/" className="flex items-center shrink-0">
             <Image
               src="/images/logo.png"
               alt="Website Logo"
               width={110}
-              height={40} // height is optional and will auto-adjust if you control via CSS
-              className=""
+              height={40}
+              style={{ height: "auto", width: "auto" }}
               priority
             />
           </Link>
 
           {/* User Menu */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             {currentUser?.isAdmin && (
               <Link href="/admin/dashboard">
                 <Button
-                  variant={"outline"}
-                  className="border-2 rounded-md cursor-pointer text-sm  bg-transparent"
+                  variant="outline"
+                  className="border border-white rounded-lg bg-transparent text-white hover:bg-white hover:text-blue-800 text-xs sm:text-sm px-2 sm:px-3 py-1 transition-all duration-300 flex items-center gap-1"
                 >
-                  <TfiWrite className="w-15" />
-
+                  <TfiWrite className="w-3 h-2" />
                   <span className="hidden sm:inline-block">Dashboard</span>
                 </Button>
               </Link>
             )}
             {isLoggedIn ? (
               <DropdownMenu>
-                <DropdownMenuTrigger className="bg-transparent border-2  flex items-center gap-1 text-white capitalize px-4 py-2 rounded-md text-xs font-semibold hover:cursor-pointer hover:bg-white hover:text-black hover:transition-all hover:ease-in-out">
-                  <FaUser className="w-3 h-3 sm:w-4 sm:h-3" />
+                <DropdownMenuTrigger className="bg-transparent border border-white flex items-center gap-1 text-white capitalize px-3 sm:px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold hover:bg-white hover:text-blue-800 transition-all duration-300">
+                  <FaUser className="w-3 h-3 sm:w-4 sm:h-4" />
                   <span>{currentUser?.name}</span>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-40 sm:w-48">
-                  <DropdownMenuLabel className="font-sans text-sm">
+                <DropdownMenuContent className="w-40 sm:w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg">
+                  <DropdownMenuLabel className="font-sans text-sm text-gray-900 dark:text-gray-200">
                     My Account
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-
                   <DropdownMenuItem
-                    className="hover:bg-red-600 hover:text-white text-black mt-2 rounded cursor-pointer text-sm font-sans font-semibold"
+                    className="hover:bg-red-600 hover:text-white text-gray-900 dark:text-gray-200 mt-2 rounded cursor-pointer text-sm font-sans font-semibold"
                     onClick={removeTokenCookie}
                   >
                     Logout
@@ -129,7 +127,7 @@ function Navbar() {
             ) : (
               <Link
                 href="/login"
-                className="bg-transparent border text-white font-semibold px-4 py-2 rounded-md text-xs sm:text-sm flex items-center hover:bg-white hover:text-black"
+                className="bg-transparent border border-white text-white font-semibold px-2 sm:px-3 py-1 rounded-lg text-xs sm:text-sm hover:bg-white hover:text-blue-800 transition-all duration-300"
               >
                 లాగిన్
               </Link>
@@ -138,14 +136,14 @@ function Navbar() {
         </div>
 
         {/* Navigation Items and District Selector */}
-        <div className="container mx-auto mt-2">
+        <div className="container mx-auto mt-3">
           <div className="flex items-center justify-between overflow-x-auto whitespace-nowrap">
-            <ul className="flex items-center gap-2 sm:gap-4">
+            <ul className="flex items-center gap-3 sm:gap-5">
               {navbarItems.map((item) => (
                 <li key={item?.id}>
                   <Link
                     href={item?.href}
-                    className="font-Gidugu text-base sm:text-lg tracking-wide rounded-md hover:text-black  hover:bg-white transition duration-300 ease-in-out block py-2 px-4"
+                    className="font-Gidugu text-sm sm:text-base lg:text-lg tracking-wide rounded-lg hover:bg-white/10 hover:text-white transition-all duration-300 block px-3 py-1.5"
                   >
                     {item?.name}
                   </Link>
@@ -159,7 +157,7 @@ function Navbar() {
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className="w-[100px] sm:w-[150px] bg-transparent text-white flex items-center justify-between font-Gidugu text-base sm:text-lg border-white py-1 h-8 sm:h-9 overflow-hidden"
+                    className="w-[90px] sm:w-[120px] lg:w-[150px] bg-transparent text-white flex items-center justify-between font-Gidugu text-sm lg:text-lg border-white py-1 h-8 lg:h-9 rounded-lg hover:bg-white hover:text-blue-800 transition-all duration-300"
                   >
                     {value
                       ? districts.find((framework) => framework.value === value)
@@ -168,23 +166,23 @@ function Navbar() {
                     <ChevronsUpDown className="w-3 h-3 sm:w-4 sm:h-4 opacity-50" />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-[180px] sm:w-[200px] p-0">
+                <PopoverContent className="w-[150px] sm:w-[180px] lg:w-[200px] p-0 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg">
                   <Command>
                     <CommandInput
                       placeholder="జిల్లా పేరు...."
-                      className="h-8 text-base font-Gidugu"
+                      className="h-8 text-sm font-Gidugu"
                     />
-                    <CommandList className="text-base font-Gidugu">
-                      <CommandEmpty className="text-sm p-2 text-center">
+                    <CommandList className="text-sm lg:text-base font-Gidugu">
+                      <CommandEmpty className="text-sm p-2 text-center text-gray-500 dark:text-gray-400">
                         దయచేసి మళ్లీ ప్రయత్నించండి
                       </CommandEmpty>
-                      <CommandGroup className="text-base">
+                      <CommandGroup className="text-sm lg:text-base">
                         {districts.map((framework) => (
                           <CommandItem
                             key={framework.value}
                             value={framework.value}
                             onSelect={handleDistrictSelect}
-                            className="text-base"
+                            className="text-sm lg:text-base text-gray-900 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
                           >
                             {framework.label}
                             <Check
