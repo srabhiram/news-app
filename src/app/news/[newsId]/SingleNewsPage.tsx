@@ -164,7 +164,7 @@ export default function SingleNewsPage({ params, newsArticles }:   {params: { ne
           ) : relatedPosts?.length === 0 ? (
             <p className="text-gray-500 italic">No related posts available.</p>
           ) : (
-            <div className="max-h-[600px] lg:max-h-[80vh] overflow-y-auto pr-4 space-y-4">
+            <div className="max-h-[600px] lg:max-h-[80vh] overflow-y-auto pr-4 space-y-4 sm:sticky sm:top-16">
               {relatedPosts.map((post, index) => (
                 <Link
                   key={post._id}
