@@ -7,6 +7,7 @@ import "./globals.css";
 import ClientProvider from "@/components/ClientProvider";
 import Footer from "@/components/Footer";
 import Script from "next/script";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,8 +41,10 @@ export default function RootLayout({
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${process.env.NEXT_PUBLIC_GOOGLE_AD}`}
           crossOrigin="anonymous"
         />
+        <GoogleAnalytics/>
         <ClientProvider>
           <Navbar />
+
           <main className="min-h-screen mt-4  dark:bg-black/80 dark:text-white">
             {children}
 
