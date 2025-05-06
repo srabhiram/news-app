@@ -77,7 +77,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-white shadow-md">
+    <nav className="sticky top-0 z-50 shadow-md">
       <div className="bg-[#3D3BF3] text-white px-3 py-2">
         <div className="container mx-auto flex items-center justify-between space-x-3">
           {/* Logo */}
@@ -85,11 +85,10 @@ function Navbar() {
             <Image
               src="/images/logo.png"
               alt="Website Logo"
-              width={90}
-              height={30} // height is optional and will auto-adjust if you control via CSS
-              style={{ height: "auto" }}
-              className="rounded-full"
-           priority
+              width={110}
+              height={40} // height is optional and will auto-adjust if you control via CSS
+              className=""
+              priority
             />
           </Link>
 
@@ -101,8 +100,7 @@ function Navbar() {
                   variant={"outline"}
                   className="border-2 rounded-md cursor-pointer text-sm  bg-transparent"
                 >
-                  <TfiWrite
-                  className="w-15"/>
+                  <TfiWrite className="w-15" />
 
                   <span className="hidden sm:inline-block">Dashboard</span>
                 </Button>
