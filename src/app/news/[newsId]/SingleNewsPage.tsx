@@ -7,6 +7,7 @@ import { EyeIcon } from "lucide-react";
 import { NewsArticle } from "@/redux/features/news/news-slice";
 import Image from "next/image";
 import { distname } from "@/lib/navbar-items";
+import useViewTracker from "@/hooks/useViewsTracker";
 
 export default function SingleNewsPage({
   params,
@@ -52,20 +53,7 @@ export default function SingleNewsPage({
   }, [newsArticles, newsId]);
 
   // Increment views
-  useEffect(() => {
-    const key = `viewed-news-${newsId}`;
-    if (localStorage.getItem(key)) return;
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/news/views/${newsId}`, {
-      method: "POST",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setViews(data.views);
-        localStorage.setItem(key, "true");
-      })
-      .catch((err) => console.error("Error incrementing views:", err));
-  }, [newsId]);
-
+  useViewTracker(newsId, setViews)
   // Memoize formatted dates for related posts
   const formattedRelatedDates = useMemo(
     () =>

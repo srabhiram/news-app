@@ -3,6 +3,8 @@ import { NewsArticle } from "@/redux/features/news/news-slice";
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 import Image from "next/image";
+import { Badge } from "../ui/badge";
+import { isNewPost } from "@/lib/isNewPost";
 
 interface LatestNewsCardProps {
   newsArticles: NewsArticle[];
@@ -14,6 +16,8 @@ export default function LatestNewsCard({ newsArticles }: LatestNewsCardProps) {
   const formattedDates = newsArticles?.map((article) =>
     formatDistanceToNow(new Date(article.createdAt), { addSuffix: true })
   );
+  
+
   //  // Show loading skeleton if loading
   //  if (loading) {
   //   return (
@@ -53,18 +57,23 @@ export default function LatestNewsCard({ newsArticles }: LatestNewsCardProps) {
                 className="flex flex-row sm:flex-row items-center hover:bg-gray-50 p-2 rounded max-sm:border-b"
                 aria-label={`Read more about ${article.newsTitle}`}
               >
-                {article.image && (
+                
                   <div className="relative flex-shrink-0 mr-2 w-1/3 sm:w-1/4 sm:mr-4">
                     <Image
                       src={article.image}
                       alt={article.newsTitle}
                       width={400}
                       height={100}
-                      className="rounded"
+                      className="rounded-sm object-cover aspect-video"
                       priority
                     />
+                  {isNewPost(article.createdAt, 3) && (
+                    <span className="absolute text-[3px]  -top-5 sm:-top-3 -left-2">
+                    <Badge variant={"destructive"} className="text-[10px] w-7">New</Badge>
+                   </span>
+                  )}
                   </div>
-                )}
+                
                 <div className="flex-1">
                   <h2 className="text-sm sm:text-lg lg:text-xl font-bold line-clamp-2 hover:underline">
                     {article.newsTitle}
