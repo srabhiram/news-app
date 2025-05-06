@@ -3,7 +3,6 @@ import connectDB from "@/db/connectDB";
 import News from "@/db/models/news.models";
 import cloudinary from "@/lib/cloudinary";
 import { NextRequest, NextResponse } from "next/server";
-import logo from "@/../public/images/logo.png"
 
 export const AddNews = async (req: NextRequest) => {
   try {
