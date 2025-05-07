@@ -34,7 +34,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased  text-gray-900 dark:bg-gray-900 dark:text-gray-100`}
       >
-        <Script src="https://ligheechoagool.com/88/tag.min.js" data-zone="146295" async data-cfasync="false"/>
+        <script src="https://ligheechoagool.com/88/tag.min.js" data-zone="146295" async data-cfasync="false"></script>
         <Script
           id="adsense-script"
           strategy="afterInteractive"
