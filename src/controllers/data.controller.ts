@@ -146,6 +146,12 @@ export const EditNews = async (req: NextRequest, newsID: string) => {
                 quality: "auto", // good quality at lower size
                 fetch_format: "auto", // convert to WebP/AVIF for browsers that support it
               },
+              {
+                overlay:"logo_oecpww", // Replace with your logo's public ID (e.g., watermarks/logo)
+                gravity: "south_east", // Position the logo in the bottom-right corner
+                width: 200, // Adjust the logo width
+                opacity: 50, // Adjust the logo opacity (0-100)
+              },
             ],
           },
           (err: any, result: any) => {
