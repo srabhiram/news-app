@@ -112,7 +112,7 @@ export default function AddNewsPageComponent() {
               rows={14}
               value={newsArticle.content}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 overflow-y-scroll"
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 overflow-y-auto"
               required
               aria-required="true"
             ></textarea>
