@@ -13,7 +13,7 @@ const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
     ignorePatterns: [
-      "src/sw.js",   // Add any other Monetag files
+      "public/sw.js",   // Add any other Monetag files
       "**/monetag*.js",                // Wildcard for Monetag scripts
     ],
   },
