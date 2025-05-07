@@ -103,17 +103,19 @@ export default function EditNewsPage() {
           <p className="text-gray-500 italic">No news articles available.</p>
         ) : (
           newsArticles.map((articles) => (
-            <div key={articles?._id} className="flex items-center gap-3 mb-1 ">
-              {articles?.image && (
+            <div key={articles?._id} className="flex items-center justify-center gap-3 mb-1 ">
+             <div className="w-1/2">
+             {articles?.image && (
                 <Image
                   src={articles?.image}
                   alt={articles?.newsTitle}
                   width={200}
                   height={100}
-                  unoptimized
-                  className="rounded w-28 h-28 object-contain mr-2 flex-shrink-0"
+                 style={{height:"auto", width:"auto"}}
+                  className="rounded-md object-cover object-center  mr-2 flex-shrink-0"
                 />
               )}
+             </div>
               <div>
                 {" "}
                 <h2 className="text-xs sm:text-xl font-semibold">
@@ -126,17 +128,21 @@ export default function EditNewsPage() {
                   </span>
                 </p>
               </div>
-              <Dialog>
+              <Dialog >
                 <DialogTrigger
                   className="bg-blue-500 px-3 py-2 rounded-md text-white"
                   onClick={() => handleEditClick(articles)}
                 >
                   Edit
                 </DialogTrigger>
-                <DialogContent>
+                <DialogContent className="max-h-[80vh] overflow-y-auto">
                   <DialogHeader>
                     <DialogTitle>Are you absolutely sure?</DialogTitle>
-                    <DialogDescription>
+
+                    <DialogDescription >
+                      </DialogDescription>
+                      </DialogHeader>
+                      <div>
                       <form
                         className="mt-4"
                         onSubmit={(e) => handleSubmit(e, articles?._id)}
@@ -170,7 +176,7 @@ export default function EditNewsPage() {
                           <textarea
                             id="content"
                             name="content"
-                            rows={6}
+                            rows={15}
                             value={newsArticle.content}
                             onChange={handleChange}
                             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
@@ -221,9 +227,9 @@ export default function EditNewsPage() {
                                 src={URL.createObjectURL(newsArticle.image)}
                                 alt="Preview"
                                 width={500}
-                                height={0} // height is optional and will auto-adjust if you control via CSS
-                                style={{ height: "auto" }}
-                                className="w-32 h-32 object-cover rounded-md"
+                                height={250} // height is optional and will auto-adjust if you control via CSS
+                                style={{ height: "auto", width:"auto" }}
+                                className=" object-cover rounded-md"
                               />
                             </div>
                           )}
@@ -264,8 +270,7 @@ export default function EditNewsPage() {
                           {loading ? "Update News...." : "Update News"}
                         </button>
                       </form>
-                    </DialogDescription>
-                  </DialogHeader>
+                      </div>
                 </DialogContent>
               </Dialog>
             </div>

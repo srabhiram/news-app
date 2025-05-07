@@ -23,7 +23,6 @@ export default function DeleteNewsPage() {
   const handleDelete = async (id: string) => {
     try {
       await dispatch(deleteNews(id)).unwrap();
-      await dispatch(getNews())
     } catch (error) {
       console.error(error);
     }

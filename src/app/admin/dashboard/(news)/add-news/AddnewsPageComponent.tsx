@@ -72,7 +72,7 @@ export default function AddNewsPageComponent() {
 
   return (
     <section>
-      <div className="mx-3 flex flex-col items-center justify-center mt-10 bg-blue-100 rounded p-4">
+      <div className="mx-3 flex flex-col items-center justify-center my-5 sm:mt-10 bg-gray-50 rounded-md p-4">
         <h1 id="add-news-title" className="text-2xl font-bold">
           Add News
         </h1>
@@ -94,7 +94,7 @@ export default function AddNewsPageComponent() {
               name="newsTitle"
               value={newsArticle.newsTitle}
               onChange={handleChange}
-              className="mt-1 block p-1 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              className="my-1 block h-10 p-1 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
               required
               aria-required="true"
             />
@@ -109,10 +109,10 @@ export default function AddNewsPageComponent() {
             <textarea
               id="content"
               name="content"
-              rows={4}
+              rows={14}
               value={newsArticle.content}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 overflow-y-scroll"
               required
               aria-required="true"
             ></textarea>
@@ -130,7 +130,7 @@ export default function AddNewsPageComponent() {
               name="author"
               value={newsArticle.author}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              className="my-1 block h-10 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
               required
               aria-required="true"
             />
@@ -149,7 +149,7 @@ export default function AddNewsPageComponent() {
               accept="image/*"
               ref={fileInputRef}
               onChange={handleFileChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              className="my-1 block h-8 p-1 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
               required
               aria-required="true"
             />
@@ -178,7 +178,7 @@ export default function AddNewsPageComponent() {
               name="district"
               value={newsArticle.district}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              className="my-1 block h-10 p-1 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
               required
               aria-required="true"
             >
@@ -192,7 +192,7 @@ export default function AddNewsPageComponent() {
           </div>
           <button
             type="submit"
-            className={`px-4 py-2 w-full bg-blue-600 text-white rounded-md hover:bg-blue-700 
+            className={`px-4 py-2 w-full bg-blue-600 text-white rounded-md hover:bg-blue-700 active:bg-blue-700 
             `}
             disabled={loading}
             aria-disabled={loading ? "true" : "false"}

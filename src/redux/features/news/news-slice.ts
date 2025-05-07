@@ -71,6 +71,9 @@ export const addNews = createAsyncThunk(
       const response = await axios.post("/api/news/add", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+      if (response.status < 200 || response.status >= 300) {
+        return rejectWithValue(`Failed to add news. Server responded with an error.: ${response.data}`);
+      }
       return response.data; // Expecting { message: string, newsArticle: NewsArticle }
     } catch (error: any) {
       return rejectWithValue(error.message || "Something went wrong");

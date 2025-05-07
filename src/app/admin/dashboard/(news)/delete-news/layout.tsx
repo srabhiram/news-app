@@ -7,7 +7,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import Link from "next/link";
 
 export default function DeleteLayout({
   children,
@@ -20,7 +19,7 @@ export default function DeleteLayout({
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-            <BreadcrumbLink className="font-semibold"><Link href={`/admin/dashboard`}>Dashboard</Link></BreadcrumbLink>
+            <BreadcrumbLink href="/admin/dashboard" className="font-semibold">Dashboard</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
