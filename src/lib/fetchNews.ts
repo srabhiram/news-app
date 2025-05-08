@@ -1,8 +1,8 @@
-export async function fetcNews() {
+export async function fetcNews(cacheType?:RequestCache) {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/news/getNews`,
       {
-        cache: "no-cache",
+        cache:  cacheType,
       }
     );
     const {newsArticles} = await res.json();

@@ -3,6 +3,6 @@ import { fetcNews } from "@/lib/fetchNews";
 
 export default async function Home() {
   
-  const {newsArticles} = await fetcNews()
+  const {newsArticles} = await fetcNews("default")
   return <LatestNewsCard newsArticles={newsArticles}  />;
 }

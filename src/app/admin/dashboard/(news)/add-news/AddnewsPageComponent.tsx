@@ -1,4 +1,5 @@
 "use client";
+import { fetcNews } from "@/lib/fetchNews";
 import { districts } from "@/lib/navbar-items";
 import { addNews, getNews } from "@/redux/features/news/news-slice";
 import { AppDispatch, RootState } from "@/redux/store";
@@ -62,6 +63,7 @@ export default function AddNewsPageComponent() {
         fileInputRef.current.value = "";
       }
       await dispatch(getNews())
+      // await fetcNews("no-store")
       router.push("/");
     } catch (error) {
       console.error("Error submitting form:", error);
