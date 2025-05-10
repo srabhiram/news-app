@@ -8,6 +8,7 @@ import ClientProvider from "@/components/ClientProvider";
 import Footer from "@/components/Footer";
 import Script from "next/script";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import { Viewport } from "next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,8 +23,17 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "SRS News",
   description: "మీ చేతిలో వార్తల ప్రపంచం – నిత్యం తాజా, నిస్సందేహం!",
+  appleWebApp:{
+    capable:true,
+    statusBarStyle:"black-translucent",
+    title:"SRS News"
+  },
+  applicationName:"SRS News"
 };
-
+export const viewport:Viewport ={
+  maximumScale:1,
+  userScalable:false
+}
 export default function RootLayout({
   children,
 }: Readonly<{
