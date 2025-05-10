@@ -77,7 +77,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="bg-gradient-to-r from-blue-600 to-blue-800 sticky top-0 z-50 shadow-md">
+    <nav className="bg-gradient-to-r from-blue-600 to-blue-800 bg-blue-600 sticky top-0 z-50 shadow-md">
       <div className=" text-white px-4 py-3">
         <div className="container mx-auto flex items-center justify-between gap-3">
           {/* Logo */}
