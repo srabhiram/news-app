@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   appleWebApp:{
     capable:true,
     statusBarStyle:"black-translucent",
-    title:"SRS News"
+    title:"SRS News",
   },
   applicationName:"SRS News"
 };
