@@ -91,11 +91,11 @@ export default function SingleNewsPage({
   const article = newsArticles[0];
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-8 bg-white dark:bg-black text-black dark:text-white">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-8 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-200">
       <div className="flex flex-col lg:flex-row lg:gap-8">
         {/* Main Article */}
         <div className="w-full lg:w-3/4">
-          <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl min-h-fit">
+          <div className="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-gray-700 rounded-xl min-h-fit">
             {/* Article Image */}
             <div className="w-full mt-0.5 flex justify-center items-center">
               <Image
@@ -144,7 +144,7 @@ export default function SingleNewsPage({
                     <FaShareAlt className="w-4 sm:w-5" />
                   </button>
                   {isShareOpen === article?._id && (
-                    <div className="absolute top-10 right-0 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-3 flex flex-col gap-2 z-10">
+                    <div className="absolute top-10 right-0 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-3 flex flex-col gap-2 z-10">
                       <button
                         onClick={() => handleWhatsAppShare(article)}
                         className="flex items-center gap-2 px-3 py-1.5 bg-green-500 text-white rounded-md hover:bg-green-600 text-sm transition-colors duration-300"
@@ -189,7 +189,7 @@ export default function SingleNewsPage({
                 <Link
                   key={post._id}
                   href={`/news/${post._id}`}
-                  className="flex flex-col bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:scale-[1.02] hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 overflow-hidden"
+                  className="flex flex-col bg-white dark:bg-zinc-900 border border-gray-200 dark:border-gray-700 rounded-lg hover:scale-[1.02] hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 overflow-hidden"
                 >
                   <div className="w-full">
                     <Image

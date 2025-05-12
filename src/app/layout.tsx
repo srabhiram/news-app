@@ -40,9 +40,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased  text-gray-900 dark:bg-gray-900 dark:text-gray-100`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
         <Script
           id="adsense-script"
@@ -55,7 +55,7 @@ export default function RootLayout({
         <ClientProvider>
           <Navbar />
 
-          <main className="min-h-screen mt-4  dark:bg-black/80 dark:text-white">
+          <main className="min-h-screen mt-4 ">
             {children}
 
             <Analytics />
