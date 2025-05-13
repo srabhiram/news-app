@@ -31,15 +31,15 @@ export default function DeleteNewsPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-PottiSreeramulu font-bold mt-1 mb-6">
+      <h1 className="text-2xl font-PottiSreeramulu font-bold mt-1 mb-6 dark:text-zinc-200">
         Delete News
       </h1>
-      <div className="border p-4 mb-4 rounded-lg shadow-md">
+      <div className=" p-4 mb-4 rounded-lg shadow-md">
         {newsArticles.length === 0 ? (
           <p className="text-gray-500 italic">No news articles available.</p>
         ) : (
           newsArticles.map((articles) => (
-            <div key={articles?._id} className="flex items-center gap-3 mb-1 ">
+            <div key={articles?._id} className="p-2 flex items-center gap-3 mb-1 dark:bg-zinc-900 dark:text-zinc-200">
               {articles?.image && (
                 <Image
                   src={articles?.image}

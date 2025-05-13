@@ -2,14 +2,14 @@ import React from "react";
 
 export default function LoadingSvg() {
   return (
-    <div className="flex justify-center items-center mx-auto sm:h-screen bg-white dark:bg-zinc-950">
+    <div className="flex justify-center items-center mx-auto sm:h-screen bg-white dark:bg-zinc-900">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 100 100"
         preserveAspectRatio="xMidYMid"
         width="200"
         height="200"
-        className="bg-white dark:bg-zinc-950 block"
+        className="bg-white dark:bg-zinc-900 block"
       >
         <g>
           <rect fill="#0099cc" height="40" width="15" y="30" x="17.5">

@@ -42,7 +42,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased `}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased dark:bg-zinc-900`}
       >
         <Script
           id="adsense-script"
@@ -55,7 +55,7 @@ export default function RootLayout({
         <ClientProvider>
           <Navbar />
 
-          <main className="min-h-screen mt-4 ">
+          <main className="min-h-screen mx-1 sm:mx-2 mt-4">
             {children}
 
             <Analytics />

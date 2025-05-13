@@ -91,11 +91,11 @@ export default function SingleNewsPage({
   const article = newsArticles[0];
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-8 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-200">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-8 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-200">
       <div className="flex flex-col lg:flex-row lg:gap-8">
         {/* Main Article */}
         <div className="w-full lg:w-3/4">
-          <div className="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-gray-700 rounded-xl min-h-fit">
+          <div className="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-gray-700 rounded-xl min-h-fit">
             {/* Article Image */}
             <div className="w-full mt-0.5 flex justify-center items-center">
               <Image
@@ -184,25 +184,25 @@ export default function SingleNewsPage({
               No related posts available.
             </p>
           ) : (
-            <div className="space-y-4 lg:max-h-[80vh] lg:overflow-y-auto lg:pr-4 lg:sticky lg:top-16">
+            <div className="space-y-4 lg:max-h-[80vh] lg:overflow-y-auto lg:pr-4 lg:sticky lg:top-36">
               {relatedPosts.map((post, index) => (
                 <Link
                   key={post._id}
                   href={`/news/${post._id}`}
-                  className="flex flex-col bg-white dark:bg-zinc-900 border border-gray-200 dark:border-gray-700 rounded-lg hover:scale-[1.02] hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 overflow-hidden"
+                  className="flex sm:flex-col max-sm:items-center bg-white dark:bg-zinc-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:scale-[1.02] hover:bg-gray-50 dark:hover:bg-zinc-700 transition-all duration-300 overflow-hidden"
                 >
-                  <div className="w-full">
+                  <div className="max-sm:w-1/3">
                     <Image
                       src={post.image}
                       alt={post.newsTitle}
-                      width={500}
+                      width={300}
                       height={96}
                       style={{ height: "auto", width: "auto" }}
-                      className="rounded-t-lg object-cover object-top aspect-video mx-auto w-full h-full"
+                      className="rounded-t-lg object-cover object-top sm:aspect-video mx-auto"
                       priority
                     />
                   </div>
-                  <div className="p-2">
+                  <div className="p-2 max-sm:w-full">
                     <h4 className="text-sm font-PottiSreeramulu font-bold line-clamp-2 leading-normal active:text-blue-600 active:underline hover:text-blue-600 hover:underline">
                       {post.newsTitle}
                     </h4>

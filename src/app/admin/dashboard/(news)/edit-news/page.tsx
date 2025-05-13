@@ -95,15 +95,15 @@ export default function EditNewsPage() {
   };
   return (
     <div>
-      <h1 className="text-2xl font-PottiSreeramulu font-bold mt-1 mb-6">
+      <h1 className="text-2xl font-PottiSreeramulu font-bold mt-1 mb-6 dark:text-zinc-200">
         Edit News
       </h1>
-      <div className="border p-2 mb-4 rounded-lg shadow-md">
+      <div className=" p-2 mb-4 rounded-xl shadow-md">
         {newsArticles.length === 0 ? (
           <p className="text-gray-500 italic">No news articles available.</p>
         ) : (
           newsArticles.map((articles) => (
-            <div key={articles?._id} className="flex items-center justify-center gap-3 mb-1 ">
+            <div key={articles?._id} className="p-2 flex items-center justify-center gap-3 mb-1 dark:bg-zinc-900 dark:text-zinc-200">
              <div className="w-1/2">
              {articles?.image && (
                 <Image

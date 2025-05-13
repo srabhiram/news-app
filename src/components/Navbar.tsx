@@ -77,8 +77,8 @@ function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 shadow-md bg-blue-800">
-      <div className=" text-white px-4 py-3">
+    <nav className="sticky top-0 z-50 shadow-md ">
+      <div className="bg-blue-800 text-white px-4 py-3">
         <div className="container mx-auto flex items-center justify-between gap-3">
           {/* Logo */}
           <Link href="/" className="flex items-center shrink-0">
@@ -98,7 +98,7 @@ function Navbar() {
               <Link href="/admin/dashboard">
                 <Button
                   variant="outline"
-                  className="border border-white rounded-lg bg-transparent text-white hover:bg-white hover:text-blue-800 text-xs sm:text-sm px-2 sm:px-3 py-1 transition-all duration-300 flex items-center gap-1"
+                  className="border border-white rounded-lg dark:bg-transparent bg-transparent text-white dark:hover:bg-white hover:bg-white hover:text-blue-800 text-xs sm:text-sm px-2 sm:px-3 py-1 transition-all duration-300 flex items-center gap-1"
                 >
                   <TfiWrite className="w-3 h-2" />
                   <span className="hidden sm:inline-block">Dashboard</span>
@@ -157,7 +157,7 @@ function Navbar() {
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className="w-[90px] sm:w-[120px] lg:w-[150px] bg-transparent text-white flex items-center justify-between font-Gidugu text-sm lg:text-lg border-white py-1 h-8 lg:h-9 rounded-lg hover:bg-white hover:text-blue-800 transition-all duration-300"
+                    className="w-[90px] sm:w-[120px] lg:w-[150px] bg-transparent text-white flex items-center justify-between font-Gidugu text-sm lg:text-lg border-white py-1 h-8 lg:h-9 rounded-lg hover:bg-white hover:text-blue-800 transition-all duration-300 dark:hover:bg-white dark:bg-transparent"
                   >
                     {value
                       ? districts.find((framework) => framework.value === value)
@@ -166,14 +166,14 @@ function Navbar() {
                     <ChevronsUpDown className="w-3 h-3 sm:w-4 sm:h-4 opacity-50" />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-[150px] sm:w-[180px] lg:w-[200px] p-0 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg">
-                  <Command>
+                <PopoverContent className="w-[150px] sm:w-[180px] lg:w-[200px] p-0 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg">
+                  <Command className="dark:bg-zinc-700 dark:text-zinc-200">
                     <CommandInput
                       placeholder="జిల్లా పేరు...."
                       className="h-8 text-sm font-Gidugu"
                     />
                     <CommandList className="text-sm lg:text-base font-Gidugu">
-                      <CommandEmpty className="text-sm p-2 text-center text-gray-500 dark:text-gray-400">
+                      <CommandEmpty className="text-sm p-2 text-center text-zinc-500 dark:text-zinc-400">
                         దయచేసి మళ్లీ ప్రయత్నించండి
                       </CommandEmpty>
                       <CommandGroup className="text-sm lg:text-base">
@@ -182,7 +182,7 @@ function Navbar() {
                             key={framework.value}
                             value={framework.value}
                             onSelect={handleDistrictSelect}
-                            className="text-sm lg:text-base text-gray-900 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                            className="text-sm lg:text-base text-gray-900 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-gray-200"
                           >
                             {framework.label}
                             <Check

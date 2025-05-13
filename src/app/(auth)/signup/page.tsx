@@ -50,7 +50,7 @@ export default function SignupPage() {
     <>
       <div className="flex items-center justify-center h-full mt-10  mx-auto">
         <form
-          className="flex border-2 gap-2 flex-col items-center justify-center h-fit  m-2 p-5 rounded-lg shadow-md w-96"
+          className="flex border-2 gap-2 flex-col items-center justify-center h-fit  m-2 p-5 rounded-lg shadow-md  dark:border-zinc-900 dark:text-zinc-200 dark:bg-zinc-800 w-96"
           onSubmit={handleSubmit}
         >
           <h2 className="text-xl font-bold font-PottiSreeramulu my-2">
@@ -64,7 +64,7 @@ export default function SignupPage() {
             name="username"
             value={formData.username}
             onChange={handleChange}
-            className="mb-4 p-2 border border-gray-300 rounded"
+            className="mb-4 p-2 border border-gray-300  dark:border-blue-300 placeholder:dark:text-zinc-400 dark:bg-zinc-700  rounded"
           />
           <input
             type="email"
@@ -72,7 +72,7 @@ export default function SignupPage() {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            className="mb-4 p-2 border border-gray-300 rounded"
+            className="mb-4 p-2 border border-gray-300  dark:border-blue-300 placeholder:dark:text-zinc-400 dark:bg-zinc-700  rounded"
           />
           <input
             type="password"
@@ -80,20 +80,20 @@ export default function SignupPage() {
             name="password"
             value={formData.password}
             onChange={handleChange}
-            className="mb-4 p-2 border border-gray-300 rounded"
+            className="mb-4 p-2 border border-gray-300  dark:border-blue-300 placeholder:dark:text-zinc-400 dark:bg-zinc-700  rounded"
           />
           <button
             type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded"
+            className="bg-blue-500 text-white px-4 py-2 hover:bg-blue-700 active:bg-blue-700 rounded"
             disabled={loading}
           >
-            {loading ? "Loading..." : "సైన్ అప్"}
+            {loading ? "Signing up..." : "సైన్ అప్"}
           </button>
           <p>
             <span className="font-PottiSreeramulu">
               మీకు ఇప్పటికే ఖాతా ఉందా?
             </span>{" "}
-            <Link href="/login" className="text-blue-500 font-semibold">
+            <Link href="/login" className="text-blue-500 font-semibold hover:underline active:underline active:text-blue-600">
               లాగిన్ చేయండి
             </Link>
           </p>

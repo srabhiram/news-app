@@ -74,7 +74,7 @@ export default function AddNewsPageComponent() {
 
   return (
     <section>
-      <div className="mx-3 flex flex-col items-center justify-center my-5 sm:mt-10 bg-gray-50 rounded-md p-4">
+      <div className="mx-3 flex flex-col items-center justify-center my-5 sm:mt-10 bg-white dark:bg-zinc-800 dark:text-zinc-200 rounded-xl p-6">
         <h1 id="add-news-title" className="text-2xl font-bold">
           Add News
         </h1>
@@ -86,7 +86,7 @@ export default function AddNewsPageComponent() {
           <div className="mb-4">
             <label
               htmlFor="newsTitle"
-              className="block text-sm font-semibold font-PottiSreeramulu text-gray-700"
+              className="block text-sm font-semibold font-PottiSreeramulu text-zinc-700 dark:text-zinc-200"
             >
               న్యూస్ టైటిల్
             </label>
@@ -96,7 +96,7 @@ export default function AddNewsPageComponent() {
               name="newsTitle"
               value={newsArticle.newsTitle}
               onChange={handleChange}
-              className="my-1 block h-10 p-1 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              className="my-1 block h-10 p-1 w-full border dark:text-zinc-200 placeholder:dark:text-zinc-200 dark:bg-zinc-700  border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
               required
               aria-required="true"
             />
@@ -104,7 +104,7 @@ export default function AddNewsPageComponent() {
           <div className="mb-4">
             <label
               htmlFor="content"
-              className="block text-sm text-gray-700 font-semibold font-PottiSreeramulu"
+              className="block text-sm text-zinc-700 dark:text-zinc-200 font-semibold font-PottiSreeramulu"
             >
               కంటెంట్
             </label>
@@ -114,7 +114,7 @@ export default function AddNewsPageComponent() {
               rows={14}
               value={newsArticle.content}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 overflow-y-auto"
+              className="mt-1 block w-full border placeholder:dark:text-zinc-200 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-200 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 overflow-y-auto"
               required
               aria-required="true"
             ></textarea>
@@ -122,7 +122,7 @@ export default function AddNewsPageComponent() {
           <div className="mb-4">
             <label
               htmlFor="author"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-zinc-700 dark:text-zinc-200"
             >
               Author
             </label>
@@ -132,7 +132,7 @@ export default function AddNewsPageComponent() {
               name="author"
               value={newsArticle.author}
               onChange={handleChange}
-              className="my-1 block h-10 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              className="my-1 block h-10 w-full border placeholder:dark:text-zinc-200 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-200 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
               required
               aria-required="true"
             />
@@ -140,7 +140,7 @@ export default function AddNewsPageComponent() {
           <div className="mb-4">
             <label
               htmlFor="image"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-zinc-700 dark:text-zinc-200"
             >
               Image Upload
             </label>
@@ -151,7 +151,7 @@ export default function AddNewsPageComponent() {
               accept="image/*"
               ref={fileInputRef}
               onChange={handleFileChange}
-              className="my-1 block h-8 p-1 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              className="my-1 block h-8 p-1 w-full border placeholder:dark:text-zinc-200 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-200 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
               required
               aria-required="true"
             />
@@ -171,7 +171,7 @@ export default function AddNewsPageComponent() {
           <div className="mb-4">
             <label
               htmlFor="district"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-zinc-700 dark:text-zinc-200"
             >
               Districts
             </label>
@@ -180,13 +180,13 @@ export default function AddNewsPageComponent() {
               name="district"
               value={newsArticle.district}
               onChange={handleChange}
-              className="my-1 block h-10 p-1 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              className="my-1 block h-10 p-1 w-full border placeholder:dark:text-zinc-200 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-200 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
               required
               aria-required="true"
             >
               <option value="">Select a district</option>
               {districts.map((item) => (
-                <option key={item.value} value={item.value}>
+                <option key={item.value} value={item.value} className="text-zinc-700 dark:text-zinc-200 dark:bg-zinc-700">
                   {item.label}
                 </option>
               ))}

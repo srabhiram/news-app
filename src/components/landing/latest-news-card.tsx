@@ -32,7 +32,7 @@ export default function LatestNewsCard({ newsArticles }: LatestNewsCardProps) {
   }
 
   return (
-    <div className="container mx-auto px-4 bg-white dark:bg-zinc-950 text-black dark:text-white">
+    <div className="container mx-auto pb-4 bg-white dark:bg-zinc-900 text-black dark:text-white">
       {/* Section header */}
       <h1 className="text-2xl sm:text-3xl font-PottiSreeramulu font-bold mt-6 ml-2 mb-4">
         తాజా వార్తలు
@@ -44,7 +44,7 @@ export default function LatestNewsCard({ newsArticles }: LatestNewsCardProps) {
               <Link
                 key={article._id}
                 href={`/news/${article._id}`}
-                className="flex flex-col sm:flex-row items-start sm:items-center bg-white dark:bg-zinc-900 rounded-lg shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 p-3"
+                className="flex flex-col sm:flex-row items-start sm:items-center bg-white dark:bg-zinc-800 rounded-lg shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 p-3"
                 aria-label={`Read more about ${article.newsTitle}`}
               >
                 {/* Image Container */}
