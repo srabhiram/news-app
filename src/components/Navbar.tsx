@@ -2,7 +2,7 @@
 import { districts, navbarItems } from "@/lib/navbar-items";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, Moon, Sun } from "lucide-react";
 import { TfiWrite } from "react-icons/tfi";
 import {
   DropdownMenu,
@@ -34,6 +34,7 @@ import { AppDispatch, RootState } from "@/redux/store";
 import { resetAuthState } from "@/redux/features/users/authSlice";
 import { FaUser } from "react-icons/fa";
 import Image from "next/image";
+import { Switch } from "./ui/switch";
 
 // Define the type for currentUser
 export interface User {
@@ -50,6 +51,26 @@ function Navbar() {
   const router = useRouter();
   const { success } = useSelector((state: RootState) => state.auth.signin);
   const dispatch = useDispatch<AppDispatch>();
+
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    const theme = localStorage.getItem("theme");
+
+    if (theme && theme === "dark") {
+      document.body.classList.add("dark");
+      setIsDarkMode(true);
+    } else {
+      document.body.classList.remove("dark"); // ensure light is default
+    }
+  }, []);
+
+  const toggleDarkMode = () => {
+    const newTheme = isDarkMode ? "light" : "dark";
+    setIsDarkMode(!isDarkMode);
+    localStorage.setItem("theme", newTheme);
+    document.body.classList.toggle("dark");
+  };
 
   useEffect(() => {
     const userData = getTokenData();
@@ -94,6 +115,12 @@ function Navbar() {
 
           {/* User Menu */}
           <div className="flex items-center gap-3">
+            <Switch
+            onCheckedChange={toggleDarkMode}
+              className="data-[state=checked]:bg-black/40 data-[state=unchecked]:bg-blue-600"
+              checkedIcon={<Moon size={12} className="text-blue-200" />}
+              uncheckedIcon={<Sun size={12} className="text-orange-400" />}
+            />
             {currentUser?.isAdmin && (
               <Link href="/admin/dashboard">
                 <Button
@@ -137,7 +164,7 @@ function Navbar() {
 
         {/* Navigation Items and District Selector */}
         <div className="container mx-auto mt-3">
-          <div className="flex items-center justify-between overflow-x-auto whitespace-nowrap">
+          <div className="flex items-center justify-between overflow-x-hidden whitespace-nowrap">
             <ul className="flex items-center gap-3 sm:gap-5">
               {navbarItems.map((item) => (
                 <li key={item?.id}>

@@ -4,10 +4,10 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import "./globals.css";
-import ClientProvider from "@/components/ClientProvider";
+import ClientProvider from "@/components/providers/ClientProvider";
 import Footer from "@/components/Footer";
 import Script from "next/script";
-import GoogleAnalytics from "@/components/GoogleAnalytics";
+import GoogleAnalytics from "@/components/providers/GoogleAnalytics";
 import { Viewport } from "next";
 
 const geistSans = Geist({
