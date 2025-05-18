@@ -117,6 +117,7 @@ function Navbar() {
           <div className="flex items-center gap-3">
             <Switch
             onCheckedChange={toggleDarkMode}
+            checked={isDarkMode}
               className="data-[state=checked]:bg-black/40 data-[state=unchecked]:bg-blue-600"
               checkedIcon={<Moon size={12} className="text-blue-200" />}
               uncheckedIcon={<Sun size={12} className="text-orange-400" />}
