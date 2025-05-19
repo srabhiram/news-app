@@ -55,15 +55,10 @@ function Navbar() {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
-    const theme = localStorage.getItem("theme");
-
-    if (theme && theme === "dark") {
-      document.body.classList.add("dark");
-      setIsDarkMode(true);
-    } else {
-      document.body.classList.remove("dark"); // ensure light is default
-    }
-  }, []);
+  const isDark = localStorage.getItem("theme") === "dark";
+  document.body.classList.toggle("dark", isDark);
+  setIsDarkMode(isDark);
+}, []);
 
   const toggleDarkMode = () => {
     const newTheme = isDarkMode ? "light" : "dark";
@@ -166,12 +161,12 @@ function Navbar() {
         {/* Navigation Items and District Selector */}
         <div className="container mx-auto mt-3">
           <div className="flex items-center justify-between overflow-x-hidden whitespace-nowrap">
-            <ul className="flex items-center gap-3 sm:gap-5">
+            <ul className="flex items-center gap-2 sm:gap-5">
               {navbarItems.map((item) => (
                 <li key={item?.id}>
                   <Link
                     href={item?.href}
-                    className="font-Gidugu text-sm sm:text-base lg:text-lg tracking-wide rounded-lg hover:bg-white/10 hover:text-white transition-all duration-300 block px-3 py-1.5"
+                    className="font-Gidugu text-sm sm:text-base lg:text-lg tracking-wide rounded-lg hover:bg-white/10 hover:text-white transition-all duration-300 block px-2 sm:px-3 py-1.5"
                   >
                     {item?.name}
                   </Link>

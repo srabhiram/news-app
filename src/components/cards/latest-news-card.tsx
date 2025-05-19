@@ -1,12 +1,13 @@
 "use client";
 import { NewsArticle } from "@/redux/features/news/news-slice";
 import Link from "next/link";
-import { formatDistanceToNow } from "date-fns";
-import {te} from "date-fns/locale"
 import Image from "next/image";
 import { Badge } from "../ui/badge";
 import { isNewPost } from "@/lib/isNewPost";
 import { distname } from "@/lib/navbar-items";
+import Pagination from "../Pagination";
+import { useState } from "react";
+import { useFormattedDates } from "@/hooks/useFormatdatetime";
 
 interface LatestNewsCardProps {
   newsArticles: NewsArticle[];
@@ -14,9 +15,16 @@ interface LatestNewsCardProps {
 }
 
 export default function LatestNewsCard({ newsArticles }: LatestNewsCardProps) {
-  // Memoize formatted dates to prevent recalculation on re-renders
-  const formattedDates = newsArticles?.map((article) =>
-    formatDistanceToNow(new Date(article.createdAt), { addSuffix: true , locale: te})
+ const formattedDates = useFormattedDates(newsArticles)
+  // pagination
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const itemsPerPage = 15;
+
+  const totalPages = Math.ceil(newsArticles.length / itemsPerPage);
+  const paginatedNews = newsArticles.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
   );
 
   // Show "No news found" if no articles
@@ -24,7 +32,7 @@ export default function LatestNewsCard({ newsArticles }: LatestNewsCardProps) {
     return (
       <div className="container mx-auto px-4 bg-white dark:bg-black text-black dark:text-white">
         <h1 className="text-2xl sm:text-3xl font-PottiSreeramulu font-bold mt-6 ml-2 mb-4">
-          తాజా వార్తలు
+          <span className="bg-blue-500  p-0.5 mr-1"></span> తాజా వార్తలు
         </h1>
         <p>No news found</p>
       </div>
@@ -35,12 +43,12 @@ export default function LatestNewsCard({ newsArticles }: LatestNewsCardProps) {
     <div className="container mx-auto pb-4 bg-white dark:bg-zinc-900 text-black dark:text-white">
       {/* Section header */}
       <h1 className="text-2xl sm:text-3xl font-PottiSreeramulu font-bold mt-6 ml-2 mb-4">
-        తాజా వార్తలు
+        <span className="bg-blue-500  p-0.5 mr-1"></span> తాజా వార్తలు
       </h1>
       <div className="mb-4">
-        {newsArticles && (
+        {paginatedNews && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {newsArticles.map((article, index) => (
+            {paginatedNews.map((article, index) => (
               <Link
                 key={article._id}
                 href={`/news/${article._id}`}
@@ -60,10 +68,7 @@ export default function LatestNewsCard({ newsArticles }: LatestNewsCardProps) {
                   />
                   {isNewPost(article.createdAt, 3) && (
                     <span className="absolute -top-4 -left-2">
-                      <Badge
-                        variant="destructive"
-                        className="text-[10px] w-7"
-                      >
+                      <Badge variant="destructive" className="text-[10px] w-7">
                         New
                       </Badge>
                     </span>
@@ -75,9 +80,10 @@ export default function LatestNewsCard({ newsArticles }: LatestNewsCardProps) {
                   <h2 className="text-sm sm:text-base lg:text-lg font-PottiSreeramulu font-bold line-clamp-2 active:underline active:text-blue-600 hover:underline hover:text-blue-600 dark:hover:text-blue-400 sm:transition-colors sm:duration-300">
                     {article.newsTitle}
                   </h2>
-                  <p className="py-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1 font-PottiSreeramulu"> <b>{distname(article.district)}{" "}</b>
-                   
-                    • <span>{formattedDates[index]}</span>
+                  <p className="py-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1 font-PottiSreeramulu">
+                    {" "}
+                    <b>{distname(article.district)} </b>•{" "}
+                    <span>{formattedDates[index]}</span>
                   </p>
                 </div>
               </Link>
@@ -85,6 +91,11 @@ export default function LatestNewsCard({ newsArticles }: LatestNewsCardProps) {
           </div>
         )}
       </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
     </div>
   );
 }

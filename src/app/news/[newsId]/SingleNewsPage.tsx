@@ -175,7 +175,7 @@ export default function SingleNewsPage({
         {/* Related Posts */}
         <div className="w-full lg:w-1/3 mt-8 lg:mt-0">
           <h3 className="text-xl sm:text-2xl font-PottiSreeramulu font-bold mb-6">
-            సంబంధిత వార్తలు
+              <span className="bg-blue-500  p-0.5 mr-1"></span> సంబంధిత వార్తలు
           </h3>
           {error ? (
             <p className="text-red-500">{error}</p>
