@@ -163,7 +163,7 @@ export default function SingleNewsPage({
               </div>
 
               {/* Article Content */}
-              <p className="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 mt-4 tracking-wide leading-relaxed text-justify font-PottiSreeramulu">
+              <p className="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 mt-4 tracking-wide leading-relaxed text-pretty md:text-balance text-start md:text-justify font-PottiSreeramulu">
                 <b>{article.district ? distname(article.district): categoryNames(article.category)}</b>
                 {": "}
                 {article?.content}
