@@ -56,8 +56,16 @@ export const states = [
   { value: "telangana", label: "తెలంగాణ " },
   { value: "andhra pradesh", label: "ఆంధ్రప్రదేశ్" },
 ];
-
+export const categories = [
+  { value: "technology", label: "టెక్నాలజీ" },
+  { value: "sports", label: "స్పోర్ట్స్" },
+];
 export const distname = (dist: string) => {
   const district = districts.find((d) => d.value === dist);
   return district ? district.label : dist;
 };
+export const categoryNames = (cat:string)=>{
+const category = categories.find((c) => c.value === cat);
+  return category ? category.label : cat;
+}
+

@@ -13,9 +13,10 @@ export const AddNews = async (req: NextRequest) => {
     const file = body.get("image") as File;
     const district = body.get("district");
     const author = body.get("author");
-
+    const category = body.get("category");
+    console.log({ newsTitle, content, district, category, author });
     // validate the input data
-    if (!newsTitle || !content || !author || !file || !district) {
+    if (!newsTitle || !content || !author || !file) {
       return NextResponse.json(
         {
           error: "All fields are required",
@@ -45,7 +46,7 @@ export const AddNews = async (req: NextRequest) => {
                 fetch_format: "auto",
               },
               {
-                overlay:"logo_oecpww", // Replace with your logo's public ID (e.g., watermarks/logo)
+                overlay: "logo_oecpww", // Replace with your logo's public ID (e.g., watermarks/logo)
                 gravity: "south_east", // Position the logo in the bottom-right corner
                 width: 200, // Adjust the logo width
                 opacity: 50, // Adjust the logo opacity (0-100)
@@ -68,11 +69,13 @@ export const AddNews = async (req: NextRequest) => {
       content,
       image: secure_url,
       district,
+      category,
       author,
     });
     return NextResponse.json(
       {
         addNews,
+        
       },
       {
         status: 201,
@@ -147,7 +150,7 @@ export const EditNews = async (req: NextRequest, newsID: string) => {
                 fetch_format: "auto", // convert to WebP/AVIF for browsers that support it
               },
               {
-                overlay:"logo_oecpww", // Replace with your logo's public ID (e.g., watermarks/logo)
+                overlay: "logo_oecpww", // Replace with your logo's public ID (e.g., watermarks/logo)
                 gravity: "south_east", // Position the logo in the bottom-right corner
                 width: 200, // Adjust the logo width
                 opacity: 50, // Adjust the logo opacity (0-100)

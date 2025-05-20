@@ -13,13 +13,14 @@ import {
 import { cn } from "@/lib/utils";
 import { NewsArticle } from "@/redux/features/news/news-slice";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function CarouselWithPagination({ newsArticles }: { newsArticles: NewsArticle[] }) {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
   const [isPaused, setIsPaused] = React.useState(false);
-  const slicedArticles = newsArticles.slice(0, 5);
+  const slicedArticles = newsArticles.slice(0, 5).reverse();
 
   // Set up carousel state and event listeners
   React.useEffect(() => {
@@ -65,7 +66,7 @@ export default function CarouselWithPagination({ newsArticles }: { newsArticles:
           {slicedArticles &&
             slicedArticles.map((article, index) => (
               <CarouselItem key={article._id}>
-                <div className="relative w-full aspect-video flex items-center justify-center">
+                <Link href={`/news/${article._id}`} className="relative w-full aspect-video flex items-center justify-center">
                   <Image
                     src={article.image}
                     alt={article.newsTitle}
@@ -74,12 +75,12 @@ export default function CarouselWithPagination({ newsArticles }: { newsArticles:
                     className="object-cover"
                     priority={index === 0}
                   />
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4">
                     <p className="text-white text-sm sm:text-base md:text-lg font-semibold line-clamp-2">
                       {article.newsTitle}
                     </p>
                   </div>
-                </div>
+                </Link>
               </CarouselItem>
             ))}
         </CarouselContent>

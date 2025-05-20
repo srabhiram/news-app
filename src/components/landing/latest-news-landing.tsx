@@ -7,6 +7,7 @@ import Link from 'next/link';
 import React from 'react';
 import { Badge } from '../ui/badge';
 import { cn } from '@/lib/utils';
+import { Heading } from '../Heading';
 
 export const LatestNewsLanding = ({ newsArticles }: { newsArticles: NewsArticle[] }) => {
   const slicedArticles = newsArticles.slice(0, 8);
@@ -14,9 +15,8 @@ export const LatestNewsLanding = ({ newsArticles }: { newsArticles: NewsArticle[
 
   return (
     <section className="w-full max-w-3xl mx-auto px-3 sm:px-4 py-4">
-      <h1 className="text-xl font-PottiSreeramulu font-bold flex items-center mb-3">
-        <span className="bg-blue-500 w-1.5 h-5 mr-1.5 rounded-sm"></span> తాజా వార్తలు
-      </h1>
+           <Heading text={"తాజా వార్తలు"}/>
+
       {slicedArticles &&
         slicedArticles.map((article, index) => (
           <Link

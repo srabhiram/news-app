@@ -17,7 +17,9 @@ const newsSchema: Schema = new Schema(
     newsTitle: { type: String, required: true },
     content: { type: String, required: true },
     image: { type: String, required: true },
-    district: { type: String, required: true },
+    district: { type: String||null },
+    category:{type:String || null},
+
     author: { type: String, required: true },
     comments: { type: [String], default: [] },
     likes: { type: Number, default: 0 }, // Updated from String[] to Number

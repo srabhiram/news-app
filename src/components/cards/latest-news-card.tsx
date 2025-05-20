@@ -8,6 +8,7 @@ import { distname } from "@/lib/navbar-items";
 import Pagination from "../Pagination";
 import { useState } from "react";
 import { useFormattedDates } from "@/hooks/useFormatdatetime";
+import { Heading } from "../Heading";
 
 interface LatestNewsCardProps {
   newsArticles: NewsArticle[];
@@ -25,15 +26,14 @@ export default function LatestNewsCard({ newsArticles }: LatestNewsCardProps) {
   const paginatedNews = newsArticles.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
-  );
+  ).filter((articles)=>articles.district);
 
   // Show "No news found" if no articles
   if (!newsArticles) {
     return (
       <div className="container mx-auto px-4 bg-white dark:bg-black text-black dark:text-white">
-        <h1 className="text-2xl sm:text-3xl font-PottiSreeramulu font-bold mt-6 ml-2 mb-4">
-          <span className="bg-blue-500  p-0.5 mr-1"></span> తాజా వార్తలు
-        </h1>
+      <Heading text={"తాజా వార్తలు"}/>
+
         <p>No news found</p>
       </div>
     );
@@ -42,9 +42,7 @@ export default function LatestNewsCard({ newsArticles }: LatestNewsCardProps) {
   return (
     <div className="container mx-auto pb-4 bg-white dark:bg-zinc-900 text-black dark:text-white">
       {/* Section header */}
-      <h1 className="text-2xl sm:text-3xl font-PottiSreeramulu font-bold mt-6 ml-2 mb-4">
-        <span className="bg-blue-500  p-0.5 mr-1"></span> తాజా వార్తలు
-      </h1>
+      <Heading text={"తాజా వార్తలు"}/>
       <div className="mb-4">
         {paginatedNews && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

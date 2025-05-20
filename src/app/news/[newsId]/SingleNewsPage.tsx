@@ -6,7 +6,7 @@ import { FaWhatsapp, FaLink, FaShareAlt } from "react-icons/fa";
 import { EyeIcon } from "lucide-react";
 import { NewsArticle } from "@/redux/features/news/news-slice";
 import Image from "next/image";
-import { distname } from "@/lib/navbar-items";
+import { categoryNames, distname } from "@/lib/navbar-items";
 import useViewTracker from "@/hooks/useViewsTracker";
 import { te } from "date-fns/locale";
 
@@ -164,7 +164,7 @@ export default function SingleNewsPage({
 
               {/* Article Content */}
               <p className="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 mt-4 tracking-wide leading-relaxed text-justify font-PottiSreeramulu">
-                <b>{distname(article.district)}</b>
+                <b>{article.district ? distname(article.district): categoryNames(article.category)}</b>
                 {": "}
                 {article?.content}
               </p>

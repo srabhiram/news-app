@@ -8,6 +8,7 @@ export interface NewsArticle {
   content: string;
   image: string;
   district: string;
+  category:string;
   author: string;
   comments: string[];
   likes: number;
