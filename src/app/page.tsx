@@ -17,7 +17,7 @@ export default async function Home() {
             </div>
             <div>
               <TechnologyLanding newsArticles={newsArticles}/>
-              {/* <SportsLanding newsArticles={newsArticles}/> */}
+              <SportsLanding newsArticles={newsArticles}/>
             </div>
           </div>
           <div>

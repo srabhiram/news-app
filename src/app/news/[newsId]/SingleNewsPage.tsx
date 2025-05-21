@@ -163,8 +163,15 @@ export default function SingleNewsPage({
               </div>
 
               {/* Article Content */}
-              <p className="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 mt-4 tracking-wide leading-relaxed text-pretty md:text-balance text-start md:text-justify font-PottiSreeramulu">
-                <b>{article.district ? distname(article.district): categoryNames(article.category)}</b>
+              <p
+                className=" text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 mt-4 tracking-normal leading-relaxed text-justify"
+                style={{ wordSpacing: "-2px" }}
+              >
+                <b>
+                  {article.district
+                    ? distname(article.district)
+                    : categoryNames(article.category)}
+                </b>
                 {": "}
                 {article?.content}
               </p>
@@ -175,7 +182,7 @@ export default function SingleNewsPage({
         {/* Related Posts */}
         <div className="w-full lg:w-1/3 mt-8 lg:mt-0">
           <h3 className="text-xl sm:text-2xl font-PottiSreeramulu font-bold mb-6">
-              <span className="bg-blue-500  p-0.5 mr-1"></span> సంబంధిత వార్తలు
+            <span className="bg-blue-500  p-0.5 mr-1"></span> సంబంధిత వార్తలు
           </h3>
           {error ? (
             <p className="text-red-500">{error}</p>

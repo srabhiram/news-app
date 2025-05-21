@@ -12,11 +12,7 @@ export const SportsLanding = ({
       {newsArticles ? (
         <Heading text={"స్పోర్ట్స్"} />
       ) : (
-        <>
-          {" "}
-          <Heading text={"స్పోర్ట్స్"} />
-          <p>No news found</p>
-        </>
+        ""
       )}
     </section>
   );
