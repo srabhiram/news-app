@@ -165,7 +165,7 @@ export default function SingleNewsPage({
 
               {/* Article Content */}
               <p
-                className="text-base whitespace-pre-line text-pretty lg:text-lg text-gray-700 dark:text-gray-300 mt-4 tracking-wide leading-loose"
+                className="text-base break-all whitespace-pre-line text-pretty lg:text-lg text-gray-700 dark:text-gray-300 mt-4 tracking-wide leading-loose"
                 style={{  textAlign:"justify", textJustify:"inter-word" }}
               >
                 <b>
@@ -174,7 +174,11 @@ export default function SingleNewsPage({
                     : categoryNames(article.category)}
                 </b>
                 {": "}
-            <ReactMarkdown>{article?.content}</ReactMarkdown>
+            <ReactMarkdown components={{
+          ul: ({ children }) => <ul className="list-disc">{children}</ul>,
+          ol: ({ children }) => <ol className="list-decimal">{children}</ol>
+        }}
+      >{article?.content}</ReactMarkdown>
               </p>
             </div>
           </div>
