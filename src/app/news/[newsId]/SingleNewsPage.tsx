@@ -9,6 +9,7 @@ import Image from "next/image";
 import { categoryNames, distname } from "@/lib/navbar-items";
 import useViewTracker from "@/hooks/useViewsTracker";
 import { te } from "date-fns/locale";
+import ReactMarkdown from 'react-markdown';
 
 export default function SingleNewsPage({
   params,
@@ -173,7 +174,7 @@ export default function SingleNewsPage({
                     : categoryNames(article.category)}
                 </b>
                 {": "}
-                {article?.content}
+            <ReactMarkdown>{article?.content}</ReactMarkdown>;
               </p>
             </div>
           </div>
