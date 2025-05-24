@@ -109,8 +109,8 @@ export default function SingleNewsPage({
             </div>
 
             {/* Article Content */}
-            <div className="p-4 sm:p-6">
-              <h2 className="text-lg sm:text-xl lg:text-2xl font-PottiSreeramulu font-bold leading-tight mb-4">
+            <div className="p-2 sm:p-6">
+              <h2 className="text-lg sm:text-xl lg:text-2xl font-PottiSreeramulu font-bold leading-relaxed mb-4">
                 {article?.newsTitle}
               </h2>
 
@@ -164,8 +164,8 @@ export default function SingleNewsPage({
 
               {/* Article Content */}
               <p
-                className=" text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 mt-4 tracking-normal leading-relaxed text-justify"
-                style={{ wordSpacing: "-2px" }}
+                className=" text-sm sm:text-base whitespace-pre-line text-pretty lg:text-lg text-gray-700 dark:text-gray-300 mt-4 tracking-wider leading-loose"
+                style={{  textAlign:"justify", textJustify:"inter-word" }}
               >
                 <b>
                   {article.district

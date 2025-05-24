@@ -20,7 +20,7 @@ export default function AddNewsLayout({
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
- <BreadcrumbLink asChild className="font-semibold text-zinc-100 dark:hover:text-zinc-300"><Link href="/admin/dashboard">Dashboard</Link></BreadcrumbLink>            </BreadcrumbItem>
+ <BreadcrumbLink asChild className="font-semibold dark:text-zinc-300 dark:hover:text-zinc-300 text-zinc-800"><Link href="/admin/dashboard">Dashboard</Link></BreadcrumbLink>            </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbPage className="font-semibold dark:text-zinc-100 opacity-55">Add News</BreadcrumbPage>

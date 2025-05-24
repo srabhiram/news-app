@@ -14,8 +14,8 @@ export const TechnologyLanding = ({
 }: {
   newsArticles: NewsArticle[];
 }) => {
-  const formattedDates = useFormattedDates(newsArticles)
-  const filteredArticles = newsArticles.filter((articles) => articles.category);
+  const filteredArticles = newsArticles.filter((articles) => articles.category==="technology");
+  const formattedDates = useFormattedDates(filteredArticles)
   return (
     <section className="px-3 py-4">
       {filteredArticles ? (

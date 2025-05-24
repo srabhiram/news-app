@@ -20,7 +20,7 @@ export default function CarouselWithPagination({ newsArticles }: { newsArticles:
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
   const [isPaused, setIsPaused] = React.useState(false);
-  const slicedArticles = newsArticles.slice(0, 5).reverse();
+  const slicedArticles = newsArticles.slice(0, 5);
 
   // Set up carousel state and event listeners
   React.useEffect(() => {
@@ -45,7 +45,7 @@ export default function CarouselWithPagination({ newsArticles }: { newsArticles:
     const autoplayInterval = setInterval(() => {
       const nextIndex = (api.selectedScrollSnap() + 1) % count;
       api.scrollTo(nextIndex);
-    }, 10000); // Advance every 10 seconds
+    }, 15000); // Advance every 10 seconds
 
     return () => clearInterval(autoplayInterval); // Cleanup on unmount or pause
   }, [api, isPaused, count]);

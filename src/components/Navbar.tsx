@@ -35,6 +35,7 @@ import { resetAuthState } from "@/redux/features/users/authSlice";
 import { FaUser } from "react-icons/fa";
 import Image from "next/image";
 import { Switch } from "./ui/switch";
+import useTheme from "@/hooks/useTheme";
 
 // Define the type for currentUser
 export interface User {
@@ -52,21 +53,8 @@ function Navbar() {
   const { success } = useSelector((state: RootState) => state.auth.signin);
   const dispatch = useDispatch<AppDispatch>();
 
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  useEffect(() => {
-  const isDark = localStorage.getItem("theme") === "dark";
-  document.body.classList.toggle("dark", isDark);
-  setIsDarkMode(isDark);
-}, []);
-
-  const toggleDarkMode = () => {
-    const newTheme = isDarkMode ? "light" : "dark";
-    setIsDarkMode(!isDarkMode);
-    localStorage.setItem("theme", newTheme);
-    document.body.classList.toggle("dark");
-  };
-
+ const {isDarkMode,toggleDarkMode} = useTheme();
+ 
   useEffect(() => {
     const userData = getTokenData();
     setCurrentUser(userData);
