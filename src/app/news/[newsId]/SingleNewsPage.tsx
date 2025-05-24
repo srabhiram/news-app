@@ -165,7 +165,7 @@ export default function SingleNewsPage({
 
               {/* Article Content */}
               <p
-                className=" text-sm break-all sm:text-base whitespace-pre-line text-pretty lg:text-lg text-gray-700 dark:text-gray-300 mt-4 tracking-wide leading-loose"
+                className=" text-sm sm:text-base whitespace-pre-line text-pretty lg:text-lg text-gray-700 dark:text-gray-300 mt-4 tracking-wide leading-loose"
                 style={{  textAlign:"justify", textJustify:"inter-word" }}
               >
                 <b>
