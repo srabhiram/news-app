@@ -23,11 +23,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "SRS News",
   description: "మీ చేతిలో వార్తల ప్రపంచం – నిత్యం తాజా, నిస్సందేహం!",
-  appleWebApp:{
-    capable:true,
-    statusBarStyle:"black-translucent",
-    title:"SRS News",
-  },
+  // appleWebApp:{
+  //   capable:true,
+  //   title:"SRS News",
+  // },
   applicationName:"SRS News"
 };
 export const viewport:Viewport ={

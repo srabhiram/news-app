@@ -154,7 +154,7 @@ function Navbar() {
                 <li key={item?.id}>
                   <Link
                     href={item?.href}
-                    className="font-Gidugu text-sm sm:text-base lg:text-lg tracking-wide rounded-lg hover:bg-white/10 hover:text-white transition-all duration-300 block px-2 sm:px-3 py-1.5"
+                    className="font-Gidugu text-base lg:text-lg tracking-wide rounded-lg hover:bg-white/10 hover:text-white transition-all duration-300 block px-2 sm:px-3 py-1.5"
                   >
                     {item?.name}
                   </Link>
