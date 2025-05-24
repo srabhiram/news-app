@@ -10,18 +10,16 @@ export default async function Home() {
   return (
     <>
       <main className="m-0.5">
-        <div className="grid md:grid-cols-3 gap-1 ">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-1">
           <div className="md:col-span-2">
-            <div>
-              <CarouselLading newsArticles={newsArticles} />
-            </div>
-            <div>
-              <TechnologyLanding newsArticles={newsArticles}/>
-              <SportsLanding newsArticles={newsArticles}/>
-            </div>
+            <CarouselLading newsArticles={newsArticles} />
           </div>
-          <div>
+          <div className="md:col-span-1">
             <LatestNewsLanding newsArticles={newsArticles} />
+          </div>
+          <div className="md:col-span-3">
+            <TechnologyLanding newsArticles={newsArticles} />
+            <SportsLanding newsArticles={newsArticles} />
           </div>
         </div>
       </main>

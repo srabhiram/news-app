@@ -17,7 +17,7 @@ export const SportsLanding = ({
   const filteredArticles = newsArticles.filter((articles)=>articles.category==="sports")
   const formattedDates = useFormattedDates(filteredArticles)
   return (
-    <section className="px-3 py-4">
+    <section className="px-3 py-4" id="sports">
       {newsArticles ? (<>
         <Heading text={"స్పోర్ట్స్"} />
         <div className="block md:grid md:grid-cols-2 bg-white dark:bg-zinc-800 rounded-md">
@@ -43,7 +43,7 @@ export const SportsLanding = ({
                         className="rounded-md object-cover aspect-video w-full"
                         priority={index === 0}
                       />
-                      {isNewPost(article.createdAt, 3) && (
+                      {isNewPost(article.createdAt, 6) && (
                         <span className="absolute -top-3 -left-1.5">
                           <Badge variant="destructive" className="text-[10px] px-1.5 py-0.5">
                             New

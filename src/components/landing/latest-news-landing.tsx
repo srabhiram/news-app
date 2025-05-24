@@ -10,11 +10,11 @@ import { cn } from '@/lib/utils';
 import { Heading } from '../Heading';
 
 export const LatestNewsLanding = ({ newsArticles }: { newsArticles: NewsArticle[] }) => {
-  const slicedArticles = newsArticles.slice(0, 8);
+  const slicedArticles = newsArticles.slice(0, 4);
   const formattedDates = useFormattedDates(newsArticles);
 
   return (
-    <section className="w-full max-w-3xl mx-auto px-3 sm:px-4 py-4">
+    <section className="w-full max-w-3xl mx-auto px-3 sm:px-4 py-2">
            <Heading text={"తాజా వార్తలు"}/>
 <div className='rounded-md bg-white dark:bg-zinc-800 mb-1'>
 
@@ -40,7 +40,7 @@ export const LatestNewsLanding = ({ newsArticles }: { newsArticles: NewsArticle[
                 className="rounded-md object-cover aspect-video w-full"
                 priority={index === 0}
               />
-              {isNewPost(article.createdAt, 3) && (
+              {isNewPost(article.createdAt, 6) && (
                 <span className="absolute -top-3 -left-1.5">
                   <Badge variant="destructive" className="text-[10px] px-1.5 py-0.5">
                     New

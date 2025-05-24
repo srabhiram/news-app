@@ -14,7 +14,6 @@ export const AddNews = async (req: NextRequest) => {
     const district = body.get("district");
     const author = body.get("author");
     const category = body.get("category");
-    console.log({ newsTitle, content, district, category, author });
     // validate the input data
     if (!newsTitle || !content || !author || !file) {
       return NextResponse.json(
@@ -75,7 +74,6 @@ export const AddNews = async (req: NextRequest) => {
     return NextResponse.json(
       {
         addNews,
-        
       },
       {
         status: 201,
@@ -104,6 +102,8 @@ export const EditNews = async (req: NextRequest, newsID: string) => {
     const file = body.get("image") as File;
     const district = body.get("district");
     const author = body.get("author");
+    const category = body.get("category");
+
     // delete the existing image from cloudinary
     const article = await News.findById(newsID);
     if (!article) {
@@ -125,7 +125,7 @@ export const EditNews = async (req: NextRequest, newsID: string) => {
     }
 
     // validate the input data
-    if (!newsTitle || !content || !file || !district || !author) {
+    if (!newsTitle || !content || !file || !author) {
       return NextResponse.json(
         {
           message: "All fields are required",
@@ -174,6 +174,7 @@ export const EditNews = async (req: NextRequest, newsID: string) => {
         content,
         image: secure_url,
         district,
+        category,
         author,
       },
       { new: true }

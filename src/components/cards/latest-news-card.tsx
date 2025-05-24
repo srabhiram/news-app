@@ -64,7 +64,7 @@ export default function LatestNewsCard({ newsArticles }: LatestNewsCardProps) {
                     className="rounded-md object-cover object-top aspect-video w-full mx-auto"
                     priority
                   />
-                  {isNewPost(article.createdAt, 3) && (
+                  {isNewPost(article.createdAt, 6) && (
                     <span className="absolute -top-4 -left-2">
                       <Badge variant="destructive" className="text-[10px] w-7">
                         New

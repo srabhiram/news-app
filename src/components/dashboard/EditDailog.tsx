@@ -1,112 +1,62 @@
 "use client";
-import { categories, districts } from "@/lib/navbar-items";
+import React from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { LoaderCircle } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import { FaSpinner } from "react-icons/fa";
+import { Button } from "../ui/button";
+import { categories, districts } from "@/lib/navbar-items";
+import { newsData } from "@/interface/all-interfaces";
+import { NewsArticle } from "@/redux/features/news/news-slice";
 
-export default function AddNewsPageComponent() {
-  const [newsData, setnewsData] = React.useState({
-    newsTitle: "",
-    content: "",
-    image: null as File | null,
-    district: "",
-    category: "",
-    author: "",
-    selectionType: "district" as "district" | "category",
-  });
-  const [loading, setLoading] = useState(false);
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
-
-  const router = useRouter();
-
-  const handleChange = (
+interface EditDailogProps {
+  articles: NewsArticle;
+  fileInputRef: React.RefObject<HTMLInputElement | null>;
+  handleChange: (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
-  ) => {
-    const { name, value } = e.target;
-    setnewsData((prev) => ({ ...prev, [name]: value }));
-  };
+  ) => void;
+  handleSelectionTypeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleEditClick: (article: NewsArticle) => void;
+  handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>, id: string) => void;
+  loading: boolean;
+  newsData: newsData;
+}
 
-  const handleSelectionTypeChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const selectionType = e.target.value as "district" | "category";
-    setnewsData((prev) => ({
-      ...prev,
-      selectionType,
-      district: selectionType === "category" ? "" : prev.district,
-      category: selectionType === "district" ? "" : prev.category,
-    }));
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null;
-
-    if (file && file.size > 5 * 1024 * 1024) {
-      alert("Image size must be less than 5MB");
-      return;
-    }
-
-    setnewsData((prev) => ({ ...prev, image: file }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append("newsTitle", newsData.newsTitle);
-    formData.append("content", newsData.content);
-    formData.append("image", newsData.image as Blob);
-    formData.append("author", newsData.author);
-    formData.append("district", newsData.district);
-    formData.append("category", newsData.category);
-
-    try {
-      // await dispatch(addNews(formData));
-      setLoading(true);
-      const response = await fetch("/api/news/add", {
-        method: "POST",
-        body: formData
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        return console.log(data.message || "Something went wrong");
-      }
-
-      setnewsData({
-        newsTitle: "",
-        content: "",
-        image: null,
-        district: "",
-        category: "",
-        author: "",
-        selectionType: "district",
-      });
-      if (fileInputRef.current) {
-        fileInputRef.current.value = "";
-      }
-      setLoading(false);
-      // await dispatch(getNews());
-      router.push("/");
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      alert("An error occurred while submitting the form. Please try again.");
-      return;
-    }
-  };
-
+export function EditDailog({
+  articles,
+  fileInputRef,
+  handleChange,
+  handleSelectionTypeChange,
+  handleEditClick,
+  handleFileChange,
+  handleSubmit,
+  loading,
+  newsData,
+}: EditDailogProps) {
   return (
-    <section>
-      <div className="mx-3 flex flex-col items-center justify-center my-5 sm:mt-10 bg-white dark:bg-zinc-800 dark:text-zinc-200 rounded-xl p-6">
-        <h1 id="add-news-title" className="text-2xl font-bold">
-          Add News
-        </h1>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button className="bg-blue-600 text-white" onClick={() => handleEditClick(articles)}>Edit</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px] max-h-[80vh] overflow-y-auto bg-white dark:bg-zinc-800 dark:text-zinc-200">
+        <DialogHeader>
+          <DialogTitle id="edit-news-title">Edit News</DialogTitle>
+          <DialogDescription>
+            Update the news article details below.
+          </DialogDescription>
+        </DialogHeader>
         <form
-          className="mt-4"
-          onSubmit={handleSubmit}
-          aria-labelledby="add-news-title"
+          onSubmit={(e) => handleSubmit(e, articles._id)}
+          aria-labelledby="edit-news-title"
         >
           <div className="mb-4">
             <label
@@ -136,7 +86,7 @@ export default function AddNewsPageComponent() {
             <textarea
               id="content"
               name="content"
-              rows={14}
+              rows={8}
               value={newsData.content}
               onChange={handleChange}
               className="mt-1 block w-full border placeholder:dark:text-zinc-200 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-200 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 overflow-y-auto"
@@ -177,10 +127,8 @@ export default function AddNewsPageComponent() {
               ref={fileInputRef}
               onChange={handleFileChange}
               className="my-1 block h-8 p-1 w-full border placeholder:dark:text-zinc-200 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-200 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-              required
-              aria-required="true"
             />
-            {newsData.image && (
+            {newsData.image ? (
               <div className="mt-2">
                 <p>Image Preview:</p>
                 <Image
@@ -191,6 +139,19 @@ export default function AddNewsPageComponent() {
                   className="w-32 h-32 object-cover rounded-md"
                 />
               </div>
+            ) : (
+              articles.image && (
+                <div className="mt-2">
+                  <p>Current Image:</p>
+                  <Image
+                    src={articles.image}
+                    alt="Current"
+                    width={128}
+                    height={128}
+                    className="w-32 h-32 object-cover rounded-md"
+                  />
+                </div>
+              )
             )}
           </div>
           <div className="mb-4">
@@ -281,21 +242,26 @@ export default function AddNewsPageComponent() {
               </select>
             </div>
           )}
-          <button
+          <Button
             type="submit"
-            className={`${!loading ? "px-4 py-2 w-full bg-blue-600 text-white rounded-md hover:bg-blue-700 active:bg-blue-700" :"opacity-55 bg-blue-600 px-4 py-2 w-full rounded-md text-white"} `}
+            className={`${
+              !loading
+                ? "px-4 py-2 w-full bg-blue-600 text-white rounded-md hover:bg-blue-700 active:bg-blue-700"
+                : "opacity-55 bg-blue-600 px-4 py-2 w-full rounded-md text-white"
+            }`}
             disabled={loading}
             aria-disabled={loading ? "true" : "false"}
           >
             {loading ? (
               <span className="flex items-center justify-center mx-auto">
-              <LoaderCircle className="animate-spin transition-all  " /></span>
+                <LoaderCircle className="animate-spin transition-all" />
+              </span>
             ) : (
-              "Add News"
+              "Update News"
             )}
-          </button>
+          </Button>
         </form>
-      </div>
-    </section>
+      </DialogContent>
+    </Dialog>
   );
 }
