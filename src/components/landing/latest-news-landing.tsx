@@ -16,6 +16,7 @@ export const LatestNewsLanding = ({ newsArticles }: { newsArticles: NewsArticle[
   return (
     <section className="w-full max-w-3xl mx-auto px-3 sm:px-4 py-4">
            <Heading text={"తాజా వార్తలు"}/>
+<div className='rounded-md bg-white dark:bg-zinc-800 mb-1'>
 
       {slicedArticles &&
         slicedArticles.map((article, index) => (
@@ -23,8 +24,8 @@ export const LatestNewsLanding = ({ newsArticles }: { newsArticles: NewsArticle[
             key={article._id}
             href={`/news/${article._id}`}
             className={cn(
-              "flex flex-row items-center bg-white dark:bg-zinc-800 my-1 p-2",
-              index !== slicedArticles.length - 1 && "border-b-2 border-zinc-200 dark:border-zinc-700",
+              "flex flex-row items-center   p-2 ",
+              index !== slicedArticles.length - 1 && "max-sm:border-b-2 border-zinc-200 dark:border-zinc-700",
               "hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors duration-200"
             )}
             aria-label={`Read more about ${article.newsTitle}`}
@@ -59,6 +60,7 @@ export const LatestNewsLanding = ({ newsArticles }: { newsArticles: NewsArticle[
             </div>
           </Link>
         ))}
+        </div>
       <Link href={"/latest-news"} className='flex justify-end text-sm text-blue-500 font-bold hover:text-blue-700 active:text-blue-700 hover:underline'>మరి కొన్ని వార్తలు</Link>
     </section>
   );

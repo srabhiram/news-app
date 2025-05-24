@@ -54,7 +54,7 @@ function Navbar() {
   const dispatch = useDispatch<AppDispatch>();
 
  const {isDarkMode,toggleDarkMode} = useTheme();
- 
+
   useEffect(() => {
     const userData = getTokenData();
     setCurrentUser(userData);
@@ -98,13 +98,13 @@ function Navbar() {
 
           {/* User Menu */}
           <div className="flex items-center gap-3">
-            <Switch
-            onCheckedChange={toggleDarkMode}
-            checked={isDarkMode}
-              className="data-[state=checked]:bg-black/40 data-[state=unchecked]:bg-blue-600"
-              checkedIcon={<Moon size={12} className="text-blue-200" />}
-              uncheckedIcon={<Sun size={12} className="text-orange-400" />}
-            />
+            <Button
+            onClick={toggleDarkMode}
+              className="border-0 rounded-lg bg-transparent dark:bg-transparent hover:backdrop-blur-xl hover:text-white  hover:bg-white/10   text-xs sm:text-sm px-2 sm:px-3 py-1 transition-all duration-30"
+        variant={"outline"}
+            >{isDarkMode ? <Sun/> : <Moon/>}</Button>
+
+            
             {currentUser?.isAdmin && (
               <Link href="/admin/dashboard">
                 <Button

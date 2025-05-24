@@ -20,15 +20,17 @@ export const SportsLanding = ({
     <section className="px-3 py-4">
       {newsArticles ? (<>
         <Heading text={"స్పోర్ట్స్"} />
+        <div className="block md:grid md:grid-cols-2 bg-white dark:bg-zinc-800 rounded-md">
+
          {filteredArticles.map((article,index)=>(
-                    <Link
-                    key={article._id}
-                    href={`/news/${article._id}`}
-                    className={cn(
-                      "flex flex-row items-center bg-white dark:bg-zinc-800 my-1 p-2",
-                      index !== filteredArticles.length - 1 && "border-b-2 border-zinc-200 dark:border-zinc-700",
-                      "hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors duration-200"
-                    )}
+           <Link
+           key={article._id}
+           href={`/news/${article._id}`}
+           className={cn(
+             "flex flex-row items-center   p-2 rounded-md",
+             index !== filteredArticles.length - 1 && "max-sm:border-b-2 md:border-r-2 border-zinc-200 dark:border-zinc-700",
+             "hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors duration-200"
+            )}
                     aria-label={`Read more about ${article.newsTitle}`}
                   >
                     {/* Image Container */}
@@ -61,6 +63,7 @@ export const SportsLanding = ({
                     </div>
                   </Link>
                   ))}
+                  </div>
       </>
 
 
