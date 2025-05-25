@@ -165,7 +165,7 @@ export default function AllNewsShowcase({
                       {article.newsTitle}
                     </h2>
                     <p className="py-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1 font-PottiSreeramulu">
-                      <span>{formattedDates[index]}</span>
+                      <span>{formattedDates?.[index]|| ""}</span>
                     </p>
                   </div>
                 </div>

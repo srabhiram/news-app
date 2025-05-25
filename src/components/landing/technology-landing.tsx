@@ -59,7 +59,7 @@ export const TechnologyLanding = ({
                 {article.newsTitle}
               </h2>
               <p className="mt-1 text-xs text-gray-600 dark:text-gray-400 font-PottiSreeramulu">
-                <b>{categoryNames(article.category)}</b> • <span>{formattedDates[index]}</span>
+                <b>{categoryNames(article.category)}</b> • <span>{formattedDates?.[index] || ""}</span>
               </p>
             </div>
           </Link>

@@ -55,7 +55,7 @@ export const LatestNewsLanding = ({ newsArticles }: { newsArticles: NewsArticle[
                 {article.newsTitle}
               </h2>
               <p className="mt-1 text-xs text-gray-600 dark:text-gray-400 font-PottiSreeramulu">
-                <b>{distname(article.district)}</b> • <span>{formattedDates[index]}</span>
+                <b>{distname(article.district)}</b> • <span>{formattedDates?.[index] || ""}</span>
               </p>
             </div>
           </Link>
