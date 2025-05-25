@@ -165,22 +165,25 @@ export default function SingleNewsPage({
 
               {/* Article Content */}
               <p
-  className="text-base inline break-all whitespace-pre- text-balance lg:text-lg text-gray-700 dark:text-gray-300 mt-4 tracking-wide leading-loose"
-  style={{ textAlign: "justify", textJustify: "inter-word"}}
->
-  <b className="inline">
-    {article.district
-      ? distname(article.district)
-      : categoryNames(article.category)}
-  </b>
-  {": "}
-  <span className="prose inline text-base">
-    <ReactMarkdown components={{ p: ({ node, ...props }) => <span {...props} /> }}>
-      {article?.content}
-    </ReactMarkdown>
-  </span>
-</p>
-
+                className="text-base whitespace-break-spaces text-pretty lg:text-lg text-gray-700 dark:text-gray-300 mt-4 tracking-wide leading-loose"
+                style={{ textAlign: "justify", textJustify: "inter-word", wordSpacing:"-2px" }}
+              >
+                <b className="inline">
+                  {article.district
+                    ? distname(article.district)
+                    : categoryNames(article.category)}
+                </b>
+                {": "}
+                <span className="prose inline text-base">
+                  <ReactMarkdown
+                    components={{
+                      p: ({ node, ...props }) => <span {...props} />,
+                    }}
+                  >
+                    {article?.content}
+                  </ReactMarkdown>
+                </span>
+              </p>
             </div>
           </div>
         </div>
