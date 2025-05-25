@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, HTMLAttributes } from "react";
 import Link from "next/link";
 import { format, formatDistanceToNow } from "date-fns";
 import { FaWhatsapp, FaLink, FaShareAlt } from "react-icons/fa";
@@ -9,7 +9,7 @@ import Image from "next/image";
 import { categoryNames, distname } from "@/lib/navbar-items";
 import useViewTracker from "@/hooks/useViewsTracker";
 import { te } from "date-fns/locale";
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown from "react-markdown";
 
 export default function SingleNewsPage({
   params,
@@ -92,13 +92,13 @@ export default function SingleNewsPage({
   const article = newsArticles[0];
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-8 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-200">
+    <div className="container mx-auto px-1 sm:px-6 lg:px-8 pb-8 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-200">
       <div className="flex flex-col lg:flex-row lg:gap-8">
         {/* Main Article */}
         <div className="w-full lg:w-3/4">
           <div className="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-gray-700 rounded-xl min-h-fit">
             {/* Article Image */}
-            <div className="w-full mt-0.5 flex justify-center items-center">
+            <div className="w-full  flex justify-center items-center">
               <Image
                 src={article?.image}
                 alt={article?.newsTitle}
@@ -165,21 +165,22 @@ export default function SingleNewsPage({
 
               {/* Article Content */}
               <p
-                className="text-base break-all whitespace-pre-line text-pretty lg:text-lg text-gray-700 dark:text-gray-300 mt-4 tracking-wide leading-loose"
-                style={{  textAlign:"justify", textJustify:"inter-word" }}
-              >
-                <b>
-                  {article.district
-                    ? distname(article.district)
-                    : categoryNames(article.category)}
-                </b>
-                {": "}
-            <ReactMarkdown components={{
-          ul: ({ children }) => <ul className="list-disc">{children}</ul>,
-          ol: ({ children }) => <ol className="list-decimal">{children}</ol>
-        }}
-      >{article?.content}</ReactMarkdown>
-              </p>
+  className="text-base inline break-all whitespace-pre- text-balance lg:text-lg text-gray-700 dark:text-gray-300 mt-4 tracking-wide leading-loose"
+  style={{ textAlign: "justify", textJustify: "inter-word"}}
+>
+  <b className="inline">
+    {article.district
+      ? distname(article.district)
+      : categoryNames(article.category)}
+  </b>
+  {": "}
+  <span className="prose inline text-base">
+    <ReactMarkdown components={{ p: ({ node, ...props }) => <span {...props} /> }}>
+      {article?.content}
+    </ReactMarkdown>
+  </span>
+</p>
+
             </div>
           </div>
         </div>

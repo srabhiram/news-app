@@ -22,11 +22,14 @@ export default function LatestNewsCard({ newsArticles }: LatestNewsCardProps) {
 
   const itemsPerPage = 15;
 
-  const totalPages = Math.ceil(newsArticles.length / itemsPerPage);
-  const paginatedNews = newsArticles.slice(
+  const totalPages = ()=>{
+    if(newsArticles){
+   return  Math.ceil(newsArticles.length / itemsPerPage);
+    }}
+  const paginatedNews = newsArticles?.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
-  ).filter((articles)=>articles.district);
+  ).filter((articles)=>articles.district) || [];
 
   // Show "No news found" if no articles
   if (!newsArticles) {
@@ -46,7 +49,7 @@ export default function LatestNewsCard({ newsArticles }: LatestNewsCardProps) {
       <div className="mb-4">
         {paginatedNews && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {paginatedNews.map((article, index) => (
+            {paginatedNews?.map((article, index) => (
               <Link
                 key={article._id}
                 href={`/news/${article._id}`}
@@ -81,7 +84,7 @@ export default function LatestNewsCard({ newsArticles }: LatestNewsCardProps) {
                   <p className="py-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1 font-PottiSreeramulu">
                     {" "}
                     <b>{distname(article.district)} </b>•{" "}
-                    <span>{formattedDates[index]}</span>
+                    <span>{formattedDates?.[index] ?? ""}</span>
                   </p>
                 </div>
               </Link>
@@ -91,7 +94,7 @@ export default function LatestNewsCard({ newsArticles }: LatestNewsCardProps) {
       </div>
       <Pagination
         currentPage={currentPage}
-        totalPages={totalPages}
+        totalPages={totalPages() ?? 1}
         onPageChange={setCurrentPage}
       />
     </div>
