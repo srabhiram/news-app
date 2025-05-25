@@ -51,7 +51,7 @@ useEffect(() => {
         throw new Error("Invalid newsArticles array");
 
       setRelatedPosts(
-        posts.filter((post: NewsArticle) => post._id !== newsId)
+        posts.filter((post: NewsArticle) => post._id !== newsId).slice(0,5)
       );
       setError(null);
     } catch (err) {
@@ -177,7 +177,7 @@ useEffect(() => {
 
               {/* Article Content */}
               <p
-                className="text-base whitespace-break-spaces text-pretty lg:text-lg text-gray-700 dark:text-gray-300 mt-4 tracking-wide leading-loose"
+                className="text-base whitespace-break-spaces text-pretty lg:text-lg text-gray-700 dark:text-zinc-300 mt-4 tracking-wide leading-loose"
                 style={{
                   textAlign: "justify",
                   textJustify: "inter-word",
@@ -190,7 +190,7 @@ useEffect(() => {
                     : categoryNames(article.category)}
                 </b>
                 {": "}
-                <span className="prose inline text-base">
+                <span className="prose inline text-base dark:text-zinc-300">
                   <ReactMarkdown
                     components={{
                       p: ({ node, ...props }) => <span {...props} />,
