@@ -26,31 +26,43 @@ export default function SingleNewsPage({
   const [views, setViews] = useState<number>(0);
 
   // Fetch related posts
-  useEffect(() => {
-    const fetchRelatedPosts = async () => {
-      if (!newsArticles[0]?.district) return;
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/news/${newsArticles[0].district}`,
-          { method: "GET", headers: { "Content-Type": "application/json" } }
-        );
-        if (!response.ok)
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        const { newsArticles: posts } = await response.json();
-        if (!Array.isArray(posts))
-          throw new Error("Invalid newsArticles array");
-        setRelatedPosts(
-          posts.filter((post: NewsArticle) => post._id !== newsId)
-        );
-        setError(null);
-      } catch (err) {
-        console.error("Error fetching related posts:", err);
-        setRelatedPosts([]);
-        setError((err as Error).message || "Failed to load related posts.");
-      }
-    };
-    if (newsArticles.length > 0) fetchRelatedPosts();
-  }, [newsArticles, newsId]);
+useEffect(() => {
+  const fetchRelatedPosts = async () => {
+    if (!newsArticles[0]) return;
+
+    const param = newsArticles[0].district || newsArticles[0].category;
+    if (!param) return;
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/news/${param}`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          cache: "no-store",
+        }
+      );
+      if (!response.ok)
+        throw new Error(`HTTP error! Status: ${response.status}`);
+
+      const { newsArticles: posts } = await response.json();
+
+      if (!Array.isArray(posts))
+        throw new Error("Invalid newsArticles array");
+
+      setRelatedPosts(
+        posts.filter((post: NewsArticle) => post._id !== newsId)
+      );
+      setError(null);
+    } catch (err) {
+      console.error("Error fetching related posts:", err);
+      setRelatedPosts([]);
+      setError((err as Error).message || "Failed to load related posts.");
+    }
+  };
+
+  fetchRelatedPosts();
+}, [newsArticles, newsId]);
 
   // Increment views
   useViewTracker(newsId, setViews);
@@ -166,7 +178,11 @@ export default function SingleNewsPage({
               {/* Article Content */}
               <p
                 className="text-base whitespace-break-spaces text-pretty lg:text-lg text-gray-700 dark:text-gray-300 mt-4 tracking-wide leading-loose"
-                style={{ textAlign: "justify", textJustify: "inter-word", wordSpacing:"-2px" }}
+                style={{
+                  textAlign: "justify",
+                  textJustify: "inter-word",
+                  wordSpacing: "-2px",
+                }}
               >
                 <b className="inline">
                   {article.district

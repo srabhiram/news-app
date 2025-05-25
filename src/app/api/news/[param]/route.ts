@@ -10,20 +10,25 @@ export async function GET(
   connectDB();
   let newsArticles: any[] = [];
   const { param } = await params;
-  
+
   console.log(param);
   if (mongoose.Types.ObjectId.isValid(param)) {
-    const id = param;
-    newsArticles = await News.find({ _id: id }).sort({ createdAt: -1 });
-  } else {
-    newsArticles = await News.find({ district: param }).sort({ createdAt: -1 });
-  }
-  if (!newsArticles || newsArticles.length === 0) {
-    return new Response(JSON.stringify({ message: "No articles found" }), {
-      status: 404,
-      headers: { "Content-Type": "application/json" },
-    });
-  }
+  const id = param;
+  newsArticles = await News.find({ _id: id }).sort({ createdAt: -1 });
+} else {
+  newsArticles = await News.find({
+    $or: [{ district: param }, { category: param }]
+  }).sort({ createdAt: -1 });
+}
+
+if (!newsArticles || newsArticles.length === 0) {
+  console.log("no articles are found");
+  return new Response(JSON.stringify({ message: "No articles found" }), {
+    status: 404,
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
   return new Response(JSON.stringify({ newsArticles }), {
     status: 200,
     headers: {
