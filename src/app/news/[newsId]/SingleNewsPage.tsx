@@ -177,7 +177,7 @@ useEffect(() => {
 
               {/* Article Content */}
               <p
-                className="text-base whitespace-break-spaces text-pretty lg:text-lg text-gray-700 dark:text-zinc-300 mt-4 tracking-wide leading-loose"
+                className="text-base text-wrap lg:text-lg text-gray-700 dark:text-zinc-300 mt-4 tracking-wide leading-loose"
                 style={{
                   textAlign: "justify",
                   textJustify: "inter-word",
@@ -190,7 +190,7 @@ useEffect(() => {
                     : categoryNames(article.category)}
                 </b>
                 {": "}
-                <span className="prose inline text-base dark:text-zinc-300">
+                <span className="prose-ul:list-disc prose whitespace-pre-wrap text-wrap text-base dark:text-zinc-300">
                   <ReactMarkdown
                     components={{
                       p: ({ node, ...props }) => <span {...props} />,

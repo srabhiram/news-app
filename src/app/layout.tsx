@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import Script from "next/script";
 import GoogleAnalytics from "@/components/providers/GoogleAnalytics";
 import { Viewport } from "next";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,6 +52,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <GoogleAnalytics/>
+        <ErrorBoundary>
         <ClientProvider>
           <Navbar />
 
@@ -62,6 +64,7 @@ export default function RootLayout({
           </main>
           <Footer />
         </ClientProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );

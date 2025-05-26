@@ -13,6 +13,8 @@ import { NewsArticle } from "@/redux/features/news/news-slice";
 // Assuming EditDailog is a separate component handling the edit form
 import { EditDailog } from "./EditDailog";
 import { DeleteDailog } from "./DeleteDailog";
+import { fetcNews } from "@/lib/fetchNews";
+import Link from "next/link";
 
 export default function AllNewsShowcase({
   newsArticles,
@@ -117,8 +119,8 @@ export default function AllNewsShowcase({
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
-
-      router.push("/");
+      await router.push("/");
+      
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("An error occurred while submitting the form. Please try again.");
@@ -133,7 +135,8 @@ export default function AllNewsShowcase({
       <div className=" rounded-xl space-y-2 grid md:grid-cols-4 md:gap-2">
         {newsArticles.length &&
           newsArticles.map((article, index) => (
-            <Card key={article._id}>
+            <Link href={`/news/${article._id}`} key={article._id} >
+            <Card >
               <CardContent className="flex flex-row">
                 <div aria-label={`Read more about ${article.newsTitle}`}>
                   {/* Image Container */}
@@ -187,6 +190,7 @@ export default function AllNewsShowcase({
                 </div>
               </CardFooter>
             </Card>
+            </Link>
           ))}
       </div>
     </div>

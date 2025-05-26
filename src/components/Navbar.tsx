@@ -82,7 +82,7 @@ function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 shadow-md ">
-      <div className="bg-blue-800 text-white px-4 py-3">
+      <div className="bg-blue-800 text-white px-0.5 lg:px-4 py-3">
         <div className="container mx-auto flex items-center justify-between gap-3">
           {/* Logo */}
           <Link href="/" className="flex items-center shrink-0">
@@ -154,7 +154,7 @@ function Navbar() {
                 <li key={item?.id}>
                   <Link
                     href={item?.href}
-                    className="font-Gidugu text-base lg:text-lg tracking-wide rounded-lg hover:bg-white/10 hover:text-white transition-all duration-300 block px-2 sm:px-3 py-1.5"
+                    className=" text-base lg:text-lg tracking-wide rounded-lg hover:bg-white/10 hover:text-white transition-all duration-300 block px-2 sm:px-3 py-1.5"
                   >
                     {item?.name}
                   </Link>
@@ -168,7 +168,7 @@ function Navbar() {
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className="w-[90px] sm:w-[120px] lg:w-[150px] bg-transparent text-white flex items-center justify-between font-Gidugu text-sm lg:text-lg border-white py-1 h-8 lg:h-9 rounded-lg hover:bg-white hover:text-blue-800 transition-all duration-300 dark:hover:bg-white dark:bg-transparent"
+                    className="w-[90px] sm:w-[120px] lg:w-[150px] bg-transparent text-white flex items-center justify-between  text-sm lg:text-lg border-white py-1 h-8 lg:h-9 rounded-lg hover:bg-white hover:text-blue-800 transition-all duration-300 dark:hover:bg-white dark:bg-transparent"
                   >
                     {value
                       ? districts.find((framework) => framework.value === value)
@@ -181,9 +181,9 @@ function Navbar() {
                   <Command className="dark:bg-zinc-700 dark:text-zinc-200">
                     <CommandInput
                       placeholder="జిల్లా పేరు...."
-                      className="h-8 text-sm font-Gidugu"
+                      className="h-8 text-sm "
                     />
-                    <CommandList className="text-sm lg:text-base font-Gidugu">
+                    <CommandList className="text-sm lg:text-base">
                       <CommandEmpty className="text-sm p-2 text-center text-zinc-500 dark:text-zinc-400">
                         దయచేసి మళ్లీ ప్రయత్నించండి
                       </CommandEmpty>

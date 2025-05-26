@@ -13,12 +13,13 @@ import {
 import { NewsArticle } from "@/redux/features/news/news-slice";
 import { LucideLoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { fetcNews } from "@/lib/fetchNews";
 
 interface deleteDailogProps {
   articles: NewsArticle;
 }
 export const DeleteDailog = ({ articles }: deleteDailogProps) => {
-    const router = useRouter();
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const handleDelete = async (id: string) => {
     try {
@@ -33,7 +34,9 @@ export const DeleteDailog = ({ articles }: deleteDailogProps) => {
       if (!response.ok) {
         return console.log(data.error || "Something went wrong");
       }
-      router.refresh()
+      await fetcNews("no-store");
+
+      await router.refresh();
     } catch (error) {
       console.error(error);
     } finally {
