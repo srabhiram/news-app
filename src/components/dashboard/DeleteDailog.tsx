@@ -34,7 +34,7 @@ export const DeleteDailog = ({ articles }: deleteDailogProps) => {
       if (!response.ok) {
         return console.log(data.error || "Something went wrong");
       }
-      await fetcNews("no-store");
+     
 
       await router.refresh();
     } catch (error) {
