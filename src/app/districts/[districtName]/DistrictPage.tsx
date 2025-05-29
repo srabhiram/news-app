@@ -1,6 +1,6 @@
 import LatestNewsCard from "@/components/cards/latest-news-card";
 import { getSingleNews } from "@/lib/getSingleNews";
-import { NewsArticle } from "@/redux/features/news/news-slice";
+import { NewsArticle } from "@/interface/all-interfaces";
 import React from "react";
 
 export default async function DistrictPageClient({

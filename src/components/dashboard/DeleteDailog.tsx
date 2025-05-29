@@ -10,7 +10,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
-import { NewsArticle } from "@/redux/features/news/news-slice";
+import { NewsArticle } from "@/interface/all-interfaces";
 import { LucideLoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { fetcNews } from "@/lib/fetchNews";

@@ -8,7 +8,7 @@ import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { newsData } from "@/interface/all-interfaces";
-import { NewsArticle } from "@/redux/features/news/news-slice";
+import { NewsArticle } from "@/interface/all-interfaces";
 
 // Assuming EditDailog is a separate component handling the edit form
 import { EditDailog } from "./EditDailog";

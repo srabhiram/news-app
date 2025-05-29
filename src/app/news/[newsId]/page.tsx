@@ -1,6 +1,6 @@
 // app/news/[newsId]/page.tsx
 
-import { NewsArticle } from "@/redux/features/news/news-slice";
+import { NewsArticle } from "@/interface/all-interfaces";
 import SingleNewsPage from "./SingleNewsPage";
 import { getSingleNews } from "@/lib/getSingleNews";
 

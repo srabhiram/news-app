@@ -11,7 +11,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
-import { NewsArticle } from "@/redux/features/news/news-slice";
+import { NewsArticle } from "@/interface/all-interfaces";
 import Image from "next/image";
 import Link from "next/link";
 

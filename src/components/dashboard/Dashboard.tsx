@@ -3,7 +3,7 @@ import { User } from "@/components/Navbar";
 import { getTokenData } from "@/helpers/getTokenData";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { NewsArticle } from "@/redux/features/news/news-slice";
+import { NewsArticle } from "@/interface/all-interfaces";
 import AllNewsShowcase from "./AllNewsShowcase";
 
 interface dashboardProps {

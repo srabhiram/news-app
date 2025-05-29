@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { te } from "date-fns/locale";
-import { NewsArticle } from "@/redux/features/news/news-slice";
+import { NewsArticle } from "@/interface/all-interfaces";
 
 export const useFormattedDates = (newsArticles:NewsArticle[]) =>
   useMemo(() => {

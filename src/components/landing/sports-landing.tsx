@@ -1,6 +1,6 @@
 import React from "react";
 import { Heading } from "../Heading";
-import { NewsArticle } from "@/redux/features/news/news-slice";
+import { NewsArticle } from "@/interface/all-interfaces";
 import Link from "next/link";
 import Image from "next/image";
 import { isNewPost } from "@/lib/isNewPost";

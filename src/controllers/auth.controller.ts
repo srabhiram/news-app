@@ -4,6 +4,7 @@ import connectDB from "@/db/connectDB";
 import User from "@/db/models/users.models";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
 const SignupController = async (req: NextRequest) => {
   try {
     await connectDB();
@@ -137,4 +138,28 @@ const SigninController = async (req: NextRequest) => {
     );
   }
 };
-export { SignupController, SigninController };
+
+const SignoutController = async (req: NextRequest) => {
+ try {
+    const cookieStore = await cookies();
+    
+    // Delete the userToken by setting it with an expired date
+     cookieStore.set('userToken', '', {
+      path: '/',
+      expires: new Date(0), // expired date
+    });
+
+    return NextResponse.json({
+      message: 'Signout success',
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'Internal server Error' },
+      {
+        status: 500,
+        headers: { 'content-Type': 'application/json' },
+      }
+    );
+  }
+};
+export { SignupController, SigninController, SignoutController };

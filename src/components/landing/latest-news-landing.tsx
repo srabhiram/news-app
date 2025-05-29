@@ -1,7 +1,7 @@
 import { useFormattedDates } from '@/hooks/useFormatdatetime';
 import { isNewPost } from '@/lib/isNewPost';
 import { distname } from '@/lib/navbar-items';
-import { NewsArticle } from '@/redux/features/news/news-slice';
+import { NewsArticle } from '@/interface/all-interfaces';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';

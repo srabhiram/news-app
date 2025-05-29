@@ -31,7 +31,7 @@ import { useRouter } from "next/navigation";
 import { getTokenData } from "@/helpers/getTokenData";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
-import { resetAuthState } from "@/redux/features/users/authSlice";
+import { logoutUser, resetAuthState } from "@/redux/features/users/authSlice";
 import { FaUser } from "react-icons/fa";
 import Image from "next/image";
 import { Switch } from "./ui/switch";
@@ -50,22 +50,20 @@ function Navbar() {
   const [value, setValue] = useState("");
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const router = useRouter();
-  const { success } = useSelector((state: RootState) => state.auth.signin);
+  const { signin, signout } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
 
- const {isDarkMode,toggleDarkMode} = useTheme();
+  const { isDarkMode, toggleDarkMode } = useTheme();
 
   useEffect(() => {
     const userData = getTokenData();
     setCurrentUser(userData);
-  }, [success]);
+  }, [signin.success, signout.success]);
 
   const isLoggedIn = currentUser ? currentUser : null;
 
   const removeTokenCookie = async () => {
-    document.cookie =
-      "userToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    await dispatch(resetAuthState());
+    await dispatch(logoutUser());
     await router.push("/login");
   };
 
@@ -99,12 +97,13 @@ function Navbar() {
           {/* User Menu */}
           <div className="flex items-center gap-3">
             <Button
-            onClick={toggleDarkMode}
+              onClick={toggleDarkMode}
               className="border-0 rounded-lg bg-transparent dark:bg-transparent hover:backdrop-blur-xl hover:text-white  hover:bg-white/10   text-xs sm:text-sm px-2 sm:px-3 py-1 transition-all duration-30"
-        variant={"outline"}
-            >{isDarkMode ? <Sun/> : <Moon/>}</Button>
+              variant={"outline"}
+            >
+              {isDarkMode ? <Sun /> : <Moon />}
+            </Button>
 
-            
             {currentUser?.isAdmin && (
               <Link href="/admin/dashboard">
                 <Button

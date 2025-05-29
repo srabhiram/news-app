@@ -13,7 +13,7 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import { categories, districts } from "@/lib/navbar-items";
 import { newsData } from "@/interface/all-interfaces";
-import { NewsArticle } from "@/redux/features/news/news-slice";
+import { NewsArticle } from "@/interface/all-interfaces";
 
 interface EditDailogProps {
   articles: NewsArticle;

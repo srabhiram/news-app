@@ -15,37 +15,49 @@ export interface User {
 
 // Define the auth state interface
 export interface AuthState {
-  signin:{
+  signin: {
     loading: boolean;
-  error: string | null;
-  success: boolean;
-  message: string;
-  user: User | null;
-  },
-  signup:{
+    error: string | null;
+    success: boolean;
+    message: string;
+    user: User | null;
+  };
+  signup: {
     loading: boolean;
-  error: string | null;
-  success: boolean;
-  message: string;
-  user: User | null;
-  }
+    error: string | null;
+    success: boolean;
+    message: string;
+    user: User | null;
+  };
+  signout: {
+    loading: boolean;
+    error: string | null;
+    success: boolean;
+    message: string;
+  };
 }
 
 const initialState: AuthState = {
- signup:{
-  loading: false,
-  error: null,
-  success: false,
-  message: "",
-  user: null,
- },
- signin:{
-  loading: false,
-  error: null,
-  success: false,
-  message: "",
-  user: null,
- }
+  signup: {
+    loading: false,
+    error: null,
+    success: false,
+    message: "",
+    user: null,
+  },
+  signin: {
+    loading: false,
+    error: null,
+    success: false,
+    message: "",
+    user: null,
+  },
+  signout: {
+    loading: false,
+    error: null,
+    success: false,
+    message: "",
+  },
 };
 
 // Async thunk for signup
@@ -96,7 +108,7 @@ export const loginUser = createAsyncThunk(
       const data = await response.json();
 
       if (!response.ok) {
-        return rejectWithValue (data.error || "Failed to sign in user");
+        return rejectWithValue(data.error || "Failed to sign in user");
       }
 
       return data; // Expecting { message: string, user: User }
@@ -106,6 +118,21 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const logoutUser = createAsyncThunk(
+  "auth/logout",
+  async (_: void, { rejectWithValue }) => {
+    try {
+      const res = await fetch("/api/signout", { method: "POST" });
+      const data = await res.json();
+      if (!res.ok) {
+        return rejectWithValue(data.error || "Failed to logout user");
+      }
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error.message || "Something went wrong");
+    }
+  }
+);
 // Combined auth slice
 const authSlice = createSlice({
   name: "auth",
@@ -172,6 +199,23 @@ const authSlice = createSlice({
         state.signin.message = "";
         state.signin.user = null;
       });
+
+    // logout case
+    builder.addCase(logoutUser.pending, (state) => {
+      state.signout.loading = true;
+      state.signout.success = false;
+      state.signout.error = null;
+      state.signout.message = "";
+    }).addCase(logoutUser.fulfilled, (state,action)=>{
+      state.signout.loading = false;
+      state.signout.success = true;
+      state.signout.error = null;
+    state.signout.message = action.payload.message}).addCase(logoutUser.rejected, (state,action)=>{
+      state.signout.loading = false;
+      state.signout.success = false;
+      state.signout.error = action.payload as string;
+      state.signout.message = ""
+    })
   },
 });
 

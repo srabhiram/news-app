@@ -4,7 +4,7 @@ import Link from "next/link";
 import { format, formatDistanceToNow } from "date-fns";
 import { FaWhatsapp, FaLink, FaShareAlt } from "react-icons/fa";
 import { EyeIcon } from "lucide-react";
-import { NewsArticle } from "@/redux/features/news/news-slice";
+import { NewsArticle } from "@/interface/all-interfaces";
 import Image from "next/image";
 import { categoryNames, distname } from "@/lib/navbar-items";
 import useViewTracker from "@/hooks/useViewsTracker";

@@ -1,11 +1,14 @@
-'use client'
-import { registerServiceWorker } from '@/lib/registerServiceWorker';
-import store from '@/redux/store';
-import React, { useEffect } from 'react'
-import { Provider } from 'react-redux';
+"use client";
+import { registerServiceWorker } from "@/lib/registerServiceWorker";
+import store from "@/redux/store";
+import React, { useEffect } from "react";
+import { Provider } from "react-redux";
 
-
-export default function ClientProvider({ children }: { children: React.ReactNode }) {
+export default function ClientProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   useEffect(() => {
     registerServiceWorker();
   }, []);

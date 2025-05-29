@@ -1,6 +1,6 @@
 import React from 'react'
 import CarouselWithPagination from '../carousel-06'
-import { NewsArticle } from '@/redux/features/news/news-slice'
+import { NewsArticle } from '@/interface/all-interfaces'
 
 export const CarouselLading = ({newsArticles}:{newsArticles:NewsArticle[]}) => {
   return (

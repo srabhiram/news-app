@@ -1,13 +1,9 @@
 // store.ts
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./features/users/authSlice";
-import newsReducer from "./features/news/news-slice";
-
+import authReducer from "./features/users/authSlice"
 export const store = configureStore({
   reducer: {
-    auth: authReducer,
-
-    news: newsReducer,
+    auth: authReducer
   },
 });
 
