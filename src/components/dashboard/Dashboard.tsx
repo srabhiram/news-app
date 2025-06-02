@@ -8,14 +8,10 @@ import AllNewsShowcase from "./AllNewsShowcase";
 
 interface dashboardProps {
   newsArticles: NewsArticle[];
+  currentUser:{id: string; name: string; email: string; isAdmin: boolean; } | null
 }
 
-export default function AdminDashboard({ newsArticles }: dashboardProps) {
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  useEffect(() => {
-    const data = getTokenData();
-    setCurrentUser(data);
-  }, []);
+export default  function AdminDashboard({ newsArticles,currentUser }: dashboardProps) {
   return (
     <>
       <div className="flex flex-col items-center justify-center mt-4  dark:bg-zinc-900  dark:text-zinc-200">
