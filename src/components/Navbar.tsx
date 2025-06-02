@@ -44,8 +44,15 @@ export interface User {
   email: string;
   isAdmin: boolean;
 }
-
-function Navbar() {
+interface userDataProps {
+  userData: {
+    id: string;
+    name: string;
+    email: string;
+    isAdmin: boolean;
+  } | null;
+}
+function Navbar({ userData }: userDataProps) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -55,16 +62,16 @@ function Navbar() {
 
   const { isDarkMode, toggleDarkMode } = useTheme();
 
-  useEffect(() => {
-    const userData = getTokenData();
-    setCurrentUser(userData);
-  }, [signin.success, signout.success]);
+// useEffect(() => {
+//   setCurrentUser(userData);
+// }, [signin.success, signout.success]);
 
   const isLoggedIn = currentUser ? currentUser : null;
 
   const removeTokenCookie = async () => {
     await dispatch(logoutUser());
     await router.push("/login");
+    await router.refresh()
   };
 
   const handleDistrictSelect = (currentValue: string) => {
@@ -79,18 +86,18 @@ function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 shadow-md ">
-      <div className="bg-blue-800 text-white px-0.5 lg:px-4 py-3">
+    <nav className="sticky top-0 z-50 shadow-md bg-blue-800">
+      <div className="text-white px-0.5 lg:px-4 py-3 mx-1">
         <div className="container mx-auto flex items-center justify-between gap-3">
           {/* Logo */}
-          <Link href="/" className="flex items-center shrink-0">
+          <Link href="/" className="flex items-center shrink-0 ml-1">
             <Image
               src="/images/logo.png"
-              alt="Website Logo"
-              width={110}
-              height={40}
-              style={{ height: "auto", width: "auto" }}
-              priority
+              alt="SRS News"
+              width={100}
+              height={20}
+              style={{ height: "auto", width: 95 }}
+              
             />
           </Link>
 
@@ -104,7 +111,7 @@ function Navbar() {
               {isDarkMode ? <Sun /> : <Moon />}
             </Button>
 
-            {currentUser?.isAdmin && (
+            {userData?.isAdmin && (
               <Link href="/admin/dashboard">
                 <Button
                   variant="outline"
@@ -115,11 +122,11 @@ function Navbar() {
                 </Button>
               </Link>
             )}
-            {isLoggedIn ? (
+            {userData ? (
               <DropdownMenu>
                 <DropdownMenuTrigger className="bg-transparent border border-white flex items-center gap-1 text-white capitalize px-3 sm:px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold hover:bg-white hover:text-blue-800 transition-all duration-300">
                   <FaUser className="w-3 h-3 sm:w-4 sm:h-4" />
-                  <span>{currentUser?.name}</span>
+                  <span>{userData?.name}</span>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-40 sm:w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg">
                   <DropdownMenuLabel className="font-sans text-sm text-gray-900 dark:text-gray-200">

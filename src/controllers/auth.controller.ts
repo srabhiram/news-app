@@ -123,7 +123,7 @@ const SigninController = async (req: NextRequest) => {
       }
     );
     res.cookies.set("userToken", token, {
-      httpOnly: false,
+      httpOnly: true,
       maxAge: 60 * 60 * 24 * 30,
     });
     return res;

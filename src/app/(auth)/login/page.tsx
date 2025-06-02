@@ -39,12 +39,12 @@ export default function LoginPage() {
         email: "",
         password: "",
       });
-  
-       router.replace("/")
-  
+
+      router.push("/");
+      router.refresh();
     } catch (error: any) {
       console.error("Login error:", error.message);
-    } 
+    }
   };
   return (
     <>
@@ -77,11 +77,17 @@ export default function LoginPage() {
             className="bg-blue-500 text-white px-4 py-2 rounded cursor-pointer hover:bg-blue-700 active:bg-blue-700"
             disabled={loading}
           >
-           <span className="font-PottiSreeramulu font-semibold"> {loading ? "Signing in..." : "లాగిన్"}</span>
+            <span className="font-PottiSreeramulu font-semibold">
+              {" "}
+              {loading ? "Signing in..." : "లాగిన్"}
+            </span>
           </button>
           <p className="mt-4 font-gidugu font-bold">
             లాగిన్ చేయడానికి మీకు ఖాతా లేదు?{" "}
-            <Link href="/signup" className="text-blue-500 hover:underline active:underline active:text-blue-600">
+            <Link
+              href="/signup"
+              className="text-blue-500 hover:underline active:underline active:text-blue-600"
+            >
               సైన్ అప్ చేయండి
             </Link>
           </p>

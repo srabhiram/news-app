@@ -7,9 +7,9 @@ import "./globals.css";
 import ClientProvider from "@/components/providers/ClientProvider";
 import Footer from "@/components/Footer";
 import Script from "next/script";
-import GoogleAnalytics from "@/components/providers/GoogleAnalytics";
 import { Viewport } from "next";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { getTokenData } from "@/helpers/getTokenData";
+import useTheme from "@/hooks/useTheme";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,35 +28,28 @@ export const metadata: Metadata = {
   //   capable:true,
   //   title:"SRS News",
   // },
-  applicationName:"SRS News"
+  applicationName: "SRS News",
 };
-export const viewport:Viewport ={
-  maximumScale:1,
-  userScalable:false
-}
-export default function RootLayout({
+export const viewport: Viewport = {
+  maximumScale: 1,
+  userScalable: false,
+};
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const userData = await getTokenData();
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased dark:bg-zinc-900`}
       >
-        <Script
-          id="adsense-script"
-          strategy="afterInteractive"
-          async
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${process.env.NEXT_PUBLIC_GOOGLE_AD}`}
-          crossOrigin="anonymous"
-        />
-        <GoogleAnalytics/>
-        <ErrorBoundary>
         <ClientProvider>
-          <Navbar />
+          <Navbar userData={userData}/>
 
-          <main className="min-h-screen mx-1 sm:mx-2 mt-4">
+          <main className="min-h-screen mx-1 sm:mx-2 mt-4 ">
             {children}
 
             <Analytics />
@@ -64,7 +57,13 @@ export default function RootLayout({
           </main>
           <Footer />
         </ClientProvider>
-        </ErrorBoundary>
+        <Script
+          id="adsense-script"
+          strategy="afterInteractive"
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${process.env.NEXT_PUBLIC_GOOGLE_AD}`}
+          crossOrigin="anonymous"
+        />
       </body>
     </html>
   );
