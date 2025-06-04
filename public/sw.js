@@ -13,11 +13,9 @@ self.addEventListener("activate", (event) => {
 
 // Fetch event: Serve offline page for navigation requests when offline
 self.addEventListener("fetch", (event) => {
-  // Only handle navigation requests (page loads)
   if (event.request.mode === "navigate") {
     event.respondWith(
       fetch(event.request).catch(() => {
-        // When offline, return the offline page
         return new Response(
           `
             <!DOCTYPE html>
@@ -56,4 +54,46 @@ self.addEventListener("fetch", (event) => {
       })
     );
   }
+});
+
+// Push event: Handle incoming push notifications
+self.addEventListener("push", (event) => {
+  console.log("Push event received:", event);
+  let data;
+  try {
+    data = event.data.json();
+  } catch (error) {
+    console.error("Invalid push data:", error);
+    return;
+  }
+  const { title, body, icon, url } = data;
+
+  event.waitUntil(
+    self.registration.showNotification(title, {
+      body,
+      icon: icon || "/icon-192x192.png",
+      data: { url },
+      lang: "te", // Set language for Telugu notifications
+    }).catch((error) => {
+      console.error("Notification display failed:", error);
+    })
+  );
+});
+
+// Notification click event: Navigate to the specified URL
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  event.waitUntil(
+    clients.matchAll({ type: "window", includeUncontrolled: true }).then((clientList) => {
+      const url = event.notification.data.url || "/";
+      for (const client of clientList) {
+        if (client.url === url && "focus" in client) {
+          return client.focus();
+        }
+      }
+      if (clients.openWindow) {
+        return clients.openWindow(url);
+      }
+    })
+  );
 });

@@ -22,7 +22,9 @@ export function middleware(request: NextRequest) {
     const token = request.cookies.get("userToken")?.value;
 
     if (!token) {
-      throw new Error("Token not found");
+      console.log("no usertoken found");
+      // Redirect to /login without callbackUrl
+      return NextResponse.redirect(new URL("/login", request.url));
     }
 
     // Decode token

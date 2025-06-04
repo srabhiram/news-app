@@ -68,7 +68,7 @@ export default function AddNewsPageComponent() {
       setLoading(true);
       const response = await fetch("/api/news/add", {
         method: "POST",
-        body: formData
+        body: formData,
       });
       const data = await response.json();
       if (!response.ok) {
@@ -90,6 +90,7 @@ export default function AddNewsPageComponent() {
       setLoading(false);
       // await dispatch(getNews());
       router.push("/");
+      router.refresh();
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("An error occurred while submitting the form. Please try again.");
@@ -283,13 +284,18 @@ export default function AddNewsPageComponent() {
           )}
           <button
             type="submit"
-            className={`${!loading ? "px-4 py-2 w-full bg-blue-600 text-white rounded-md hover:bg-blue-700 active:bg-blue-700" :"opacity-55 bg-blue-600 px-4 py-2 w-full rounded-md text-white"} `}
+            className={`${
+              !loading
+                ? "px-4 py-2 w-full bg-blue-600 text-white rounded-md hover:bg-blue-700 active:bg-blue-700"
+                : "opacity-55 bg-blue-600 px-4 py-2 w-full rounded-md text-white"
+            } `}
             disabled={loading}
             aria-disabled={loading ? "true" : "false"}
           >
             {loading ? (
               <span className="flex items-center justify-center mx-auto">
-              <LoaderCircle className="animate-spin transition-all  " /></span>
+                <LoaderCircle className="animate-spin transition-all  " />
+              </span>
             ) : (
               "Add News"
             )}

@@ -3,52 +3,58 @@ import connectDB from "@/db/connectDB";
 import News from "@/db/models/news.models";
 import cloudinary from "@/lib/cloudinary";
 import { NextRequest, NextResponse } from "next/server";
+import webPush from 'web-push';
+import {PushSubscription} from "@/db/models/pushnotification.models"; // Adjust path to your PushSubscription model
+
+// Configure web-push with VAPID keys
+webPush.setVapidDetails(
+  process.env.VAPID_SUBJECT!,
+  process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
+  process.env.VAPID_PRIVATE_KEY!
+);
 
 export const AddNews = async (req: NextRequest) => {
   try {
     await connectDB();
     const body = await req.formData();
-    const newsTitle = body.get("newsTitle");
-    const content = body.get("content");
-    const file = body.get("image") as File;
-    const district = body.get("district");
-    const author = body.get("author");
-    const category = body.get("category");
-    // validate the input data
+    const newsTitle = body.get('newsTitle') as string;
+    const content = body.get('content') as string;
+    const file = body.get('image') as File;
+    const district = body.get('district') as string;
+    const author = body.get('author') as string;
+    const category = body.get('category') as string;
+
+    // Validate input data
     if (!newsTitle || !content || !author || !file) {
       return NextResponse.json(
-        {
-          error: "All fields are required",
-        },
-        {
-          status: 400,
-        }
+        { error: 'All fields are required' },
+        { status: 400 }
       );
     }
 
-    // convert the image into buffer
+    // Convert image to buffer
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // upload the bufffer stream to cloudinary
+    // Upload to Cloudinary
     const uploadResult = await new Promise((resolve, reject) => {
       cloudinary.uploader
         .upload_stream(
           {
-            folder: "news-images",
+            folder: 'news-images',
             transformation: [
               {
                 width: 800,
                 height: 600,
-                crop: "limit",
-                quality: "auto",
-                fetch_format: "auto",
+                crop: 'limit',
+                quality: 'auto',
+                fetch_format: 'auto',
               },
               {
-                overlay: "logo_oecpww", // Replace with your logo's public ID (e.g., watermarks/logo)
-                gravity: "south_east", // Position the logo in the bottom-right corner
-                width: 200, // Adjust the logo width
-                opacity: 50, // Adjust the logo opacity (0-100)
+                overlay: 'logo_oecpww',
+                gravity: 'south_east',
+                width: 200,
+                opacity: 50,
               },
             ],
           },
@@ -62,7 +68,7 @@ export const AddNews = async (req: NextRequest) => {
 
     const { secure_url } = uploadResult as { secure_url: string };
 
-    // create a news item
+    // Create news item
     const addNews = await News.create({
       newsTitle,
       content,
@@ -71,24 +77,41 @@ export const AddNews = async (req: NextRequest) => {
       category,
       author,
     });
+
+    // Send push notifications to all subscribers
+    const subscriptions = await PushSubscription.find(); // Retrieve all subscriptions
+    const payload = JSON.stringify({
+      title: `${newsTitle}`,
+      body: `Click here to read..`,
+      icon: secure_url || '/icon-192x192.png', // Use news image or fallback
+      url: `/news/${addNews._id}`, // Adjust URL to match your news page route
+    });
+
+    await Promise.all(
+      subscriptions.map(async (sub) => {
+        try {
+          await webPush.sendNotification(sub, payload);
+        } catch (error:any) {
+          console.error(`Failed to send notification to ${sub._id}:`, error);
+          // Optionally remove invalid subscriptions
+          if (error.statusCode === 410) {
+            await PushSubscription.deleteOne({ _id: sub._id });
+          }
+        }
+      })
+    );
+
     return NextResponse.json(
-      {
-        addNews,
-      },
-      {
-        status: 201,
-      }
+      { addNews },
+      { status: 201 }
     );
   } catch (error) {
     return NextResponse.json(
       {
         success: false,
-        message:
-          error instanceof Error ? error.message : "An unknown error occurred",
+        message: error instanceof Error ? error.message : 'An unknown error occurred',
       },
-      {
-        status: 500,
-      }
+      { status: 500 }
     );
   }
 };
