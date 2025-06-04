@@ -1,3 +1,4 @@
+import {v7 as uuid} from "uuid"
 export function registerServiceWorker() {
   if ('serviceWorker' in navigator && 'PushManager' in window) {
     window.addEventListener('load', async () => {
@@ -66,7 +67,7 @@ async function subscribeToPush(registration: ServiceWorkerRegistration) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           subscription: subscription.toJSON(),
-          deviceId: 'unique-device-id', // Replace with dynamic device ID
+          deviceId: uuid() , // Replace with dynamic device ID
         }),
       });
       if (!response.ok) {
