@@ -83,7 +83,7 @@ export const AddNews = async (req: NextRequest) => {
     const payload = JSON.stringify({
       title: `${newsTitle}`,
       body: `Click here to read..`,
-      icon: secure_url || '/icon-192x192.png', // Use news image or fallback
+      icon: secure_url // Use news image or fallback
       url: `/news/${addNews._id}`, // Adjust URL to match your news page route
     });
 
