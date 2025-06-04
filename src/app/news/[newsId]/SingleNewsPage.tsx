@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useMemo, HTMLAttributes } from "react";
+import { useEffect, useState, useMemo, HTMLAttributes, useRef } from "react";
 import Link from "next/link";
 import { format, formatDistanceToNow } from "date-fns";
 import { FaWhatsapp, FaLink, FaShareAlt } from "react-icons/fa";
@@ -10,6 +10,7 @@ import { categoryNames, distname } from "@/lib/navbar-items";
 import useViewTracker from "@/hooks/useViewsTracker";
 import { te } from "date-fns/locale";
 import ReactMarkdown from "react-markdown";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 export default function SingleNewsPage({
   params,
@@ -25,44 +26,53 @@ export default function SingleNewsPage({
   const [isShareOpen, setIsShareOpen] = useState<string | null>(null);
   const [views, setViews] = useState<number>(0);
 
-  // Fetch related posts
+  const lottieRef = useRef<HTMLDivElement>(null);
+
 useEffect(() => {
-  const fetchRelatedPosts = async () => {
-    if (!newsArticles[0]) return;
+  const player = lottieRef.current?.querySelector("dotlottie-player");
+  if (player) {
+    (player as any).play(); // play is a method on the web component
+  }
+}, [views]);
 
-    const param = newsArticles[0].district || newsArticles[0].category;
-    if (!param) return;
+  // Fetch related posts
+  useEffect(() => {
+    const fetchRelatedPosts = async () => {
+      if (!newsArticles[0]) return;
 
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/news/${param}`,
-        {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-          cache: "no-store",
-        }
-      );
-      if (!response.ok)
-        throw new Error(`HTTP error! Status: ${response.status}`);
+      const param = newsArticles[0].district || newsArticles[0].category;
+      if (!param) return;
 
-      const { newsArticles: posts } = await response.json();
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/news/${param}`,
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+            cache: "no-store",
+          }
+        );
+        if (!response.ok)
+          throw new Error(`HTTP error! Status: ${response.status}`);
 
-      if (!Array.isArray(posts))
-        throw new Error("Invalid newsArticles array");
+        const { newsArticles: posts } = await response.json();
 
-      setRelatedPosts(
-        posts.filter((post: NewsArticle) => post._id !== newsId).slice(0,5)
-      );
-      setError(null);
-    } catch (err) {
-      console.error("Error fetching related posts:", err);
-      setRelatedPosts([]);
-      setError((err as Error).message || "Failed to load related posts.");
-    }
-  };
+        if (!Array.isArray(posts))
+          throw new Error("Invalid newsArticles array");
 
-  fetchRelatedPosts();
-}, [newsArticles, newsId]);
+        setRelatedPosts(
+          posts.filter((post: NewsArticle) => post._id !== newsId).slice(0, 5)
+        );
+        setError(null);
+      } catch (err) {
+        console.error("Error fetching related posts:", err);
+        setRelatedPosts([]);
+        setError((err as Error).message || "Failed to load related posts.");
+      }
+    };
+
+    fetchRelatedPosts();
+  }, [newsArticles, newsId]);
 
   // Increment views
   useViewTracker(newsId, setViews);
@@ -130,7 +140,7 @@ useEffect(() => {
               {/* Meta Section */}
               <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
                 <div className="flex items-center gap-2">
-                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 font-PottiSreeramulu">
+                  <p className="text-sm sm:text-sm text-gray-600 dark:text-gray-400 font-PottiSreeramulu">
                     <span className="capitalize font-bold">
                       {article?.author}
                     </span>{" "}
@@ -142,11 +152,12 @@ useEffect(() => {
                   </p>
                 </div>
                 <div className="relative flex items-center gap-3">
-                  <div className="flex items-center gap-1">
-                    <EyeIcon className="w-4 sm:w-5 text-gray-600 dark:text-gray-400" />
-                    <span className="text-xs sm:text-sm font-semibold text-gray-600 dark:text-gray-400">
+                  <div className=" flex items-center gap-1">
+                    <EyeIcon className="w-5 text-gray-600 dark:text-gray-400" />
+                    <span className="text-sm sm:text-sm font-semibold text-gray-600 dark:text-gray-400">
                       {views || article?.views || 0}
                     </span>
+                   
                   </div>
                   <button
                     onClick={() => toggleShareOptions(article._id)}
