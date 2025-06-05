@@ -3,22 +3,18 @@ import React, { useEffect, useState } from "react";
 
 export default function NotificationBanner() {
   const [isAllowed, setIsAllowed] = useState(false);
-  const [isHide, setIsHide] = useState(false);
-  useEffect(() => {
-    console.log("Notification Allowed:", isAllowed);
-    console.log("Banner Hidden:", isHide);
-  }, [isAllowed, isHide]);
+  const [isHide, setIsHide] = useState(true); // Start hidden until we know user's preference
 
   useEffect(() => {
     const storedPermission = localStorage.getItem("notificationPermission");
     if (storedPermission === "granted" || storedPermission === "denied") {
-      setIsHide(true);
+      setIsHide(true); // Don't show banner
+    } else {
+      setIsHide(false); // Show banner
     }
   }, []);
 
-  if (localStorage.getItem("notificationPermission") === "granted") {
-    return null;
-  }
+  if (isHide) return null;
 
   return (
     <div className="text-white sticky bottom-0 gap-3 sm:gap-7 z-50 flex flex-wrap justify-center items-center bg-blue-900 p-4 sm:p-6 mx-auto animate-fade-in">
