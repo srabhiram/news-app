@@ -1,75 +1,70 @@
 import { v7 as uuid } from "uuid";
 
 export function registerServiceWorker() {
-  if ('serviceWorker' in navigator && 'PushManager' in window) {
-    window.addEventListener('load', async () => {
+  if ("serviceWorker" in navigator && "PushManager" in window) {
+    window.addEventListener("load", async () => {
       try {
-        const registration = await navigator.serviceWorker.register('/sw.js', {
-          scope: '/',
-          updateViaCache: 'none',
+        const registration = await navigator.serviceWorker.register("/sw.js", {
+          scope: "/",
+          updateViaCache: "none",
         });
-        console.log('Service Worker registered:', registration);
 
         // Check existing push subscription
-        const existingSubscription = await registration.pushManager.getSubscription();
-        console.log('Existing subscription:', existingSubscription);
+        const existingSubscription =
+          await registration.pushManager.getSubscription();
 
         if (!existingSubscription) {
           const permission = await Notification.requestPermission();
-          console.log('Notification permission:', permission);
 
-          if (permission === 'granted') {
+          if (permission === "granted") {
             await subscribeToPush(registration);
           } else {
-            console.warn('Notification permission denied.');
+            console.warn("Notification permission denied.");
           }
-        } else {
-          console.log('Push subscription already exists. No need to resubscribe.');
         }
 
-        registration.addEventListener('updatefound', () => {
+        registration.addEventListener("updatefound", () => {
           const newWorker = registration.installing;
           if (newWorker) {
-            newWorker.addEventListener('statechange', () => {
-              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                console.log('New service worker available. Refresh to update.');
+            newWorker.addEventListener("statechange", () => {
+              if (
+                newWorker.state === "installed" &&
+                navigator.serviceWorker.controller
+              ) {
+                console.log("New service worker available. Refresh to update.");
               }
             });
           }
         });
       } catch (error) {
-        console.error('Service Worker registration failed:', error);
+        console.error("Service Worker registration failed:", error);
       }
     });
   } else {
-    console.warn('Service workers or Push API not supported in this browser.');
+    console.warn("Service workers or Push API not supported in this browser.");
   }
 }
 
 async function subscribeToPush(registration: ServiceWorkerRegistration) {
   try {
     const vapidPublicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
-    console.log('Raw VAPID public key:', vapidPublicKey);
 
     if (!vapidPublicKey) {
-      throw new Error('VAPID public key not found.');
+      throw new Error("VAPID public key not found.");
     }
 
     const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
-    console.log('Converted VAPID key:', convertedVapidKey, 'Length:', convertedVapidKey.length);
 
     const subscription = await registration.pushManager.subscribe({
       userVisibleOnly: true,
       applicationServerKey: convertedVapidKey,
     });
 
-    console.log('Push subscription successful:', subscription.toJSON());
-
     const deviceId = getOrCreateDeviceId();
 
-    const response = await fetch('/api/web-push/subscribe', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const response = await fetch("/api/web-push/subscribe", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         subscription: subscription.toJSON(),
         deviceId,
@@ -77,25 +72,34 @@ async function subscribeToPush(registration: ServiceWorkerRegistration) {
     });
 
     if (!response.ok) {
-      console.error('Failed to save subscription:', await response.text());
-    } else {
-      console.log('Subscription saved to server.');
+      console.error("Failed to save subscription:", await response.text());
     }
   } catch (error: any) {
-    console.error('Push subscription failed:', error.name, error.message, error.stack);
-    if (error.name === 'AbortError') {
-      console.error('AbortError: Possible causes:');
-      console.error('- Invalid or malformed VAPID public key');
-      console.error('- Network issues (e.g., blocked push service like fcm.googleapis.com)');
-      console.error('- Browser restrictions (e.g., private mode, disabled push)');
+    console.error(
+      "Push subscription failed:",
+      error.name,
+      error.message,
+      error.stack
+    );
+    if (error.name === "AbortError") {
+      console.error("AbortError: Possible causes:");
+      console.error("- Invalid or malformed VAPID public key");
+      console.error(
+        "- Network issues (e.g., blocked push service like fcm.googleapis.com)"
+      );
+      console.error(
+        "- Browser restrictions (e.g., private mode, disabled push)"
+      );
     }
   }
 }
 
 function urlBase64ToUint8Array(base64String: string) {
   try {
-    const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
-    const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+    const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+    const base64 = (base64String + padding)
+      .replace(/-/g, "+")
+      .replace(/_/g, "/");
     const rawData = window.atob(base64);
     const outputArray = new Uint8Array(rawData.length);
     for (let i = 0; i < rawData.length; ++i) {
@@ -103,20 +107,17 @@ function urlBase64ToUint8Array(base64String: string) {
     }
     return outputArray;
   } catch (error: any) {
-    console.error('VAPID key conversion failed:', error);
+    console.error("VAPID key conversion failed:", error);
     throw new Error(`Invalid VAPID key format: ${error.message}`);
   }
 }
 
 function getOrCreateDeviceId(): string {
-  const localStorageKey = 'deviceId';
+  const localStorageKey = "deviceId";
   let deviceId = localStorage.getItem(localStorageKey);
   if (!deviceId) {
     deviceId = uuid();
     localStorage.setItem(localStorageKey, deviceId);
-    console.log('Generated new deviceId:', deviceId);
-  } else {
-    console.log('Using existing deviceId:', deviceId);
   }
   return deviceId;
 }

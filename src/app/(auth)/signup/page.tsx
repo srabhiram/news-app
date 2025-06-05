@@ -2,6 +2,7 @@
 "use client";
 import { signupUser } from "@/redux/features/users/authSlice";
 import { AppDispatch, RootState } from "@/redux/store";
+import { Metadata } from "next";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";

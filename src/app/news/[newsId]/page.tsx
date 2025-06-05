@@ -8,8 +8,6 @@ import { getSingleNews } from "@/lib/getSingleNews";
 
 export async function generateMetadata({ params }: {params : Promise<{newsId:string}>}) {
   const { newsId } = await params;
-  console.log(newsId);
-
   try {
     const newsArticle = await getSingleNews(newsId)
     const news: NewsArticle = await newsArticle[0]

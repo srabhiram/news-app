@@ -8,6 +8,12 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Add News - SRS News",
+  description: "Add Latest news only available to admins"
+};
 
 export default function AddNewsLayout({
   children,
@@ -20,10 +26,18 @@ export default function AddNewsLayout({
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
- <BreadcrumbLink asChild className="font-semibold dark:text-zinc-300 dark:hover:text-zinc-300 text-zinc-800"><Link href="/admin/dashboard">Dashboard</Link></BreadcrumbLink>            </BreadcrumbItem>
+              <BreadcrumbLink
+                asChild
+                className="font-semibold dark:text-zinc-300 dark:hover:text-zinc-300 text-zinc-800"
+              >
+                <Link href="/admin/dashboard">Dashboard</Link>
+              </BreadcrumbLink>{" "}
+            </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage className="font-semibold dark:text-zinc-100 opacity-55">Add News</BreadcrumbPage>
+              <BreadcrumbPage className="font-semibold dark:text-zinc-100 opacity-55">
+                Add News
+              </BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>

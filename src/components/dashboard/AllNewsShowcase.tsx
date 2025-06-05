@@ -4,7 +4,6 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { useFormattedDates } from "@/hooks/useFormatdatetime";
 import { isNewPost } from "@/lib/isNewPost";
-import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { newsData } from "@/interface/all-interfaces";
@@ -13,8 +12,8 @@ import { NewsArticle } from "@/interface/all-interfaces";
 // Assuming EditDailog is a separate component handling the edit form
 import { EditDailog } from "./EditDailog";
 import { DeleteDailog } from "./DeleteDailog";
-import { fetcNews } from "@/lib/fetchNews";
 import Link from "next/link";
+
 
 export default function AllNewsShowcase({
   newsArticles,
@@ -129,7 +128,6 @@ export default function AllNewsShowcase({
       setLoading(false);
     }
   };
-
   return (
     <div>
       <div className=" rounded-xl space-y-2 grid md:grid-cols-4 md:gap-2">

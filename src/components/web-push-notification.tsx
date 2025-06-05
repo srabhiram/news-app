@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 export default function NotificationBanner() {
   const [isAllowed, setIsAllowed] = useState(false);
   const [isHide, setIsHide] = useState(false);
-
   useEffect(() => {
     console.log("Notification Allowed:", isAllowed);
     console.log("Banner Hidden:", isHide);
@@ -17,7 +16,7 @@ export default function NotificationBanner() {
     }
   }, []);
 
-  if (isHide) {
+  if (localStorage.getItem("notificationPermission") === "granted") {
     return null;
   }
 
