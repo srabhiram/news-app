@@ -17,7 +17,7 @@ export default function NotificationBanner() {
   if (isHide) return null;
 
   return (
-    <div className="text-white sticky bottom-0 gap-3 sm:gap-7 z-50 flex flex-wrap justify-center items-center bg-blue-900 p-4 sm:p-6 mx-auto animate-fade-in">
+    <div className="text-zinc-900 sticky bottom-0 gap-3 sm:gap-7 z-50 flex flex-wrap justify-center items-center bg-blue-100/90 backdrop-blur-sm p-4 sm:p-6 mx-auto animate-fade-in">
       <style jsx>{`
         @keyframes fadeIn {
           from {
@@ -46,11 +46,11 @@ export default function NotificationBanner() {
           animation: fadeOut 0.5s ease-in-out forwards;
         }
       `}</style>
-      <p className="text-base sm:text-2xl ml-5">
+      <p className="text-base sm:text-2xl ml-5 font-semibold">
         Please Allow Notification for latest updates
       </p>
       <button
-        className="px-3 py-2 bg-transparent border border-white hover:bg-gray-700 transition-colors"
+        className="px-3 py-2 bg-transparent border border-zinc-500 rounded-md font-medium hover:bg-gray-700 transition-colors"
         onClick={() => {
           setIsHide(true);
           localStorage.setItem("notificationPermission", "denied");
@@ -59,7 +59,7 @@ export default function NotificationBanner() {
         Cancel
       </button>
       <button
-        className="px-3 py-2 bg-blue-600 border border-white hover:bg-blue-700 transition-colors"
+        className="px-5 py-2 bg-blue-400 border border-zinc-300 rounded-md font-medium hover:bg-blue-700 transition-colors text-white"
         onClick={async () => {
           const permission = await Notification.requestPermission();
           setIsAllowed(permission === "granted");
