@@ -13,9 +13,11 @@ import { Heading } from "../Heading";
 interface LatestNewsCardProps {
   newsArticles: NewsArticle[];
   loading?: boolean;
+  categoryType? : string,
+  heading?: string
 }
 
-export default function LatestNewsCard({ newsArticles }: LatestNewsCardProps) {
+export default function LatestNewsCard({ newsArticles, categoryType,heading }: LatestNewsCardProps) {
  const formattedDates = useFormattedDates(newsArticles)
   // pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -29,7 +31,7 @@ export default function LatestNewsCard({ newsArticles }: LatestNewsCardProps) {
   const paginatedNews = newsArticles?.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
-  ).filter((articles)=>articles.district) || [];
+  ).filter((articles)=>articles.district || articles.category===categoryType) ||  [];
 
   // Show "No news found" if no articles
   if (!newsArticles) {
@@ -45,7 +47,7 @@ export default function LatestNewsCard({ newsArticles }: LatestNewsCardProps) {
   return (
     <div className="container mx-auto pb-4 bg-white dark:bg-zinc-900 text-black dark:text-white">
       {/* Section header */}
-      <Heading text={"తాజా వార్తలు"}/>
+      <Heading text={heading || "తాజా వార్తలు"}/>
       <div className="mb-4">
         {paginatedNews && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

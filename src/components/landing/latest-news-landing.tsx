@@ -61,7 +61,7 @@ export const LatestNewsLanding = ({ newsArticles }: { newsArticles: NewsArticle[
           </Link>
         ))}
         </div>
-      <Link href={"/latest-news"} className='flex justify-end text-sm text-blue-500 font-bold hover:text-blue-700 active:text-blue-700 hover:underline'>మరి కొన్ని వార్తలు</Link>
+      <Link href={"/news/latest-news"} className='flex justify-end text-sm text-blue-500 font-bold hover:text-blue-700 active:text-blue-700 hover:underline'>మరి కొన్ని వార్తలు</Link>
     </section>
   );
 };

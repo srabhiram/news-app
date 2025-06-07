@@ -7,12 +7,12 @@ export const navbarItems = [
   {
     id: 2,
     name: "టెక్నాలజీ ",
-    href: "#tech",
+    href: "/news/technology",
   },
   {
     id: 3,
     name: "స్పోర్ట్స్ ",
-    href: "#sports",
+    href: "/news/sports",
   },
 ];
 

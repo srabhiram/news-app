@@ -6,7 +6,7 @@ import { NewsArticle } from "@/interface/all-interfaces";
 export const useFormattedDates = (newsArticles:NewsArticle[]) =>
   useMemo(() => {
     if(newsArticles){
-    return newsArticles.map((article) =>
+    return newsArticles?.map((article) =>
       formatDistanceToNow(new Date(article.createdAt), {
         addSuffix: true,
         locale: te,
