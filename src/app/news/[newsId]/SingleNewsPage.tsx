@@ -118,7 +118,7 @@ useEffect(() => {
       <div className="flex flex-col lg:flex-row lg:gap-8">
         {/* Main Article */}
         <div className="w-full lg:w-3/4">
-          <div className="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-gray-700 rounded-xl min-h-fit">
+          <div className="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-gray-700 rounded-md min-h-fit">
             {/* Article Image */}
             <div className="w-full  flex justify-center items-center">
               <Image
@@ -127,7 +127,7 @@ useEffect(() => {
                 width={700}
                 height={250}
                 style={{ height: "auto", width: "auto" }}
-                className="rounded-t-xl object-cover w-full mx-auto"
+                className="rounded-t-md object-cover w-full mx-auto"
               />
             </div>
 

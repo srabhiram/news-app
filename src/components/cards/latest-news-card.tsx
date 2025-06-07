@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "../ui/badge";
 import { isNewPost } from "@/lib/isNewPost";
-import { distname } from "@/lib/navbar-items";
+import { categoryNames, distname } from "@/lib/navbar-items";
 import Pagination from "../Pagination";
 import { useState } from "react";
 import { useFormattedDates } from "@/hooks/useFormatdatetime";
@@ -85,7 +85,7 @@ export default function LatestNewsCard({ newsArticles, categoryType,heading }: L
                   </h2>
                   <p className="py-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1 font-PottiSreeramulu">
                     {" "}
-                    <b>{distname(article.district)} </b>•{" "}
+                    <b>{article.district ? distname(article.district): categoryNames(article.category)} </b>•{" "}
                     <span>{formattedDates?.[index] ?? ""}</span>
                   </p>
                 </div>

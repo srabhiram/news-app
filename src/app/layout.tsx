@@ -49,7 +49,7 @@ export default async function RootLayout({
         <ClientProvider>
           <Navbar userData={userData}/>
 
-          <main className="min-h-screen mx-1 sm:mx-2 mt-4 ">
+          <main className="min-h-screen mx-0.5 sm:mx-2 sm:mt-4 mt-3 ">
             {children}
 
             <Analytics />

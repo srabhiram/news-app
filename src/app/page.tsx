@@ -9,7 +9,7 @@ export default async function Home() {
   const { newsArticles } = await fetcNews("no-store");
   return (
     <>
-      <main className="m-0.5">
+      <main className="m-0.5 mx-0">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-1">
           <div className="md:col-span-2">
             <CarouselLading newsArticles={newsArticles} />

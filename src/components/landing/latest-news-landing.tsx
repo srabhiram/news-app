@@ -14,7 +14,7 @@ export const LatestNewsLanding = ({ newsArticles }: { newsArticles: NewsArticle[
   const formattedDates = useFormattedDates(newsArticles);
 
   return (
-    <section className="w-full max-w-3xl mx-auto px-3 sm:px-4 py-2">
+    <section className="w-full max-w-3xl mx-auto  sm:px-4 py-1.5">
            <Heading text={"తాజా వార్తలు"}/>
 <div className='rounded-md bg-white dark:bg-zinc-800 mb-1'>
 

@@ -19,7 +19,7 @@ export const SportsLanding = ({
   );
   const formattedDates = useFormattedDates(filteredArticles);
   return (
-    <section className="px-3 py-4" id="sports">
+    <section className=" py-1.5" id="sports">
       {newsArticles ? (
         <>
           <Heading text={"స్పోర్ట్స్"} />

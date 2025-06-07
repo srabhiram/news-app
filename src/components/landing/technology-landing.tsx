@@ -19,7 +19,7 @@ export const TechnologyLanding = ({
   );
   const formattedDates = useFormattedDates(filteredArticles);
   return (
-    <section className="px-3 py-4" id="tech">
+    <section className=" py-1.5" id="tech">
       {filteredArticles ? (
         <>
           <Heading text={"టెక్నాలజీ"} />

@@ -60,7 +60,7 @@ export default function CarouselWithPagination({ newsArticles }: { newsArticles:
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="w-full max-w-4xl mx-auto  sm:px-6 lg:px-8">
       <Carousel setApi={setApi} className="w-full bg-zinc-800 rounded-sm overflow-hidden">
         <CarouselContent>
           {slicedArticles &&

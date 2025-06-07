@@ -86,8 +86,8 @@ function Navbar({ userData }: userDataProps) {
   };
 
   return (
-    <nav className="sticky top-0 z-50 shadow-md bg-blue-800">
-      <div className="text-white px-0.5 lg:px-4 py-3 mx-1">
+    <nav className="sticky top-0 z-50 shadow-md bg-blue-100/70 backdrop-blur-md text-zinc-900 dark:bg-zinc-950/80 dark:text-white">
+      <div className=" px-0.5 lg:px-4 py-3 mx-1">
         <div className="container mx-auto flex items-center justify-between gap-3">
           {/* Logo */}
           <Link href="/" className="flex items-center shrink-0 ml-1">
@@ -95,7 +95,7 @@ function Navbar({ userData }: userDataProps) {
               src="/images/logo.png"
               alt="SRS News"
               width={100}
-              height={20}
+              height={50}
               style={{ height: "auto", width: 95 }}
               
             />
@@ -105,7 +105,7 @@ function Navbar({ userData }: userDataProps) {
           <div className="flex items-center gap-3">
             <Button
               onClick={toggleDarkMode}
-              className="border-0 rounded-lg bg-transparent dark:bg-transparent hover:backdrop-blur-xl hover:text-white  hover:bg-white/10   text-xs sm:text-sm px-2 sm:px-3 py-1 transition-all duration-30"
+              className="border-zinc-400 rounded-lg bg-transparent dark:bg-transparent hover:backdrop-blur-xl hover:text-zinc-950  hover:bg-zinc-200 dark:hover:text-white text-xs sm:text-sm px-2 sm:px-3 py-1 transition-all duration-30"
               variant={"outline"}
             >
               {isDarkMode ? <Sun /> : <Moon />}
@@ -115,7 +115,7 @@ function Navbar({ userData }: userDataProps) {
               <Link href="/admin/dashboard">
                 <Button
                   variant="outline"
-                  className="border border-white rounded-lg dark:bg-transparent bg-transparent text-white dark:hover:bg-white hover:bg-white hover:text-blue-800 text-xs sm:text-sm px-2 sm:px-3 py-1 transition-all duration-300 flex items-center gap-1"
+                  className="border-zinc-400 active:border-zinc-400 hover:border-zinc-400 rounded-lg dark:bg-transparent bg-transparent text-zinc-800 dark:text-white dark:hover:bg-white hover:bg-white hover:text-zinc-950 text-xs sm:text-sm px-2 sm:px-3 py-1 transition-all duration-300 flex items-center gap-1"
                 >
                   <TfiWrite className="w-3 h-2" />
                   <span className="hidden sm:inline-block">Dashboard</span>
@@ -124,7 +124,7 @@ function Navbar({ userData }: userDataProps) {
             )}
             {userData ? (
               <DropdownMenu>
-                <DropdownMenuTrigger className="bg-transparent border border-white flex items-center gap-1 text-white capitalize px-3 sm:px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold hover:bg-white hover:text-blue-800 transition-all duration-300">
+                <DropdownMenuTrigger className="bg-transparent border border-zinc-400 active:border-zinc-400 hover:border-zinc-400 flex items-center gap-1 text-zinc-900 dark:text-white capitalize px-3 sm:px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold hover:bg-white hover:text-zinc-950 transition-all duration-300">
                   <FaUser className="w-3 h-3 sm:w-4 sm:h-4" />
                   <span>{userData?.name}</span>
                 </DropdownMenuTrigger>
@@ -144,7 +144,7 @@ function Navbar({ userData }: userDataProps) {
             ) : (
               <Link
                 href="/login"
-                className="bg-transparent border border-white text-white font-semibold px-2 sm:px-3 py-1 rounded-lg text-xs sm:text-sm hover:bg-white hover:text-blue-800 transition-all duration-300"
+                className="bg-transparent border border-zinc-500 text-zinc-800 dark:text-white font-semibold px-3 sm:px-3 py-2 rounded-lg text-sm sm:text-sm hover:bg-white hover:text-blue-800 transition-all duration-300"
               >
                 లాగిన్
               </Link>
@@ -160,7 +160,7 @@ function Navbar({ userData }: userDataProps) {
                 <li key={item?.id}>
                   <Link
                     href={item?.href}
-                    className=" text-base lg:text-lg tracking-wide rounded-lg hover:bg-white/10 hover:text-white transition-all duration-300 block px-2 sm:px-3 py-1.5"
+                    className=" text-[14px] lg:text-lg tracking-wide rounded-lg hover:bg-zinc-950/5 active:bg-zinc-950/5   hover:text-zinc-950 transition-all duration-300 block px-2 sm:px-3 py-1.5 dark:hover:text-white dark:hover:bg-white/5 font-semibold"
                   >
                     {item?.name}
                   </Link>
@@ -174,7 +174,7 @@ function Navbar({ userData }: userDataProps) {
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className="w-[90px] sm:w-[120px] lg:w-[150px] bg-transparent text-white flex items-center justify-between  text-sm lg:text-lg border-white py-1 h-8 lg:h-9 rounded-lg hover:bg-white hover:text-blue-800 transition-all duration-300 dark:hover:bg-white dark:bg-transparent"
+                    className="w-[90px] sm:w-[120px] lg:w-[150px] bg-transparent dark:text-white text-zinc-900 flex items-center justify-between  text-sm lg:text-lg border-zinc-400  py-1 h-8 lg:h-9 rounded-lg hover:bg-white hover:text-zinc-950 transition-all duration-300 dark:hover:bg-white dark:bg-transparent font-semibold"
                   >
                     {value
                       ? districts.find((framework) => framework.value === value)
