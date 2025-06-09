@@ -44,12 +44,12 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased dark:bg-zinc-900`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ClientProvider>
           <Navbar userData={userData}/>
 
-          <main className="min-h-screen mx-0.5 sm:mx-2 sm:mt-4 mt-3 ">
+          <main className="min-h-screen mx-0.5 sm:mx-2 sm:mt-4 pt-2 ">
             {children}
 
             <Analytics />

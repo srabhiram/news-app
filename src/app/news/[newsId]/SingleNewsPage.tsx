@@ -114,7 +114,7 @@ useEffect(() => {
   const article = newsArticles[0];
 
   return (
-    <div className="container mx-auto px-1 sm:px-6 lg:px-8 pb-8 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-200">
+    <div className="shadow-md container mx-auto px-1 sm:px-6 lg:px-8 pb-8 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-200">
       <div className="flex flex-col lg:flex-row lg:gap-8">
         {/* Main Article */}
         <div className="w-full lg:w-3/4">
