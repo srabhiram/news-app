@@ -82,7 +82,7 @@ function Navbar({ userData }: userDataProps) {
   };
 
   return (
-    <nav className="sticky top-0 z-50 shadow-sm bg-blue-100/25 backdrop-blur-lg text-zinc-900 dark:bg-zinc-950/50 dark:border-b-2 rounded-b-md dark:text-white">
+    <nav className="sticky top-0 z-50 shadow-sm bg-blue-100/30 backdrop-blur-md text-zinc-900 dark:bg-zinc-950/50 dark:border-b-2 rounded-b-md dark:text-white">
       <div className=" px-0.5 lg:px-4 py-3 mx-1">
         <div className="container mx-auto flex items-center justify-between gap-3">
           {/* Logo */}

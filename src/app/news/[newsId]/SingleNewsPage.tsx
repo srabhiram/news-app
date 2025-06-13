@@ -1,87 +1,31 @@
 "use client";
-import { useEffect, useState, useMemo } from "react";
-import Link from "next/link";
-import { format, formatDistanceToNow } from "date-fns";
+import { useState } from "react";
+import { format } from "date-fns";
 import { FaWhatsapp, FaLink, FaShareAlt } from "react-icons/fa";
 import { EyeIcon } from "lucide-react";
 import { NewsArticle } from "@/interface/all-interfaces";
 import Image from "next/image";
 import { categoryNames, distname } from "@/lib/navbar-items";
 import useViewTracker from "@/hooks/useViewsTracker";
-import { te } from "date-fns/locale";
 import ReactMarkdown from "react-markdown";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import RelatedPost from "@/components/RelatedPost";
 
 export default function SingleNewsPage({
   params,
   newsArticles,
-  relatedArticles
+  relatedArticles,
 }: {
   params: { newsId: string };
   newsArticles: NewsArticle[];
-  relatedArticles:NewsArticle[]
+  relatedArticles: NewsArticle[];
 }) {
   const { newsId } = params;
 
-  const [relatedPosts, setRelatedPosts] = useState<NewsArticle[]>([]);
-  const [error, setError] = useState<string | null>(null);
   const [isShareOpen, setIsShareOpen] = useState<string | null>(null);
   const [views, setViews] = useState<number>(0);
 
-  // // Fetch related posts
-  // useEffect(() => {
-  //   const fetchRelatedPosts = async () => {
-  //     if (!newsArticles[0]) return;
-
-  //     const param = newsArticles[0].district || newsArticles[0].category;
-  //     if (!param) return;
-
-  //     try {
-  //       const response = await fetch(
-  //         `${process.env.NEXT_PUBLIC_API_URL}/api/news/${param}`,
-  //         {
-  //           method: "GET",
-  //           headers: { "Content-Type": "application/json" },
-  //           cache: "no-store",
-  //         }
-  //       );
-  //       if (!response.ok)
-  //         throw new Error(`HTTP error! Status: ${response.status}`);
-
-  //       const { newsArticles: posts } = await response.json();
-
-  //       if (!Array.isArray(posts))
-  //         throw new Error("Invalid newsArticles array");
-
-  //       setRelatedPosts(
-  //         posts.filter((post: NewsArticle) => post._id !== newsId).slice(0, 5)
-  //       );
-  //       setError(null);
-  //     } catch (err) {
-  //       console.error("Error fetching related posts:", err);
-  //       setRelatedPosts([]);
-  //       setError((err as Error).message || "Failed to load related posts.");
-  //     }
-  //   };
-
-  //   fetchRelatedPosts();
-  // }, [newsArticles, newsId]);
-
   // Increment views
   useViewTracker(newsId, setViews);
-
-  // Memoize formatted dates for related posts
-  const formattedRelatedDates = useMemo(
-    () =>
-      relatedPosts.map((post) =>
-        formatDistanceToNow(new Date(post.createdAt), {
-          addSuffix: true,
-          locale: te,
-        })
-      ),
-    [relatedPosts]
-  );
 
   const handleCopyLink = (articleId: string) => {
     navigator.clipboard
@@ -205,10 +149,9 @@ export default function SingleNewsPage({
                 </span>
               </p>
             </div>
-            
           </div>
         </div>
-         <RelatedPost relatedPosts={relatedArticles}/>
+        <RelatedPost relatedPosts={relatedArticles} />
       </div>
     </div>
   );
