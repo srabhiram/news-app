@@ -1,7 +1,7 @@
 "use client";
 import { districts, navbarItems } from "@/lib/navbar-items";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { Check, ChevronsUpDown, Moon, Sun } from "lucide-react";
 import { TfiWrite } from "react-icons/tfi";
 import {
@@ -28,13 +28,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useRouter } from "next/navigation";
-import { getTokenData } from "@/helpers/getTokenData";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/redux/store";
-import { logoutUser, resetAuthState } from "@/redux/features/users/authSlice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
+import { logoutUser } from "@/redux/features/users/authSlice";
 import { FaUser } from "react-icons/fa";
 import Image from "next/image";
-import { Switch } from "./ui/switch";
 import useTheme from "@/hooks/useTheme";
 
 // Define the type for currentUser
@@ -57,7 +55,6 @@ function Navbar({ userData }: userDataProps) {
   const [value, setValue] = useState("");
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const router = useRouter();
-  const { signin, signout } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
 
   const { isDarkMode, toggleDarkMode } = useTheme();
@@ -66,7 +63,6 @@ function Navbar({ userData }: userDataProps) {
 //   setCurrentUser(userData);
 // }, [signin.success, signout.success]);
 
-  const isLoggedIn = currentUser ? currentUser : null;
 
   const removeTokenCookie = async () => {
     await dispatch(logoutUser());
@@ -86,7 +82,7 @@ function Navbar({ userData }: userDataProps) {
   };
 
   return (
-    <nav className="sticky top-0 z-50 shadow-sm bg-blue-100/35 backdrop-blur-lg text-zinc-900 dark:bg-zinc-950/50 border-b-2 rounded-b-md dark:text-white">
+    <nav className="sticky top-0 z-50 shadow-sm bg-blue-100/25 backdrop-blur-lg text-zinc-900 dark:bg-zinc-950/50 dark:border-b-2 rounded-b-md dark:text-white">
       <div className=" px-0.5 lg:px-4 py-3 mx-1">
         <div className="container mx-auto flex items-center justify-between gap-3">
           {/* Logo */}

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useMemo, HTMLAttributes, useRef } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { format, formatDistanceToNow } from "date-fns";
 import { FaWhatsapp, FaLink, FaShareAlt } from "react-icons/fa";
@@ -11,13 +11,16 @@ import useViewTracker from "@/hooks/useViewsTracker";
 import { te } from "date-fns/locale";
 import ReactMarkdown from "react-markdown";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import RelatedPost from "@/components/RelatedPost";
 
 export default function SingleNewsPage({
   params,
   newsArticles,
+  relatedArticles
 }: {
   params: { newsId: string };
   newsArticles: NewsArticle[];
+  relatedArticles:NewsArticle[]
 }) {
   const { newsId } = params;
 
@@ -26,53 +29,44 @@ export default function SingleNewsPage({
   const [isShareOpen, setIsShareOpen] = useState<string | null>(null);
   const [views, setViews] = useState<number>(0);
 
-  const lottieRef = useRef<HTMLDivElement>(null);
+  // // Fetch related posts
+  // useEffect(() => {
+  //   const fetchRelatedPosts = async () => {
+  //     if (!newsArticles[0]) return;
 
-useEffect(() => {
-  const player = lottieRef.current?.querySelector("dotlottie-player");
-  if (player) {
-    (player as any).play(); // play is a method on the web component
-  }
-}, [views]);
+  //     const param = newsArticles[0].district || newsArticles[0].category;
+  //     if (!param) return;
 
-  // Fetch related posts
-  useEffect(() => {
-    const fetchRelatedPosts = async () => {
-      if (!newsArticles[0]) return;
+  //     try {
+  //       const response = await fetch(
+  //         `${process.env.NEXT_PUBLIC_API_URL}/api/news/${param}`,
+  //         {
+  //           method: "GET",
+  //           headers: { "Content-Type": "application/json" },
+  //           cache: "no-store",
+  //         }
+  //       );
+  //       if (!response.ok)
+  //         throw new Error(`HTTP error! Status: ${response.status}`);
 
-      const param = newsArticles[0].district || newsArticles[0].category;
-      if (!param) return;
+  //       const { newsArticles: posts } = await response.json();
 
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/news/${param}`,
-          {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-            cache: "no-store",
-          }
-        );
-        if (!response.ok)
-          throw new Error(`HTTP error! Status: ${response.status}`);
+  //       if (!Array.isArray(posts))
+  //         throw new Error("Invalid newsArticles array");
 
-        const { newsArticles: posts } = await response.json();
+  //       setRelatedPosts(
+  //         posts.filter((post: NewsArticle) => post._id !== newsId).slice(0, 5)
+  //       );
+  //       setError(null);
+  //     } catch (err) {
+  //       console.error("Error fetching related posts:", err);
+  //       setRelatedPosts([]);
+  //       setError((err as Error).message || "Failed to load related posts.");
+  //     }
+  //   };
 
-        if (!Array.isArray(posts))
-          throw new Error("Invalid newsArticles array");
-
-        setRelatedPosts(
-          posts.filter((post: NewsArticle) => post._id !== newsId).slice(0, 5)
-        );
-        setError(null);
-      } catch (err) {
-        console.error("Error fetching related posts:", err);
-        setRelatedPosts([]);
-        setError((err as Error).message || "Failed to load related posts.");
-      }
-    };
-
-    fetchRelatedPosts();
-  }, [newsArticles, newsId]);
+  //   fetchRelatedPosts();
+  // }, [newsArticles, newsId]);
 
   // Increment views
   useViewTracker(newsId, setViews);
@@ -114,11 +108,11 @@ useEffect(() => {
   const article = newsArticles[0];
 
   return (
-    <div className="shadow-md container mx-auto px-1 sm:px-6 lg:px-8 pb-8 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-200">
+    <div className=" container mx-auto px-1 sm:px-6 lg:px-8 pb-8 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-200">
       <div className="flex flex-col lg:flex-row lg:gap-8">
         {/* Main Article */}
         <div className="w-full lg:w-3/4">
-          <div className="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-gray-700 rounded-md min-h-fit">
+          <div className="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-gray-700 rounded-md min-h-fit shadow-md ">
             {/* Article Image */}
             <div className="w-full  flex justify-center items-center">
               <Image
@@ -157,7 +151,6 @@ useEffect(() => {
                     <span className="text-sm sm:text-sm font-semibold text-gray-600 dark:text-gray-400">
                       {views || article?.views || 0}
                     </span>
-                   
                   </div>
                   <button
                     onClick={() => toggleShareOptions(article._id)}
@@ -212,57 +205,10 @@ useEffect(() => {
                 </span>
               </p>
             </div>
+            
           </div>
         </div>
-
-        {/* Related Posts */}
-        <div className="w-full lg:w-1/3 mt-8 lg:mt-0">
-          <h3 className="text-xl sm:text-2xl font-PottiSreeramulu font-bold mb-6">
-            <span className="bg-blue-500  p-0.5 mr-1"></span> సంబంధిత వార్తలు
-          </h3>
-          {error ? (
-            <p className="text-red-500">{error}</p>
-          ) : relatedPosts?.length === 0 ? (
-            <p className="text-gray-500 dark:text-gray-400 italic">
-              No related posts available.
-            </p>
-          ) : (
-            <div className="space-y-4 lg:max-h-[80vh] lg:overflow-y-auto lg:pr-4 lg:sticky lg:top-36">
-              {relatedPosts.map((post, index) => (
-                <Link
-                  key={post._id}
-                  href={`/news/${post._id}`}
-                  className="flex sm:flex-col max-sm:items-center bg-white dark:bg-zinc-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:scale-[1.02] hover:bg-gray-50 dark:hover:bg-zinc-700 transition-all duration-300 overflow-hidden"
-                >
-                  <div className="max-sm:w-1/3">
-                    <Image
-                      src={post.image}
-                      alt={post.newsTitle}
-                      width={300}
-                      height={96}
-                      style={{ height: "auto", width: "auto" }}
-                      className="rounded-t-lg object-cover object-top sm:aspect-video mx-auto"
-                      priority
-                    />
-                  </div>
-                  <div className="p-2 max-sm:w-full">
-                    <h4 className="text-sm font-PottiSreeramulu font-bold line-clamp-2 leading-normal active:text-blue-600 active:underline hover:text-blue-600 hover:underline">
-                      {post.newsTitle}
-                    </h4>
-                    <div className="p-1 flex items-center gap-1">
-                      <b className="text-xs">{distname(article.district)}</b>{" "}
-                      {" • "}
-                      <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 font-PottiSreeramulu">
-                        {" "}
-                        {formattedRelatedDates[index]}
-                      </p>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
-        </div>
+         <RelatedPost relatedPosts={relatedArticles}/>
       </div>
     </div>
   );

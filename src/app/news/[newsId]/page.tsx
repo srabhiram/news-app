@@ -3,28 +3,37 @@
 import { NewsArticle } from "@/interface/all-interfaces";
 import SingleNewsPage from "./SingleNewsPage";
 import { getSingleNews } from "@/lib/getSingleNews";
+import { getRelatedPosts } from "@/lib/getRelatedPosts";
 
-
-
-export async function generateMetadata({ params }: {params : Promise<{newsId:string}>}) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ newsId: string }>;
+}) {
   const { newsId } = await params;
   try {
-    const newsArticle = await getSingleNews(newsId)
-    const news: NewsArticle = await newsArticle[0]
+    const newsArticle = await getSingleNews(newsId);
+    const news: NewsArticle = await newsArticle[0];
 
     // Trim content to the first 150 characters for description
-    const trimmedContent = news.content ? news.content.substring(0, 150) : "Latest Telugu news and updates.";
+    const trimmedContent = news.content
+      ? news.content.substring(0, 150)
+      : "Latest Telugu news and updates.";
 
     return {
       title: `${news.newsTitle} - SRS News`,
-      description: trimmedContent,  // Use trimmed content
+      description: trimmedContent, // Use trimmed content
       openGraph: {
         title: news.newsTitle,
-        description: trimmedContent,  // Use trimmed content for OG description
+        description: trimmedContent, // Use trimmed content for OG description
         url: `${process.env.NEXT_PUBLIC_API_URL}/api/news/${newsId}`,
         images: [
           {
-            url: news.image || `${process.env.NEXT_PUBLIC_API_URL}/api/og?title=${encodeURIComponent(news.newsTitle)}`,
+            url:
+              news.image ||
+              `${
+                process.env.NEXT_PUBLIC_API_URL
+              }/api/og?title=${encodeURIComponent(news.newsTitle)}`,
             width: 1200,
             height: 630,
             alt: news.newsTitle,
@@ -34,7 +43,7 @@ export async function generateMetadata({ params }: {params : Promise<{newsId:str
       twitter: {
         card: "summary_large_image",
         title: news.newsTitle,
-        description: trimmedContent,  // Use trimmed content for Twitter description
+        description: trimmedContent, // Use trimmed content for Twitter description
         images: [news.image],
       },
     };
@@ -61,8 +70,24 @@ export async function generateMetadata({ params }: {params : Promise<{newsId:str
 }
 
 // ✅ Page component
-export default async function NewsIdPage({ params }: {params : Promise<{newsId:string}>}) {
+export default async function NewsIdPage({
+  params,
+}: {
+  params: Promise<{ newsId: string }>;
+}) {
   const param = await params;
-  const newsArticle:NewsArticle[] = await getSingleNews(param.newsId)
-  return <SingleNewsPage params={param} newsArticles={newsArticle} />;
+  const newsArticle: NewsArticle[] = await getSingleNews(param.newsId);
+  const res: NewsArticle[] = await getRelatedPosts(
+    newsArticle[0].district || newsArticle[0].category
+  );
+  const relatedPosts = res
+    .filter((article) => article._id !== param.newsId)
+    .slice(0, 5);
+  return (
+    <SingleNewsPage
+      params={param}
+      newsArticles={newsArticle}
+      relatedArticles={relatedPosts}
+    />
+  );
 }
