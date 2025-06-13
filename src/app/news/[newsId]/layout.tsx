@@ -1,10 +1,9 @@
-import React from 'react'
+import React from "react";
 
-export default function SingleNewsLayout({children, relatedPosts}:{children:React.ReactNode, relatedPosts:React.ReactNode}) {
-  return (
-    <>
-    {children}
-    {/* {relatedPosts} */}
-    </>
-  )
+export default function SingleNewsLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return <>{children}</>;
 }
