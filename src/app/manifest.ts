@@ -7,8 +7,6 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "మీ చేతిలో వార్తల ప్రపంచం – నిత్యం తాజా, నిస్సందేహం!",
     start_url: "/",
     display: "standalone",
-    background_color: "#ffffff",
-    theme_color: "#000000",
     lang: "te",
     icons: [
       {

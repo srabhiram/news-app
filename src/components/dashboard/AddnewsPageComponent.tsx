@@ -9,7 +9,10 @@ import { FaSpinner } from "react-icons/fa";
 export default function AddNewsPageComponent() {
   const [newsData, setnewsData] = React.useState({
     newsTitle: "",
-    content: "",
+    content: {
+      box1:"",
+      box2:""
+    },
     image: null as File | null,
     district: "",
     category: "",
@@ -57,7 +60,7 @@ export default function AddNewsPageComponent() {
     e.preventDefault();
     const formData = new FormData();
     formData.append("newsTitle", newsData.newsTitle);
-    formData.append("content", newsData.content);
+    formData.append("content", JSON.stringify(newsData.content));
     formData.append("image", newsData.image as Blob);
     formData.append("author", newsData.author);
     formData.append("district", newsData.district);
@@ -77,7 +80,7 @@ export default function AddNewsPageComponent() {
 
       setnewsData({
         newsTitle: "",
-        content: "",
+        content:{box1:"", box2:""},
         image: null,
         district: "",
         category: "",
@@ -132,13 +135,31 @@ export default function AddNewsPageComponent() {
               htmlFor="content"
               className="block text-sm text-zinc-700 dark:text-zinc-200 font-semibold font-PottiSreeramulu"
             >
-              కంటెంట్
+              కంటెంట్ 1
             </label>
             <textarea
               id="content"
               name="content"
-              rows={14}
-              value={newsData.content}
+              rows={11}
+              value={newsData.content.box1}
+              onChange={handleChange}
+              className="mt-1 block w-full border placeholder:dark:text-zinc-200 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-200 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 overflow-y-auto"
+              required
+              aria-required="true"
+            ></textarea>
+          </div>
+           <div className="mb-4">
+            <label
+              htmlFor="content"
+              className="block text-sm text-zinc-700 dark:text-zinc-200 font-semibold font-PottiSreeramulu"
+            >
+              కంటెంట్ 2
+            </label>
+            <textarea
+              id="content"
+              name="content"
+              rows={11}
+              value={newsData.content.box2}
               onChange={handleChange}
               className="mt-1 block w-full border placeholder:dark:text-zinc-200 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-200 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 overflow-y-auto"
               required

@@ -18,14 +18,14 @@ export const AddNews = async (req: NextRequest) => {
     await connectDB();
     const body = await req.formData();
     const newsTitle = body.get('newsTitle') as string;
-    const content = body.get('content') as string;
+    const content = JSON.parse(body.get('content') as string);
     const file = body.get('image') as File;
     const district = body.get('district') as string;
     const author = body.get('author') as string;
     const category = body.get('category') as string;
 
     // Validate input data
-    if (!newsTitle || !content || !author || !file) {
+    if (!newsTitle  || !author || !file) {
       return NextResponse.json(
         { error: 'All fields are required' },
         { status: 400 }
@@ -71,7 +71,7 @@ export const AddNews = async (req: NextRequest) => {
     // Create news item
     const addNews = await News.create({
       newsTitle,
-      content,
+      content : {box1: content.box1, box2:content.box2},
       image: secure_url,
       district,
       category,

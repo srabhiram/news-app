@@ -15,15 +15,15 @@ export interface NewsModel extends Document {
 const newsSchema: Schema = new Schema(
   {
     newsTitle: { type: String, required: true },
-    content: { type: String, required: true },
+    content: { box1: { type: String }, box2: { type: String } },
     image: { type: String, required: true },
-    district: { type: String||null },
-    category:{type:String || null},
+    district: { type: String || null },
+    category: { type: String || null },
 
     author: { type: String, required: true },
     comments: { type: [String], default: [] },
     likes: { type: Number, default: 0 }, // Updated from String[] to Number
-    views:{type: Number, default: 0},
+    views: { type: Number, default: 0 },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
   },
