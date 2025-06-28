@@ -17,7 +17,7 @@ export async function generateMetadata({
 
     // Trim content to the first 150 characters for description
     const trimmedContent = news.content
-      ? news.content.substring(0, 150)
+      ? news.content.box1.substring(0, 150)
       : "Latest Telugu news and updates.";
 
     return {

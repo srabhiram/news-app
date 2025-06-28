@@ -138,15 +138,17 @@ export default function SingleNewsPage({
                     : categoryNames(article.category)}
                 </b>
                 {": "}
-                <span className="prose-ul:list-disc prose whitespace-pre-wrap text-wrap text-base dark:text-zinc-300">
+                {article?.content && (
+                  <span className="prose-ul:list-disc prose whitespace-pre-wrap text-wrap text-base dark:text-zinc-300">
                   <ReactMarkdown
                     components={{
                       p: ({ node, ...props }) => <span {...props} />,
                     }}
                   >
-                    {article?.content}
+                   {`${article?.content.box1}\n\n${article?.content.box2}`}
                   </ReactMarkdown>
                 </span>
+                )}
               </p>
             </div>
           </div>

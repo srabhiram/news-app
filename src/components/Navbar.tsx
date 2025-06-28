@@ -150,7 +150,7 @@ function Navbar({ userData }: userDataProps) {
 
         {/* Navigation Items and District Selector */}
         <div className="container mx-auto mt-3">
-          <div className="flex items-center justify-between overflow-x-hidden whitespace-nowrap">
+          <div className="flex items-center justify-between overflow-x-hidden whitespace-nowrap max-sm:mx-2">
             <ul className="flex items-center gap-2 sm:gap-5">
               {navbarItems.map((item) => (
                 <li key={item?.id}>

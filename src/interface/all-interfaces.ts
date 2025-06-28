@@ -11,7 +11,10 @@ export interface newsData {
 export interface NewsArticle {
   _id: string;
   newsTitle: string;
-  content: string;
+  content: {
+    box1:string,
+    box2:string
+  };
   image: string;
   district: string;
   category:string;
