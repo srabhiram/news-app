@@ -10,9 +10,10 @@ import { newsData } from "@/interface/all-interfaces";
 import { NewsArticle } from "@/interface/all-interfaces";
 
 // Assuming EditDailog is a separate component handling the edit form
-import { EditDailog } from "./EditDailog";
+import { EditDialog } from "./EditDailog";
 import { DeleteDailog } from "./DeleteDailog";
 import Link from "next/link";
+import { SelectChangeEvent } from "@mui/material";
 
 
 export default function AllNewsShowcase({
@@ -23,7 +24,7 @@ export default function AllNewsShowcase({
   const formattedDates = useFormattedDates(newsArticles);
   const [newsArticle, setNewsArticle] = React.useState<newsData>({
     newsTitle: "",
-    content: "",
+    content: {box1:"", box2:""},
     image: null as File | null,
     district: "",
     category: "",
@@ -40,7 +41,19 @@ export default function AllNewsShowcase({
     >
   ) => {
     const { name, value } = e.target;
+
+      // Handle nested content fields (box1 or box2)
+  if (name === "box1" || name === "box2") {
+    setNewsArticle((prev) => ({
+      ...prev,
+      content: {
+        ...prev.content,
+        [name]: value,
+      },
+    }));
+  } else {
     setNewsArticle((prev) => ({ ...prev, [name]: value }));
+  }
   };
 
   const handleSelectionTypeChange = (
@@ -78,6 +91,13 @@ export default function AllNewsShowcase({
     });
   };
 
+    const handleSelectChange = (e: SelectChangeEvent) => {
+    const { name, value } = e.target;
+    setNewsArticle((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
     id: string
@@ -85,7 +105,7 @@ export default function AllNewsShowcase({
     e.preventDefault();
     const formData = new FormData();
     formData.append("newsTitle", newsArticle.newsTitle);
-    formData.append("content", newsArticle.content);
+    formData.append("content", JSON.stringify(newsArticle.content));
     if (newsArticle.image) {
       formData.append("image", newsArticle.image as Blob);
     }
@@ -108,7 +128,7 @@ export default function AllNewsShowcase({
 
       setNewsArticle({
         newsTitle: "",
-        content: "",
+        content: {box1:"", box2:""},
         image: null,
         district: "",
         category: "",
@@ -174,9 +194,10 @@ export default function AllNewsShowcase({
                   </Link>
               <CardFooter>
                 <div className="flex justify-between w-full">
-                  <EditDailog
+                  <EditDialog
                     articles={article}
                     fileInputRef={fileInputRef}
+                    handleSelectChange={handleSelectChange}
                     handleChange={handleChange}
                     handleEditClick={handleEditClick}
                     handleFileChange={handleFileChange}

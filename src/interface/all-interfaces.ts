@@ -1,6 +1,9 @@
 export interface newsData {
   newsTitle: string;
-  content: string;
+  content: {
+    box1:string,
+    box2:string
+  };
   image: File | null;
   district: string;
   category: string;

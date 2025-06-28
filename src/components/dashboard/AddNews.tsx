@@ -134,7 +134,7 @@ export default function AddNewsPageComponent() {
   };
 
   return (
-    <Box maxWidth="sm" mx="auto" mt={5} px={2}>
+    <Box maxWidth="sm" mx="auto" my={5} px={2}>
       <Typography variant="h5" fontWeight="bold" mb={3} textAlign="center">
         Add News
       </Typography>
@@ -269,7 +269,7 @@ export default function AddNewsPageComponent() {
           fullWidth
           loading = {loading}
           loadingIndicator={<CircularProgress size={24} color="inherit" />}
-          sx={{ mt: 3, mb:3 }}
+          sx={{ mt: 3}}
         >
           
             Add News

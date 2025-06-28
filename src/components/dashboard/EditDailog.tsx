@@ -2,20 +2,29 @@
 import React from "react";
 import {
   Dialog,
+  DialogActions,
   DialogContent,
-  DialogDescription,
-  DialogHeader,
   DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { LoaderCircle } from "lucide-react";
+  TextField,
+  Button,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  RadioGroup,
+  Radio,
+  Select,
+  MenuItem,
+  InputLabel,
+  CircularProgress,
+  Typography,
+  Box,
+  SelectChangeEvent,
+} from "@mui/material";
 import Image from "next/image";
-import { Button } from "../ui/button";
 import { categories, districts } from "@/lib/navbar-items";
-import { newsData } from "@/interface/all-interfaces";
-import { NewsArticle } from "@/interface/all-interfaces";
+import { newsData, NewsArticle } from "@/interface/all-interfaces";
 
-interface EditDailogProps {
+interface EditDialogProps {
   articles: NewsArticle;
   fileInputRef: React.RefObject<HTMLInputElement | null>;
   handleChange: (
@@ -27,241 +36,202 @@ interface EditDailogProps {
   handleEditClick: (article: NewsArticle) => void;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>, id: string) => void;
+  handleSelectChange: (e:SelectChangeEvent)=>void;
   loading: boolean;
   newsData: newsData;
 }
 
-export function EditDailog({
-  articles,
-  fileInputRef,
-  handleChange,
-  handleSelectionTypeChange,
-  handleEditClick,
-  handleFileChange,
-  handleSubmit,
-  loading,
-  newsData,
-}: EditDailogProps) {
+export function EditDialog(props: EditDialogProps) {
+  const {
+    articles,
+    fileInputRef,
+    handleChange,
+    handleSelectionTypeChange,
+    handleEditClick,
+    handleFileChange,
+    handleSubmit,
+    handleSelectChange,
+    loading,
+    newsData,
+  } = props;
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    handleEditClick(articles);
+    setOpen(true);
+  };
+
+  const handleClose = () => setOpen(false);
+
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button className="bg-blue-600 text-white" onClick={() => handleEditClick(articles)}>Edit</Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] max-h-[80vh] overflow-y-auto bg-white dark:bg-zinc-800 dark:text-zinc-200">
-        <DialogHeader>
-          <DialogTitle id="edit-news-title">Edit News</DialogTitle>
-          <DialogDescription>
-            Update the news article details below.
-          </DialogDescription>
-        </DialogHeader>
-        <form
-          onSubmit={(e) => handleSubmit(e, articles._id)}
-          aria-labelledby="edit-news-title"
-        >
-          <div className="mb-4">
-            <label
-              htmlFor="newsTitle"
-              className="block text-sm font-semibold font-PottiSreeramulu text-zinc-700 dark:text-zinc-200"
-            >
-              న్యూస్ టైటిల్
-            </label>
-            <input
-              type="text"
-              id="newsTitle"
+    <>
+      <Button variant="contained" color="primary" onClick={handleOpen}>
+        Edit
+      </Button>
+
+      <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+        <DialogTitle>Edit News</DialogTitle>
+
+        <form onSubmit={(e) => handleSubmit(e, articles._id)}>
+          <DialogContent dividers>
+            <TextField
+              label="న్యూస్ టైటిల్"
               name="newsTitle"
+              fullWidth
+              required
               value={newsData.newsTitle}
               onChange={handleChange}
-              className="my-1 block h-10 p-1 w-full border dark:text-zinc-200 placeholder:dark:text-zinc-200 dark:bg-zinc-700 border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-              required
-              aria-required="true"
+              margin="normal"
             />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="content"
-              className="block text-sm text-zinc-700 dark:text-zinc-200 font-semibold font-PottiSreeramulu"
-            >
-              కంటెంట్
-            </label>
-            <textarea
-              id="content"
-              name="content"
-              rows={8}
-              value={newsData.content}
-              onChange={handleChange}
-              className="mt-1 block w-full border placeholder:dark:text-zinc-200 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-200 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 overflow-y-auto"
+
+            <TextField
+              label="కంటెంట్ 1"
+              name="box1"
+              fullWidth
               required
-              aria-required="true"
-            ></textarea>
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="author"
-              className="block text-sm font-medium text-zinc-700 dark:text-zinc-200"
-            >
-              Author
-            </label>
-            <input
-              type="text"
-              id="author"
+              multiline
+              rows={6}
+              value={newsData.content.box1 || newsData.content}
+              onChange={handleChange}
+              margin="normal"
+            />
+          {newsData.content.box2 && (
+             <TextField
+              label="కంటెంట్ 2"
+              name="box2"
+              fullWidth
+              required
+              multiline
+              rows={6}
+              value={newsData.content.box2}
+              onChange={handleChange}
+              margin="normal"
+            />
+          )}
+            <TextField
+              label="Author"
               name="author"
+              fullWidth
+              required
               value={newsData.author}
               onChange={handleChange}
-              className="my-1 block h-10 w-full border placeholder:dark:text-zinc-200 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-200 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-              required
-              aria-required="true"
+              margin="normal"
             />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="image"
-              className="block text-sm font-medium text-zinc-700 dark:text-zinc-200"
-            >
-              Image Upload
-            </label>
-            <input
-              type="file"
-              name="image"
-              id="image"
-              accept="image/*"
-              ref={fileInputRef}
-              onChange={handleFileChange}
-              className="my-1 block h-8 p-1 w-full border placeholder:dark:text-zinc-200 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-200 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-            />
-            {newsData.image ? (
-              <div className="mt-2">
-                <p>Image Preview:</p>
-                <Image
-                  src={URL.createObjectURL(newsData.image)}
-                  alt="Preview"
-                  width={128}
-                  height={128}
-                  className="w-32 h-32 object-cover rounded-md"
+
+            <FormControl fullWidth margin="normal">
+              <Button variant="outlined" component="label">
+                Upload Image
+                <input
+                  type="file"
+                  accept="image/*"
+                  hidden
+                  onChange={handleFileChange}
+                  ref={fileInputRef}
                 />
-              </div>
-            ) : (
-              articles.image && (
-                <div className="mt-2">
-                  <p>Current Image:</p>
+              </Button>
+            </FormControl>
+
+            <Box mt={2}>
+              {newsData.image ? (
+                <>
+                  <Typography variant="body2">Image Preview:</Typography>
+                  <Image
+                    src={URL.createObjectURL(newsData.image)}
+                    alt="Preview"
+                    width={128}
+                    height={128}
+                    className="rounded-md object-cover"
+                  />
+                </>
+              ) : articles.image ? (
+                <>
+                  <Typography variant="body2">Current Image:</Typography>
                   <Image
                     src={articles.image}
                     alt="Current"
                     width={128}
                     height={128}
-                    className="w-32 h-32 object-cover rounded-md"
+                    className="rounded-md object-cover"
                   />
-                </div>
-              )
-            )}
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-200">
-              Select Type
-            </label>
-            <div className="flex gap-4 my-2">
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="selectionType"
+                </>
+              ) : null}
+            </Box>
+
+            <FormControl component="fieldset" margin="normal">
+              <FormLabel>Select Type</FormLabel>
+              <RadioGroup
+                row
+                value={newsData.selectionType}
+                onChange={handleSelectionTypeChange}
+              >
+                <FormControlLabel
                   value="district"
-                  checked={newsData.selectionType === "district"}
-                  onChange={handleSelectionTypeChange}
-                  className="mr-2"
+                  control={<Radio />}
+                  label="District"
                 />
-                District
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="selectionType"
+                <FormControlLabel
                   value="category"
-                  checked={newsData.selectionType === "category"}
-                  onChange={handleSelectionTypeChange}
-                  className="mr-2"
+                  control={<Radio />}
+                  label="Category"
                 />
-                Category
-              </label>
-            </div>
-          </div>
-          {newsData.selectionType === "district" ? (
-            <div className="mb-4">
-              <label
-                htmlFor="district"
-                className="block text-sm font-medium text-zinc-700 dark:text-zinc-200"
-              >
-                Districts
-              </label>
-              <select
-                id="district"
-                name="district"
-                value={newsData.district}
-                onChange={handleChange}
-                className="my-1 block h-10 p-1 w-full border placeholder:dark:text-zinc-200 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-200 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                required
-                aria-required="true"
-              >
-                <option value="">Select a district</option>
-                {districts.map((item) => (
-                  <option
-                    key={item.value}
-                    value={item.value}
-                    className="text-zinc-700 dark:text-zinc-200 dark:bg-zinc-700"
-                  >
-                    {item.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-          ) : (
-            <div className="mb-4">
-              <label
-                htmlFor="category"
-                className="block text-sm font-medium text-zinc-700 dark:text-zinc-200"
-              >
-                Categories
-              </label>
-              <select
-                id="category"
-                name="category"
-                value={newsData.category}
-                onChange={handleChange}
-                className="my-1 block h-10 p-1 w-full border placeholder:dark:text-zinc-200 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-200 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                required
-                aria-required="true"
-              >
-                <option value="">Select a category</option>
-                {categories.map((item) => (
-                  <option
-                    key={item.value}
-                    value={item.value}
-                    className="text-zinc-700 dark:text-zinc-200 dark:bg-zinc-700"
-                  >
-                    {item.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-          <Button
-            type="submit"
-            className={`${
-              !loading
-                ? "px-4 py-2 w-full bg-blue-600 text-white rounded-md hover:bg-blue-700 active:bg-blue-700"
-                : "opacity-55 bg-blue-600 px-4 py-2 w-full rounded-md text-white"
-            }`}
-            disabled={loading}
-            aria-disabled={loading ? "true" : "false"}
-          >
-            {loading ? (
-              <span className="flex items-center justify-center mx-auto">
-                <LoaderCircle className="animate-spin transition-all" />
-              </span>
+              </RadioGroup>
+            </FormControl>
+
+            {newsData.selectionType === "district" ? (
+              <FormControl fullWidth margin="normal">
+                <InputLabel>District</InputLabel>
+                <Select
+                  name="district"
+                  value={newsData.district}
+                  onChange={handleSelectChange}
+                  label="District"
+                  required
+                >
+                  {districts.map((item) => (
+                    <MenuItem key={item.value} value={item.value}>
+                      {item.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             ) : (
-              "Update News"
+              <FormControl fullWidth margin="normal">
+                <InputLabel>Category</InputLabel>
+                <Select
+                  name="category"
+                  value={newsData.category}
+                  onChange={handleSelectChange}
+                  label="Category"
+                  required
+                >
+                  {categories.map((item) => (
+                    <MenuItem key={item.value} value={item.value}>
+                      {item.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             )}
-          </Button>
+          </DialogContent>
+
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={loading}
+            >
+              {loading ? (
+                <CircularProgress size={22} color="inherit" />
+              ) : (
+                "Update News"
+              )}
+            </Button>
+          </DialogActions>
         </form>
-      </DialogContent>
-    </Dialog>
+      </Dialog>
+    </>
   );
 }

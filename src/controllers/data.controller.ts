@@ -121,7 +121,7 @@ export const EditNews = async (req: NextRequest, newsID: string) => {
     await connectDB();
     const body = await req.formData();
     const newsTitle = body.get("newsTitle");
-    const content = body.get("content");
+    const content = JSON.parse(body.get('content') as string);
     const file = body.get("image") as File;
     const district = body.get("district");
     const author = body.get("author");
@@ -148,7 +148,7 @@ export const EditNews = async (req: NextRequest, newsID: string) => {
     }
 
     // validate the input data
-    if (!newsTitle || !content || !file || !author) {
+    if (!newsTitle  || !file || !author) {
       return NextResponse.json(
         {
           message: "All fields are required",
@@ -194,7 +194,7 @@ export const EditNews = async (req: NextRequest, newsID: string) => {
       newsID,
       {
         newsTitle,
-        content,
+        content: {box1:content.box1, box2:content.box2},
         image: secure_url,
         district,
         category,
