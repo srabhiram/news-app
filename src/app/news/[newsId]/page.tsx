@@ -16,16 +16,16 @@ export async function generateMetadata({
     const news: NewsArticle = await newsArticle[0];
 
     // Trim content to the first 150 characters for description
-    const trimmedContent = news.content
-      ? news.content.box1.substring(0, 150)
+    const trimmedContentBox = news.content
+      ? news.content?.box1?.substring(0, 100)
       : "Latest Telugu news and updates.";
-
+    const trimmedContent = JSON.stringify(news.content)
     return {
       title: `${news.newsTitle} - SRS News`,
-      description: trimmedContent, // Use trimmed content
+      description: trimmedContentBox || trimmedContent.substring(0,100), // Use trimmed content
       openGraph: {
         title: news.newsTitle,
-        description: trimmedContent, // Use trimmed content for OG description
+        description: trimmedContentBox || trimmedContent.substring(0,100), // Use trimmed content for OG description
         url: `${process.env.NEXT_PUBLIC_API_URL}/api/news/${newsId}`,
         images: [
           {
@@ -43,7 +43,7 @@ export async function generateMetadata({
       twitter: {
         card: "summary_large_image",
         title: news.newsTitle,
-        description: trimmedContent, // Use trimmed content for Twitter description
+        description: trimmedContentBox || trimmedContent.substring(0,100), // Use trimmed content for Twitter description
         images: [news.image],
       },
     };

@@ -1,7 +1,14 @@
 "use client";
 import { useState } from "react";
 import { format } from "date-fns";
-import { FaWhatsapp, FaLink, FaShareAlt } from "react-icons/fa";
+import {
+  FaWhatsapp,
+  FaLink,
+  FaShareAlt,
+  FaFacebook,
+  FaTwitter,
+  FaTwitterSquare,
+} from "react-icons/fa";
 import { EyeIcon } from "lucide-react";
 import { NewsArticle } from "@/interface/all-interfaces";
 import Image from "next/image";
@@ -9,6 +16,12 @@ import { categoryNames, distname } from "@/lib/navbar-items";
 import useViewTracker from "@/hooks/useViewsTracker";
 import ReactMarkdown from "react-markdown";
 import RelatedPost from "@/components/RelatedPost";
+import {
+  handleCopyLink,
+  handleFacebookShare,
+  handleTwitterShare,
+  handleWhatsAppShare,
+} from "@/lib/share-features";
 
 export default function SingleNewsPage({
   params,
@@ -26,24 +39,6 @@ export default function SingleNewsPage({
 
   // Increment views
   useViewTracker(newsId, setViews);
-
-  const handleCopyLink = (articleId: string) => {
-    navigator.clipboard
-      .writeText(`${window.location.origin}/news/${articleId}`)
-      .then(() => {
-        alert("Link copied to clipboard!");
-      });
-  };
-
-  const handleWhatsAppShare = (article: { _id: string; newsTitle: string }) => {
-    const articleUrl = `${window.location.origin}/news/${article._id}`;
-    window.open(
-      `https://wa.me/?text=${encodeURIComponent(
-        `Check out this news article: ${article.newsTitle} - ${articleUrl}`
-      )}`,
-      "_blank"
-    );
-  };
 
   const toggleShareOptions = (articleId: string) => {
     setIsShareOpen((prev) => (prev === articleId ? null : articleId));
@@ -75,51 +70,59 @@ export default function SingleNewsPage({
                 {article?.newsTitle}
               </h2>
 
-              {/* Meta Section */}
-              <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
-                <div className="flex items-center gap-2">
-                  <p className="text-sm sm:text-sm text-gray-600 dark:text-gray-400 font-PottiSreeramulu">
-                    <span className="capitalize font-bold">
-                      {article?.author}
-                    </span>{" "}
-                    •{" "}
-                    {format(
-                      new Date(article?.createdAt),
-                      "dd MMM yyyy hh:mm a"
-                    )}
-                  </p>
-                </div>
-                <div className="relative flex items-center gap-3">
-                  <div className=" flex items-center gap-1">
+              {/* Top row: Author, Date, Views */}
+              <div className="text-gray-700 dark:text-gray-400 text-sm border-b border-gray-200 dark:border-gray-700 pb-3 mb-3">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-1">
+                    <span className="font-medium capitalize">
+                      {article.author}
+                    </span>
+                    <span>•</span>
+                    <span>
+                      {format(
+                        new Date(article?.createdAt),
+                        "dd MMM yyyy hh:mm a"
+                      )}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1 ml-4 mr-1">
                     <EyeIcon className="w-5 text-gray-600 dark:text-gray-400" />
                     <span className="text-sm sm:text-sm font-semibold text-gray-600 dark:text-gray-400">
                       {views || article?.views || 0}
                     </span>
                   </div>
+                </div>
+
+                {/* Bottom row: Share buttons */}
+                <div className="mt-2 flex gap-2 place-self-end px-0.5">
                   <button
-                    onClick={() => toggleShareOptions(article._id)}
-                    className="p-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-all duration-300"
-                    title="Share"
-                    aria-label="Share article"
+                    onClick={() => handleFacebookShare(article)}
+                    className="text-center p-[7px] md:p-3 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors duration-200"
+                    title="Share on Facebook"
                   >
-                    <FaShareAlt className="w-4 sm:w-5" />
+                    <FaFacebook size={20} />
                   </button>
-                  {isShareOpen === article?._id && (
-                    <div className="absolute top-10 right-0 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-3 flex flex-col gap-2 z-10">
-                      <button
-                        onClick={() => handleWhatsAppShare(article)}
-                        className="flex items-center gap-2 px-3 py-1.5 bg-green-500 text-white rounded-md hover:bg-green-600 text-sm transition-colors duration-300"
-                      >
-                        <FaWhatsapp size={14} /> WhatsApp
-                      </button>
-                      <button
-                        onClick={() => handleCopyLink(article._id)}
-                        className="flex items-center gap-2 px-3 py-1.5 bg-blue-500 text-white rounded-md hover:bg-blue-600 text-sm transition-colors duration-300"
-                      >
-                        <FaLink size={14} /> Copy Link
-                      </button>
-                    </div>
-                  )}
+                  <button
+                    onClick={() => handleWhatsAppShare(article)}
+                    className="text-center p-[7px] md:p-3 bg-green-500 text-white rounded-full hover:bg-green-600 transition-colors duration-200"
+                    title="Share on WhatsApp"
+                  >
+                    <FaWhatsapp size={20} />
+                  </button>
+                  <button
+                    onClick={() => handleTwitterShare(article)}
+                    className="text-center p-[7px] md:p-3 bg-black text-white rounded-full hover:bg-gray-900 transition-colors duration-200"
+                    title="Share on X (Twitter)"
+                  >
+                    <FaTwitter size={20} />
+                  </button>
+                  <button
+                    onClick={() => handleCopyLink(article._id)}
+                    className="text-center p-[7px] md:p-3 bg-gray-500 text-white rounded-full hover:bg-gray-600 transition-colors duration-200"
+                    title="Copy Link"
+                  >
+                    <FaLink size={20} />
+                  </button>{" "}
                 </div>
               </div>
 
@@ -138,16 +141,26 @@ export default function SingleNewsPage({
                     : categoryNames(article.category)}
                 </b>
                 {": "}
-                {article?.content && (
+                {article?.content.box1 ? (
                   <span className="prose-ul:list-disc prose whitespace-pre-wrap text-wrap text-base dark:text-zinc-300">
-                  <ReactMarkdown
-                    components={{
-                      p: ({ node, ...props }) => <span {...props} />,
-                    }}
-                  >
-                   {`${article?.content.box1}\n\n${article?.content.box2}`}
-                  </ReactMarkdown>
-                </span>
+                    <ReactMarkdown
+                      components={{
+                        p: ({ node, ...props }) => <span {...props} />,
+                      }}
+                    >
+                      {`${article?.content.box1}\n\n${article?.content.box2}`}
+                    </ReactMarkdown>
+                  </span>
+                ) : (
+                  <span className="prose-ul:list-disc prose whitespace-pre-wrap text-wrap text-base dark:text-zinc-300">
+                    <ReactMarkdown
+                      components={{
+                        p: ({ node, ...props }) => <span {...props} />,
+                      }}
+                    >
+                      {`${article?.content}`}
+                    </ReactMarkdown>
+                  </span>
                 )}
               </p>
             </div>
