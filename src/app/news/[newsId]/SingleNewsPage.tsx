@@ -18,11 +18,10 @@ import ReactMarkdown from "react-markdown";
 import RelatedPost from "@/components/RelatedPost";
 import {
   handleCopyLink,
-  handleFacebookShare,
   handleTwitterShare,
   handleWhatsAppShare,
 } from "@/lib/share-features";
-
+import { FacebookIcon, FacebookShareButton } from "react-share";
 export default function SingleNewsPage({
   params,
   newsArticles,
@@ -33,7 +32,7 @@ export default function SingleNewsPage({
   relatedArticles: NewsArticle[];
 }) {
   const { newsId } = params;
-
+console.log(`${window.location.origin}/news`)
   const [isShareOpen, setIsShareOpen] = useState<string | null>(null);
   const [views, setViews] = useState<number>(0);
 
@@ -95,13 +94,18 @@ export default function SingleNewsPage({
 
                 {/* Bottom row: Share buttons */}
                 <div className="mt-2 flex gap-2 place-self-end px-0.5">
-                  <button
-                    onClick={() => handleFacebookShare(article)}
-                    className="text-center p-[7px] md:p-3 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors duration-200"
-                    title="Share on Facebook"
+                 <span                     className="text-center p-[7px] md:p-3 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors duration-200"
+>
+                  
+               
+                     <FacebookShareButton
+                    url={`${window.location.origin}/news/${article._id}`}
                   >
+                   
                     <FaFacebook size={20} />
-                  </button>
+                  </FacebookShareButton>
+              </span>
+                 
                   <button
                     onClick={() => handleWhatsAppShare(article)}
                     className="text-center p-[7px] md:p-3 bg-green-500 text-white rounded-full hover:bg-green-600 transition-colors duration-200"
