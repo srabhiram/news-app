@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { NewsArticle } from "@/interface/all-interfaces";
 import Image from "next/image";
 import Link from "next/link";
+import { CldImage } from "next-cloudinary";
 
 export default function CarouselWithPagination({ newsArticles }: { newsArticles: NewsArticle[] }) {
   const [api, setApi] = React.useState<CarouselApi>();
@@ -67,7 +68,8 @@ export default function CarouselWithPagination({ newsArticles }: { newsArticles:
             slicedArticles.map((article, index) => (
               <CarouselItem key={article._id}>
                 <Link href={`/news/${article._id}`} className="relative w-full aspect-video flex items-center justify-center">
-                  <Image
+                  <CldImage
+                  preserveTransformations
                     src={article.image}
                     alt={article.newsTitle}
                     fill

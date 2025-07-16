@@ -3,7 +3,6 @@ import { registerServiceWorker } from "@/lib/registerServiceWorker";
 import store from "@/redux/store";
 import React, { useEffect } from "react";
 import { Provider } from "react-redux";
-import GoogleAnalytics from "./GoogleAnalytics";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import NotificationBanner from "../web-push-notification";
 
@@ -17,7 +16,6 @@ export default function ClientProvider({
   }, []);
   return (
     <Provider store={store}>
-      <GoogleAnalytics />
       <ErrorBoundary>{children}
         <NotificationBanner/>
       </ErrorBoundary>

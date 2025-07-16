@@ -1,3 +1,4 @@
+"use client"
 import { useFormattedDates } from '@/hooks/useFormatdatetime';
 import { isNewPost } from '@/lib/isNewPost';
 import { distname } from '@/lib/navbar-items';
@@ -8,6 +9,7 @@ import React from 'react';
 import { Badge } from '../ui/badge';
 import { cn } from '@/lib/utils';
 import { Heading } from '../Heading';
+import { CldImage } from 'next-cloudinary';
 
 export const LatestNewsLanding = ({ newsArticles }: { newsArticles: NewsArticle[] }) => {
   const slicedArticles = newsArticles.slice(0, 4);
@@ -32,13 +34,15 @@ export const LatestNewsLanding = ({ newsArticles }: { newsArticles: NewsArticle[
           >
             {/* Image Container */}
             <div className="relative flex-shrink-0 w-1/3 mr-3">
-              <Image
+              <CldImage
+              preserveTransformations
                 src={article.image}
                 alt={article.newsTitle}
                 width={400}
                 height={100}
                 className="rounded-md object-cover aspect-video w-full"
-                priority={index === 0}
+                priority
+                
               />
               {isNewPost(article.createdAt, 6) && (
                 <span className="absolute -top-3 -left-1.5">

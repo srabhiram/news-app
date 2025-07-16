@@ -6,10 +6,8 @@ import Navbar from "@/components/Navbar";
 import "./globals.css";
 import ClientProvider from "@/components/providers/ClientProvider";
 import Footer from "@/components/Footer";
-import Script from "next/script";
 import { Viewport } from "next";
 import { getTokenData } from "@/helpers/getTokenData";
-import useTheme from "@/hooks/useTheme";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -57,13 +55,6 @@ export default async function RootLayout({
           </main>
           <Footer />
         </ClientProvider>
-        <Script
-          id="adsense-script"
-          strategy="afterInteractive"
-          async
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${process.env.NEXT_PUBLIC_GOOGLE_AD}`}
-          crossOrigin="anonymous"
-        />
       </body>
     </html>
   );

@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import { Heading } from "../Heading";
 import { NewsArticle } from "@/interface/all-interfaces";
@@ -8,6 +9,7 @@ import { isNewPost } from "@/lib/isNewPost";
 import { Badge } from "../ui/badge";
 import { categoryNames } from "@/lib/navbar-items";
 import { useFormattedDates } from "@/hooks/useFormatdatetime";
+import { CldImage } from "next-cloudinary";
 
 export const TechnologyLanding = ({
   newsArticles,
@@ -38,13 +40,14 @@ export const TechnologyLanding = ({
               >
                 {/* Image Container */}
                 <div className="relative flex-shrink-0 w-1/3 mr-3">
-                  <Image
+                  <CldImage
                     src={article.image}
                     alt={article.newsTitle}
                     width={400}
                     height={100}
-                    className="rounded-md object-cover aspect-video w-full"
+                    className="rounded-md object-cover object-top aspect-video"
                     priority={index === 0}
+                    preserveTransformations
                   />
                   {isNewPost(article.createdAt, 6) && (
                     <span className="absolute -top-3 -left-1.5">

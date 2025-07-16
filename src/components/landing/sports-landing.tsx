@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react";
 import { Heading } from "../Heading";
 import { NewsArticle } from "@/interface/all-interfaces";
@@ -8,6 +10,7 @@ import { Badge } from "../ui/badge";
 import { categoryNames } from "@/lib/navbar-items";
 import { useFormattedDates } from "@/hooks/useFormatdatetime";
 import { cn } from "@/lib/utils";
+import { CldImage } from "next-cloudinary";
 
 export const SportsLanding = ({
   newsArticles,
@@ -38,7 +41,8 @@ export const SportsLanding = ({
               >
                 {/* Image Container */}
                 <div className="relative flex-shrink-0 w-1/3 mr-3">
-                  <Image
+                  <CldImage
+                  preserveTransformations
                     src={article.image}
                     alt={article.newsTitle}
                     width={400}

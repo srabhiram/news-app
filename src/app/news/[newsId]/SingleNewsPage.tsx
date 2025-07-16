@@ -22,6 +22,7 @@ import {
   handleWhatsAppShare,
 } from "@/lib/share-features";
 import { FacebookIcon, FacebookShareButton } from "react-share";
+import {CldImage} from "next-cloudinary"
 export default function SingleNewsPage({
   params,
   newsArticles,
@@ -53,14 +54,15 @@ console.log(`${window.location.origin}/news`)
           <div className="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-gray-700 rounded-md min-h-fit shadow-md ">
             {/* Article Image */}
             <div className="w-full  flex justify-center items-center">
-              <Image
+              {/* <Image
                 src={article?.image}
                 alt={article?.newsTitle}
                 width={700}
                 height={250}
                 style={{ height: "auto", width: "auto" }}
                 className="rounded-t-md object-cover w-full mx-auto"
-              />
+              /> */}
+              <CldImage src={article.image} alt={article.newsTitle} width="250" height={100} preserveTransformations className="rounded-t-md object-cover" priority />
             </div>
 
             {/* Article Content */}

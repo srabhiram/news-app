@@ -2,6 +2,7 @@
 import { useFormattedDates } from '@/hooks/useFormatdatetime'
 import { NewsArticle } from '@/interface/all-interfaces'
 import { distname } from '@/lib/navbar-items'
+import { CldImage } from 'next-cloudinary'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -27,7 +28,7 @@ export default function RelatedPost({relatedPosts}:{relatedPosts:NewsArticle[]})
               className="flex sm:flex-col max-sm:items-center bg-white dark:bg-zinc-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:scale-[1.02] hover:bg-gray-50 dark:hover:bg-zinc-700 transition-all duration-300 overflow-hidden"
             >
               <div className="max-sm:w-1/3">
-                <Image
+                {/* <Image
                   src={post.image}
                   alt={post.newsTitle}
                   width={300}
@@ -35,7 +36,8 @@ export default function RelatedPost({relatedPosts}:{relatedPosts:NewsArticle[]})
                   style={{ height: "auto", width: "auto" }}
                   className="rounded-t-lg object-cover object-top sm:aspect-video mx-auto"
                   priority
-                />
+                /> */}
+                <CldImage src={post.image} alt={post.newsTitle} preserveTransformations width={250} height={95} className='rounded-t-lg object-cover object-top sm:aspect-video mx-auto ' priority/>
               </div>
               <div className="p-2 max-sm:w-full">
                 <h4 className="text-sm font-PottiSreeramulu font-bold line-clamp-2 leading-normal active:text-blue-600 active:underline hover:text-blue-600 hover:underline">
