@@ -31,8 +31,6 @@ export default function SingleNewsPage({
   relatedArticles: NewsArticle[];
 }) {
   const { newsId } = params;
-  console.log(`${window.location.origin}/news`);
-  const [isShareOpen, setIsShareOpen] = useState<string | null>(null);
   const [views, setViews] = useState<number>(0);
 
   // Increment views
@@ -96,7 +94,7 @@ export default function SingleNewsPage({
                   <div className="flex items-center gap-1 ml-4 mr-1">
                     <EyeIcon className="w-5 text-gray-600 dark:text-gray-400" />
                     <span className="text-sm sm:text-sm font-semibold text-gray-600 dark:text-gray-400">
-                      {article?.views || views}
+                      {views || article?.views}
                     </span>
                   </div>
                 </div>
