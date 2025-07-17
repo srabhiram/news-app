@@ -8,6 +8,7 @@ import ClientProvider from "@/components/providers/ClientProvider";
 import Footer from "@/components/Footer";
 import { Viewport } from "next";
 import { getTokenData } from "@/helpers/getTokenData";
+import Head from "next/head";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,6 +42,12 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      
+        <Head>
+  <link rel="preconnect" href="https://res.cloudinary.com" />
+  <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+</Head>
+     
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

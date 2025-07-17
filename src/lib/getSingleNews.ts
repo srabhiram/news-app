@@ -4,7 +4,7 @@ export async function getSingleNews(newsId: string, param?:string) {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/news/${newsId}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
-      cache: "no-store",
+      cache: "force-cache"
     });
   
     const data = await res.json();

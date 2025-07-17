@@ -4,14 +4,12 @@ import { format } from "date-fns";
 import {
   FaWhatsapp,
   FaLink,
-  FaShareAlt,
   FaFacebook,
   FaTwitter,
-  FaTwitterSquare,
 } from "react-icons/fa";
+
 import { EyeIcon } from "lucide-react";
 import { NewsArticle } from "@/interface/all-interfaces";
-import Image from "next/image";
 import { categoryNames, distname } from "@/lib/navbar-items";
 import useViewTracker from "@/hooks/useViewsTracker";
 import ReactMarkdown from "react-markdown";
@@ -21,8 +19,8 @@ import {
   handleTwitterShare,
   handleWhatsAppShare,
 } from "@/lib/share-features";
-import { FacebookIcon, FacebookShareButton } from "react-share";
-import {CldImage} from "next-cloudinary"
+import {  FacebookShareButton } from "react-share";
+import { CldImage } from "next-cloudinary";
 export default function SingleNewsPage({
   params,
   newsArticles,
@@ -33,16 +31,14 @@ export default function SingleNewsPage({
   relatedArticles: NewsArticle[];
 }) {
   const { newsId } = params;
-console.log(`${window.location.origin}/news`)
+  console.log(`${window.location.origin}/news`);
   const [isShareOpen, setIsShareOpen] = useState<string | null>(null);
   const [views, setViews] = useState<number>(0);
 
   // Increment views
   useViewTracker(newsId, setViews);
 
-  const toggleShareOptions = (articleId: string) => {
-    setIsShareOpen((prev) => (prev === articleId ? null : articleId));
-  };
+
 
   const article = newsArticles[0];
 
@@ -62,7 +58,18 @@ console.log(`${window.location.origin}/news`)
                 style={{ height: "auto", width: "auto" }}
                 className="rounded-t-md object-cover w-full mx-auto"
               /> */}
-              <CldImage src={article.image} alt={article.newsTitle} width="250" height={100} preserveTransformations className="rounded-t-md object-cover" priority />
+              <CldImage
+               src={article.image}
+              alt={article.newsTitle}
+              preserveTransformations={true}
+              width={800}
+              height={400}
+              quality="auto:eco"
+              format="auto"
+              dpr="auto"
+              sizes="(max-width: 768px) 100vw, 80vw"
+              className="w-full h-full object-cover"
+              />
             </div>
 
             {/* Article Content */}
@@ -96,18 +103,13 @@ console.log(`${window.location.origin}/news`)
 
                 {/* Bottom row: Share buttons */}
                 <div className="mt-2 flex gap-2 place-self-end px-0.5">
-                 <span                     className="text-center p-[7px] md:p-3 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors duration-200"
->
-                  
-               
-                     <FacebookShareButton
-                    url={`${window.location.origin}/news/${article._id}`}
-                  >
-                   
-                    <FaFacebook size={20} />
-                  </FacebookShareButton>
-              </span>
-                 
+                  <span className="text-center p-[7px] md:p-3 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors duration-200">
+                    <FacebookShareButton
+                      url={`${window.location.origin}/news/${article._id}`}
+                    >
+                      <FaFacebook size={20} />
+                    </FacebookShareButton>
+                  </span>
                   <button
                     onClick={() => handleWhatsAppShare(article)}
                     className="text-center p-[7px] md:p-3 bg-green-500 text-white rounded-full hover:bg-green-600 transition-colors duration-200"

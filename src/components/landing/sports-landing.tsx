@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
 import React from "react";
 import { Heading } from "../Heading";
 import { NewsArticle } from "@/interface/all-interfaces";
 import Link from "next/link";
-import Image from "next/image";
 import { isNewPost } from "@/lib/isNewPost";
 import { Badge } from "../ui/badge";
 import { categoryNames } from "@/lib/navbar-items";
 import { useFormattedDates } from "@/hooks/useFormatdatetime";
 import { cn } from "@/lib/utils";
 import { CldImage } from "next-cloudinary";
+import { extractPublicId } from "@/lib/extract-publiIds";
 
 export const SportsLanding = ({
   newsArticles,
@@ -42,13 +42,18 @@ export const SportsLanding = ({
                 {/* Image Container */}
                 <div className="relative flex-shrink-0 w-1/3 mr-3">
                   <CldImage
-                  preserveTransformations
                     src={article.image}
-                    alt={article.newsTitle}
-                    width={400}
-                    height={100}
-                    className="rounded-md object-cover aspect-video w-full"
-                    priority={index === 0}
+              alt={article.newsTitle}
+              preserveTransformations={true}
+              width={800}
+              height={400}
+              quality="auto:eco"
+              format="auto"
+              dpr="auto"
+              sizes="(max-width: 768px) 100vw, 80vw"
+              className="w-full h-full object-cover"
+              priority={index === 0}
+              loading={index === 0 ? "eager" : "lazy"}
                   />
                   {isNewPost(article.createdAt, 6) && (
                     <span className="absolute -top-3 -left-1.5">

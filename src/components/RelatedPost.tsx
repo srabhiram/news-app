@@ -1,6 +1,7 @@
 "use client"
 import { useFormattedDates } from '@/hooks/useFormatdatetime'
 import { NewsArticle } from '@/interface/all-interfaces'
+import { extractPublicId } from '@/lib/extract-publiIds'
 import { distname } from '@/lib/navbar-items'
 import { CldImage } from 'next-cloudinary'
 import Image from 'next/image'
@@ -37,7 +38,27 @@ export default function RelatedPost({relatedPosts}:{relatedPosts:NewsArticle[]})
                   className="rounded-t-lg object-cover object-top sm:aspect-video mx-auto"
                   priority
                 /> */}
-                <CldImage src={post.image} alt={post.newsTitle} preserveTransformations width={250} height={95} className='rounded-t-lg object-cover object-top sm:aspect-video mx-auto ' priority/>
+<CldImage 
+    src={extractPublicId(post.image)}
+    alt={post.newsTitle} 
+   
+    width={300}
+    height={200}
+    quality="auto:eco"
+    format="webp"
+    dpr="auto"
+    sizes="(max-width: 640px) 33vw, (max-width: 768px) 50vw, 300px"
+    className="object-cover object-top sm:aspect-video mx-auto"
+    priority
+    loading="eager"
+    fetchPriority="high"
+    placeholder="blur"
+  blurDataURL={`https://res.cloudinary.com/djthwdebh/image/upload/w_10,h_6,e_blur:1000,q_auto,f_auto/${extractPublicId(post.image)}`}
+  onLoad={() => console.log('Image loaded:', Date.now())}
+  onLoadStart={() => console.log('Image load started:', Date.now())}
+
+  decoding="async"
+  />
               </div>
               <div className="p-2 max-sm:w-full">
                 <h4 className="text-sm font-PottiSreeramulu font-bold line-clamp-2 leading-normal active:text-blue-600 active:underline hover:text-blue-600 hover:underline">
