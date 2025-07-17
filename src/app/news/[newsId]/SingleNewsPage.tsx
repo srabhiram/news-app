@@ -96,7 +96,7 @@ export default function SingleNewsPage({
                   <div className="flex items-center gap-1 ml-4 mr-1">
                     <EyeIcon className="w-5 text-gray-600 dark:text-gray-400" />
                     <span className="text-sm sm:text-sm font-semibold text-gray-600 dark:text-gray-400">
-                      {views || article?.views || 0}
+                      {article?.views || views}
                     </span>
                   </div>
                 </div>
