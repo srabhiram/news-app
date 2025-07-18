@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { CldImage } from 'next-cloudinary';
 import { categoryNames, distname } from '@/lib/navbar-items';
 import { FaEye } from 'react-icons/fa';
+import Link from 'next/link';
 
 // Define the interface to match your data structure
 interface NewsArticle {
@@ -96,6 +97,7 @@ const CarouselWithPagination: React.FC<CarouselProps> = ({ newsArticles }) => {
       >
         {articles.map((article, index) => (
           <div key={article._id} className="w-full h-full flex-shrink-0 relative">
+            <Link href={`/news/${article._id}`}>
             <CldImage
               src={article.image}
               alt={article.newsTitle}
@@ -136,6 +138,7 @@ const CarouselWithPagination: React.FC<CarouselProps> = ({ newsArticles }) => {
                 </div>
               </div>
             </div>
+            </Link>
           </div>
         ))}
       </div>
