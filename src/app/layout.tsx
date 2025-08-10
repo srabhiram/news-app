@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono,  Noto_Sans_Telugu } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import "./globals.css";
 import ClientProvider from "@/components/providers/ClientProvider";
@@ -19,7 +19,11 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-
+const notoSans =Noto_Sans_Telugu({
+  variable:"--font-telugu",
+  subsets: ['telugu', 'latin'],
+  display: 'swap',
+});
 export const metadata: Metadata = {
   title: "SRS News",
   description: "మీ చేతిలో వార్తల ప్రపంచం – నిత్యం తాజా, నిస్సందేహం!",
@@ -49,7 +53,7 @@ export default async function RootLayout({
 </Head>
      
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${notoSans.variable} font-telugu antialiased`}
       >
         <ClientProvider>
           <Navbar userData={userData}/>

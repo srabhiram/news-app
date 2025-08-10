@@ -15,7 +15,6 @@ import { DeleteDailog } from "./DeleteDailog";
 import Link from "next/link";
 import { SelectChangeEvent } from "@mui/material";
 
-
 export default function AllNewsShowcase({
   newsArticles,
 }: {
@@ -24,7 +23,7 @@ export default function AllNewsShowcase({
   const formattedDates = useFormattedDates(newsArticles);
   const [newsArticle, setNewsArticle] = React.useState<newsData>({
     newsTitle: "",
-    content: {box1:"", box2:""},
+    content: { box1: "", box2: "" },
     image: null as File | null,
     district: "",
     category: "",
@@ -42,18 +41,18 @@ export default function AllNewsShowcase({
   ) => {
     const { name, value } = e.target;
 
-      // Handle nested content fields (box1 or box2)
-  if (name === "box1" || name === "box2") {
-    setNewsArticle((prev) => ({
-      ...prev,
-      content: {
-        ...prev.content,
-        [name]: value,
-      },
-    }));
-  } else {
-    setNewsArticle((prev) => ({ ...prev, [name]: value }));
-  }
+    // Handle nested content fields (box1 or box2)
+    if (name === "box1" || name === "box2") {
+      setNewsArticle((prev) => ({
+        ...prev,
+        content: {
+          ...prev.content,
+          [name]: value,
+        },
+      }));
+    } else {
+      setNewsArticle((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSelectionTypeChange = (
@@ -91,7 +90,7 @@ export default function AllNewsShowcase({
     });
   };
 
-    const handleSelectChange = (e: SelectChangeEvent) => {
+  const handleSelectChange = (e: SelectChangeEvent) => {
     const { name, value } = e.target;
     setNewsArticle((prev) => ({
       ...prev,
@@ -128,7 +127,7 @@ export default function AllNewsShowcase({
 
       setNewsArticle({
         newsTitle: "",
-        content: {box1:"", box2:""},
+        content: { box1: "", box2: "" },
         image: null,
         district: "",
         category: "",
@@ -139,7 +138,6 @@ export default function AllNewsShowcase({
         fileInputRef.current.value = "";
       }
       await router.push("/");
-      
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("An error occurred while submitting the form. Please try again.");
@@ -154,44 +152,44 @@ export default function AllNewsShowcase({
         {newsArticles.length &&
           newsArticles.map((article, index) => (
             <Card key={article._id}>
-              <Link href={`/news/${article._id}`} key={article._id} >
-              <CardContent className="flex flex-row">
-                <div aria-label={`Read more about ${article.newsTitle}`}>
-                  {/* Image Container */}
-                  <div className="relative flex-shrink-0 w-full justify-center items-center sm:w-1/3 sm:mr-4 mb-2 sm:mb-0">
-                    <Image
-                      src={article.image}
-                      alt={article.newsTitle}
-                      width={400}
-                      height={100}
-                      style={{ height: "auto", width: "auto" }}
-                      className="rounded-md object-cover object-top aspect-video w-full mx-auto"
-                      priority
-                    />
-                    {isNewPost(article.createdAt, 6) && (
-                      <span className="absolute -top-4 -left-2">
-                        <Badge
-                          variant="destructive"
-                          className="text-[10px] w-7"
-                        >
-                          New
-                        </Badge>
-                      </span>
-                    )}
-                  </div>
+              <Link href={`/news/${article._id}`} key={article._id}>
+                <CardContent className="flex flex-row">
+                  <div aria-label={`Read more about ${article.newsTitle}`}>
+                    {/* Image Container */}
+                    <div className="relative flex-shrink-0 w-full justify-center items-center sm:w-1/3 sm:mr-4 mb-2 sm:mb-0">
+                      <Image
+                        src={article.image}
+                        alt={article.newsTitle}
+                        width={400}
+                        height={100}
+                        style={{ height: "auto", width: "auto" }}
+                        className="rounded-md object-cover object-top aspect-video w-full mx-auto"
+                        priority
+                      />
+                      {isNewPost(article.createdAt, 6) && (
+                        <span className="absolute -top-4 -left-2">
+                          <Badge
+                            variant="destructive"
+                            className="text-[10px] w-7"
+                          >
+                            New
+                          </Badge>
+                        </span>
+                      )}
+                    </div>
 
-                  {/* Text Content */}
-                  <div className="flex-1">
-                    <h2 className="text-sm sm:text-base lg:text-lg font-PottiSreeramulu font-bold line-clamp-2 active:underline active:text-blue-600 hover:underline hover:text-blue-600 dark:hover:text-blue-400 sm:transition-colors sm:duration-300">
-                      {article.newsTitle}
-                    </h2>
-                    <p className="py-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1 font-PottiSreeramulu">
-                      <span>{formattedDates?.[index]|| ""}</span>
-                    </p>
+                    {/* Text Content */}
+                    <div className="flex-1">
+                      <h2 className="text-sm sm:text-base lg:text-lg font-telugu font-bold line-clamp-2 active:underline active:text-blue-600 hover:underline hover:text-blue-600 dark:hover:text-blue-400 sm:transition-colors sm:duration-300">
+                        {article.newsTitle}
+                      </h2>
+                      <p className="py-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1 font-telugu">
+                        <span>{formattedDates?.[index] || ""}</span>
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-                  </Link>
+                </CardContent>
+              </Link>
               <CardFooter>
                 <div className="flex justify-between w-full">
                   <EditDialog
@@ -206,7 +204,7 @@ export default function AllNewsShowcase({
                     loading={loading}
                     newsData={newsArticle}
                   />
-                  <DeleteDailog articles={article}/>
+                  <DeleteDailog articles={article} />
                 </div>
               </CardFooter>
             </Card>

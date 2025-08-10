@@ -1,36 +1,45 @@
-"use client";
-import { useFormattedDates } from "@/hooks/useFormatdatetime";
-import { isNewPost } from "@/lib/isNewPost";
-import { distname } from "@/lib/navbar-items";
-import { NewsArticle } from "@/interface/all-interfaces";
-import Link from "next/link";
-import React from "react";
-import { Badge } from "../ui/badge";
-import { cn } from "@/lib/utils";
-import { Heading } from "../Heading";
-import { CldImage } from "next-cloudinary";
-import { extractPublicId } from "@/lib/extract-publiIds";
+"use client"
+import { NewsArticle } from '@/interface/all-interfaces'
+import Link from 'next/link'
+import React, { Suspense } from 'react'
+import { Heading } from '../Heading'
+import { TrendingNewsSkeleton } from '../skeletons/trending -news-skeleton'
+import { distname } from '@/lib/navbar-items'
+import { CldImage } from 'next-cloudinary'
+import { isNewPost } from '@/lib/isNewPost'
+import { Badge } from '../ui/badge'
+import { useFormattedDates } from '@/hooks/useFormatdatetime'
+import { cn } from '@/lib/utils'
+interface pageprops{
+    data?:NewsArticle[]
+}
+export default function TredningNewsLanding({ data }: pageprops) {
 
-export const LatestNewsLanding = ({
-  newsArticles,
-}: {
-  newsArticles: NewsArticle[];
-}) => {
-  const slicedArticles = newsArticles.slice(0, 4);
-  const formattedDates = useFormattedDates(newsArticles);
-
+    const trending_news = [...(data ?? [])]
+        .sort((a, b) => b.views! - a.views!)
+        .slice(0, 10);
+          const formattedDates = useFormattedDates(trending_news);
+        
   return (
-    <section className="w-full max-w-3xl mx-auto  sm:px-4 py-1.5">
-      <Heading text={"తాజా వార్తలు"} />
-      <div className="rounded-md bg-white dark:bg-zinc-800 mb-1">
-        {slicedArticles &&
-          slicedArticles.map((article, index) => (
-            <Link
+   <section className="mb-1">
+        <Heading text="ట్రేండింగ్ న్యూస్ " />
+        <Suspense fallback={<TrendingNewsSkeleton />}>
+          <div
+            className=" max-w-full
+    flex md:flex-row flex-col md:flex-wrap md:gap-2
+"
+          >
+            {data &&
+              trending_news
+                .sort((a, b) => b.views! - a.views!)
+                .slice(0, 10)
+                .map((article, index) => (
+               <Link
               key={article._id}
               href={`/news/${article._id}`}
               className={cn(
                 "flex flex-row items-center   p-2 ",
-                index !== slicedArticles.length - 1 &&
+                index !== trending_news.length - 1 &&
                   "max-sm:border-b-2 border-zinc-200 dark:border-zinc-700",
                 "hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors duration-200"
               )}
@@ -71,14 +80,9 @@ export const LatestNewsLanding = ({
                 </p>
               </div>
             </Link>
-          ))}
-      </div>
-      <Link
-        href={"/news/latest-news"}
-        className="flex justify-end text-sm text-blue-500 font-bold hover:text-blue-700 active:text-blue-700 hover:underline"
-      >
-        మరి కొన్ని వార్తలు
-      </Link>
-    </section>
-  );
-};
+                ))}
+          </div>
+        </Suspense>
+      </section>
+  )
+}

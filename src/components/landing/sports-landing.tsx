@@ -43,17 +43,17 @@ export const SportsLanding = ({
                 <div className="relative flex-shrink-0 w-1/3 mr-3">
                   <CldImage
                     src={article.image}
-              alt={article.newsTitle}
-              preserveTransformations={true}
-              width={800}
-              height={400}
-              quality="auto:eco"
-              format="auto"
-              dpr="auto"
-              sizes="(max-width: 768px) 100vw, 80vw"
-              className="w-full h-full object-cover"
-              priority={index === 0}
-              loading={index === 0 ? "eager" : "lazy"}
+                    alt={article.newsTitle}
+                    preserveTransformations={true}
+                    width={800}
+                    height={400}
+                    quality="auto:eco"
+                    format="auto"
+                    dpr="auto"
+                    sizes="(max-width: 768px) 100vw, 80vw"
+                    className="w-full h-full object-cover"
+                    priority={index === 0}
+                    loading={index === 0 ? "eager" : "lazy"}
                   />
                   {isNewPost(article.createdAt, 6) && (
                     <span className="absolute -top-3 -left-1.5">
@@ -69,10 +69,10 @@ export const SportsLanding = ({
 
                 {/* Text Content */}
                 <div className="flex-1">
-                  <h2 className="text-sm font-PottiSreeramulu font-bold line-clamp-2 hover:underline hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300">
+                  <h2 className="text-sm font-telugu font-bold line-clamp-2 hover:underline hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300">
                     {article.newsTitle}
                   </h2>
-                  <p className="mt-1 text-xs text-gray-600 dark:text-gray-400 font-PottiSreeramulu">
+                  <p className="mt-1 text-xs text-gray-600 dark:text-gray-400 font-telugu">
                     <b>{categoryNames(article.category)}</b> •{" "}
                     <span>{formattedDates?.[index] || ""}</span>
                   </p>

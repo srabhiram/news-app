@@ -4,17 +4,16 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
- 
+
 @theme{
-    --font-PottiSreeramulu: "PottiSreeramulu";
-    --font-Gidugu: "Gidugu";
+    --font-telugu:"NotoSansTelugu-VariableFont_wdth,wght"
 }
 @font-face {
-    font-family: "PottiSreeramulu";
-    src: url("/fonts/PottiSreeramulu.ttf") format("truetype");
-    font-family: "Gidugu";
-    src: url("/fonts/Gidugu.ttf") format("truetype");
-
+    font-family: "Noto Sans Telugu Variable";
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+    src: url("/fonts/NotoSansTelugu-VariableFont_wdth,wght.ttf") format("truetype");
 }
 
 @theme inline {

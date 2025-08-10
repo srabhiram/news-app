@@ -10,8 +10,8 @@ export default function AddNewsPageComponent() {
   const [newsData, setnewsData] = React.useState({
     newsTitle: "",
     content: {
-      box1:"",
-      box2:""
+      box1: "",
+      box2: "",
     },
     image: null as File | null,
     district: "",
@@ -80,7 +80,7 @@ export default function AddNewsPageComponent() {
 
       setnewsData({
         newsTitle: "",
-        content:{box1:"", box2:""},
+        content: { box1: "", box2: "" },
         image: null,
         district: "",
         category: "",
@@ -115,7 +115,7 @@ export default function AddNewsPageComponent() {
           <div className="mb-4">
             <label
               htmlFor="newsTitle"
-              className="block text-sm font-semibold font-PottiSreeramulu text-zinc-700 dark:text-zinc-200"
+              className="block text-sm font-semibold font-telugu text-zinc-700 dark:text-zinc-200"
             >
               న్యూస్ టైటిల్
             </label>
@@ -133,7 +133,7 @@ export default function AddNewsPageComponent() {
           <div className="mb-4">
             <label
               htmlFor="content"
-              className="block text-sm text-zinc-700 dark:text-zinc-200 font-semibold font-PottiSreeramulu"
+              className="block text-sm text-zinc-700 dark:text-zinc-200 font-semibold font-telugu"
             >
               కంటెంట్ 1
             </label>
@@ -148,10 +148,10 @@ export default function AddNewsPageComponent() {
               aria-required="true"
             ></textarea>
           </div>
-           <div className="mb-4">
+          <div className="mb-4">
             <label
               htmlFor="content"
-              className="block text-sm text-zinc-700 dark:text-zinc-200 font-semibold font-PottiSreeramulu"
+              className="block text-sm text-zinc-700 dark:text-zinc-200 font-semibold font-telugu"
             >
               కంటెంట్ 2
             </label>

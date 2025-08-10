@@ -19,10 +19,7 @@ const newsSchema: Schema = new Schema(
     image: { type: String, required: true },
     district: { type: String || null },
     category: { type: String || null },
-
     author: { type: String, required: true },
-    comments: { type: [String], default: [] },
-    likes: { type: Number, default: 0 }, // Updated from String[] to Number
     views: { type: Number, default: 0 },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },

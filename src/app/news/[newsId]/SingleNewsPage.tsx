@@ -1,12 +1,7 @@
 "use client";
 import { useState } from "react";
 import { format } from "date-fns";
-import {
-  FaWhatsapp,
-  FaLink,
-  FaFacebook,
-  FaTwitter,
-} from "react-icons/fa";
+import { FaWhatsapp, FaLink, FaFacebook, FaTwitter } from "react-icons/fa";
 
 import { EyeIcon } from "lucide-react";
 import { NewsArticle } from "@/interface/all-interfaces";
@@ -19,7 +14,7 @@ import {
   handleTwitterShare,
   handleWhatsAppShare,
 } from "@/lib/share-features";
-import {  FacebookShareButton } from "react-share";
+import { FacebookShareButton } from "react-share";
 import { CldImage } from "next-cloudinary";
 export default function SingleNewsPage({
   params,
@@ -35,8 +30,6 @@ export default function SingleNewsPage({
 
   // Increment views
   useViewTracker(newsId, setViews);
-
-
 
   const article = newsArticles[0];
 
@@ -57,22 +50,22 @@ export default function SingleNewsPage({
                 className="rounded-t-md object-cover w-full mx-auto"
               /> */}
               <CldImage
-               src={article.image}
-              alt={article.newsTitle}
-              preserveTransformations={true}
-              width={800}
-              height={400}
-              quality="auto:eco"
-              format="auto"
-              dpr="auto"
-              sizes="(max-width: 768px) 100vw, 80vw"
-              className="w-full h-full object-cover"
+                src={article.image}
+                alt={article.newsTitle}
+                preserveTransformations={true}
+                width={800}
+                height={400}
+                quality="auto:eco"
+                format="auto"
+                dpr="auto"
+                sizes="(max-width: 768px) 100vw, 80vw"
+                className="w-full h-full object-cover"
               />
             </div>
 
             {/* Article Content */}
             <div className="p-2 sm:p-6">
-              <h2 className="text-lg sm:text-xl lg:text-2xl font-PottiSreeramulu font-bold leading-relaxed mb-4">
+              <h2 className="text-lg sm:text-xl lg:text-2xl font-telugu font-bold leading-relaxed mb-4">
                 {article?.newsTitle}
               </h2>
 

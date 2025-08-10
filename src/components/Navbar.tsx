@@ -82,7 +82,7 @@ function Navbar({ userData }: userDataProps) {
   };
 
   return (
-    <nav className="sticky top-0 z-50 shadow-sm bg-blue-100/30 backdrop-blur-md text-zinc-900 dark:bg-zinc-950/50 dark:border-b-2 rounded-b-md dark:text-white">
+    <nav className="sticky top-0 z-50 shadow-sm from-[#007CE9] to-[#106EC1] bg-gradient-to-r text-white p-1">
       <div className=" px-0.5 lg:px-4 py-3 mx-1">
         <div className="container mx-auto flex items-center justify-between gap-3">
           {/* Logo */}
@@ -91,27 +91,21 @@ function Navbar({ userData }: userDataProps) {
               src="/images/logo.png"
               alt="SRS News"
               width={100}
-              height={50}
-              style={{ height: "auto", width: 95 }}
+              height={75}
+             priority={true}
               
             />
           </Link>
 
           {/* User Menu */}
           <div className="flex items-center gap-3">
-            <Button
-              onClick={toggleDarkMode}
-              className="border-zinc-400 rounded-lg bg-transparent dark:bg-transparent hover:backdrop-blur-xl hover:text-zinc-950  hover:bg-zinc-200 dark:hover:text-white text-xs sm:text-sm px-2 sm:px-3 py-1 transition-all duration-30"
-              variant={"outline"}
-            >
-              {isDarkMode ? <Sun /> : <Moon />}
-            </Button>
+           
 
             {userData?.isAdmin && (
               <Link href="/admin/dashboard">
                 <Button
                   variant="outline"
-                  className="border-zinc-400 active:border-zinc-400 hover:border-zinc-400 rounded-lg dark:bg-transparent bg-transparent text-zinc-800 dark:text-white dark:hover:bg-white hover:bg-white hover:text-zinc-950 text-xs sm:text-sm px-2 sm:px-3 py-1 transition-all duration-300 flex items-center gap-1"
+                  className=" rounded-md  bg-white/80 text-zinc-800  hover:bg-white active:bg-white hover:text-zinc-950 text-xs sm:text-sm px-2 sm:px-3 py-1 transition-all duration-300 flex items-center gap-1"
                 >
                   <TfiWrite className="w-3 h-2" />
                   <span className="hidden sm:inline-block">Dashboard</span>
@@ -120,9 +114,9 @@ function Navbar({ userData }: userDataProps) {
             )}
             {userData ? (
               <DropdownMenu>
-                <DropdownMenuTrigger className="bg-transparent border border-zinc-400 active:border-zinc-400 hover:border-zinc-400 flex items-center gap-1 text-zinc-900 dark:text-white capitalize px-3 sm:px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold hover:bg-white hover:text-zinc-950 transition-all duration-300">
+                <DropdownMenuTrigger className="bg-white/80  flex items-center gap-2 text-zinc-900 px-3 sm:px-3 py-2 rounded-lg text:base sm:text-xl font-medium transition-all duration-300">
                   <FaUser className="w-3 h-3 sm:w-4 sm:h-4" />
-                  <span>{userData?.name}</span>
+                  <span className="font-sans">{userData?.name}</span>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-40 sm:w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg">
                   <DropdownMenuLabel className="font-sans text-sm text-gray-900 dark:text-gray-200">
@@ -140,9 +134,9 @@ function Navbar({ userData }: userDataProps) {
             ) : (
               <Link
                 href="/login"
-                className="bg-transparent border border-zinc-500 text-zinc-800 dark:text-white font-semibold px-3 sm:px-3 py-2 rounded-lg text-sm sm:text-sm hover:bg-white hover:text-blue-800 transition-all duration-300"
+                className="flex m-0 items-center gap-1.5 font-telugu bg-white text-zinc-800 font-semibold px-3 py-2 rounded-md text-base sm:text-xl  transition-all active:bg-blue-50 hover:bg-blue-50 duration-300"
               >
-                లాగిన్
+                <FaUser size={14}/>లాగిన్
               </Link>
             )}
           </div>
@@ -150,27 +144,27 @@ function Navbar({ userData }: userDataProps) {
 
         {/* Navigation Items and District Selector */}
         <div className="container mx-auto mt-3">
-          <div className="flex items-center justify-between overflow-x-hidden whitespace-nowrap max-sm:mx-2">
-            <ul className="flex items-center gap-2 sm:gap-5">
+          <div className="flex items-center justify-between overflow-x-hidden whitespace-nowrap max-sm:mx-0.5 w-full">
+            <ul className="flex items-center gap- sm:gap-5">
               {navbarItems.map((item) => (
                 <li key={item?.id}>
                   <Link
                     href={item?.href}
-                    className=" text-base lg:text-lg tracking-wide rounded-lg hover:bg-zinc-950/5 active:bg-zinc-950/5   hover:text-zinc-950 transition-all duration-300 block px-2 sm:px-3 py-1.5 dark:hover:text-white dark:hover:bg-white/5 font-semibold"
+                    className=" text-sm lg:text-lg tracking-wide rounded-lg hover:bg-white/5 active:bg-white/5 transition-all duration-300 block px-2 sm:px-3 py-1.5  font-medium"
                   >
                     {item?.name}
                   </Link>
                 </li>
               ))}
             </ul>
-            <div className="flex items-center">
+            <div className="flex items-center place-self-end-end">
               <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className="w-[90px] sm:w-[120px] lg:w-[150px] bg-transparent dark:text-white text-zinc-900 flex items-center justify-between  text-sm lg:text-lg border-zinc-400  py-1 h-8 lg:h-9 rounded-lg hover:bg-white hover:text-zinc-950 transition-all duration-300 dark:hover:bg-white dark:bg-transparent font-semibold"
+                    className="sm:w-[120px] lg:w-[150px]  text-zinc-900  flex items-center justify-between  text-sm lg:text-xl bg-white/80  py-2 h-8 lg:h-9 rounded-lg hover:bg-white hover:text-zinc-950 transition-all duration-300 font-medium"
                   >
                     {value
                       ? districts.find((framework) => framework.value === value)

@@ -1,6 +1,7 @@
 import { LatestNewsLanding } from "@/components/landing/latest-news-landing";
 import { SportsLanding } from "@/components/landing/sports-landing";
 import { TechnologyLanding } from "@/components/landing/technology-landing";
+import TredningNewsLanding from "@/components/landing/trending-news";
 import { fetcNews } from "@/lib/fetchNews";
 import dynamic from "next/dynamic";
 const CarouselWithPagination = dynamic(
@@ -20,6 +21,7 @@ export default async function Home() {
             <LatestNewsLanding newsArticles={newsArticles} />
           </div>
           <div className="md:col-span-3">
+            <TredningNewsLanding data={newsArticles}/>
             <TechnologyLanding newsArticles={newsArticles} />
             <SportsLanding newsArticles={newsArticles} />
           </div>

@@ -54,7 +54,7 @@ export default function SignupPage() {
           className="flex border-2 gap-2 flex-col items-center justify-center h-fit  m-2 p-5 rounded-lg shadow-md  dark:border-zinc-900 dark:text-zinc-200 dark:bg-zinc-800 w-96"
           onSubmit={handleSubmit}
         >
-          <h2 className="text-xl font-bold font-PottiSreeramulu my-2">
+          <h2 className="text-xl font-bold font-telugu my-2">
             సైన్ అప్ చేయండి
           </h2>
           {formError && <p className="text-red-500">{formError}</p>}
@@ -91,10 +91,11 @@ export default function SignupPage() {
             {loading ? "Signing up..." : "సైన్ అప్"}
           </button>
           <p>
-            <span className="font-PottiSreeramulu">
-              మీకు ఇప్పటికే ఖాతా ఉందా?
-            </span>{" "}
-            <Link href="/login" className="text-blue-500 font-semibold hover:underline active:underline active:text-blue-600">
+            <span className="font-telugu">మీకు ఇప్పటికే ఖాతా ఉందా?</span>{" "}
+            <Link
+              href="/login"
+              className="text-blue-500 font-semibold hover:underline active:underline active:text-blue-600"
+            >
               లాగిన్ చేయండి
             </Link>
           </p>

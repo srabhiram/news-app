@@ -13,31 +13,38 @@ import { Heading } from "../Heading";
 interface LatestNewsCardProps {
   newsArticles: NewsArticle[];
   loading?: boolean;
-  categoryType? : string,
-  heading?: string
+  categoryType?: string;
+  heading?: string;
 }
 
-export default function LatestNewsCard({ newsArticles, categoryType,heading }: LatestNewsCardProps) {
- const formattedDates = useFormattedDates(newsArticles)
+export default function LatestNewsCard({
+  newsArticles,
+  categoryType,
+  heading,
+}: LatestNewsCardProps) {
+  const formattedDates = useFormattedDates(newsArticles);
   // pagination
   const [currentPage, setCurrentPage] = useState(1);
 
   const itemsPerPage = 15;
 
-  const totalPages = ()=>{
-    if(newsArticles){
-   return  Math.ceil(newsArticles.length / itemsPerPage);
-    }}
-  const paginatedNews = newsArticles?.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  ).filter((articles)=>articles.district || articles.category===categoryType) ||  [];
+  const totalPages = () => {
+    if (newsArticles) {
+      return Math.ceil(newsArticles.length / itemsPerPage);
+    }
+  };
+  const paginatedNews =
+    newsArticles
+      ?.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+      .filter(
+        (articles) => articles.district || articles.category === categoryType
+      ) || [];
 
   // Show "No news found" if no articles
   if (!newsArticles) {
     return (
       <div className="container mx-auto px-4 bg-white dark:bg-black text-black dark:text-white">
-      <Heading text={"తాజా వార్తలు"}/>
+        <Heading text={"తాజా వార్తలు"} />
 
         <p>No news found</p>
       </div>
@@ -47,7 +54,7 @@ export default function LatestNewsCard({ newsArticles, categoryType,heading }: L
   return (
     <div className="container mx-auto pb-4 bg-white dark:bg-zinc-900 text-black dark:text-white">
       {/* Section header */}
-      <Heading text={heading || "తాజా వార్తలు"}/>
+      <Heading text={heading || "తాజా వార్తలు"} />
       <div className="mb-4">
         {paginatedNews && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -80,13 +87,17 @@ export default function LatestNewsCard({ newsArticles, categoryType,heading }: L
 
                 {/* Text Content */}
                 <div className="flex-1">
-                  <h2 className="text-sm sm:text-base lg:text-lg font-PottiSreeramulu font-bold line-clamp-2 active:underline active:text-blue-600 hover:underline hover:text-blue-600 dark:hover:text-blue-400 sm:transition-colors sm:duration-300">
+                  <h2 className="text-sm sm:text-base lg:text-lg font-telugu font-bold line-clamp-2 active:underline active:text-blue-600 hover:underline hover:text-blue-600 dark:hover:text-blue-400 sm:transition-colors sm:duration-300">
                     {article.newsTitle}
                   </h2>
-                  <p className="py-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1 font-PottiSreeramulu">
+                  <p className="py-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1 font-telugu">
                     {" "}
-                    <b>{article.district ? distname(article.district): categoryNames(article.category)} </b>•{" "}
-                    <span>{formattedDates?.[index] ?? ""}</span>
+                    <b>
+                      {article.district
+                        ? distname(article.district)
+                        : categoryNames(article.category)}{" "}
+                    </b>
+                    • <span>{formattedDates?.[index] ?? ""}</span>
                   </p>
                 </div>
               </Link>

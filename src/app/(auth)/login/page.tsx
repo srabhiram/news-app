@@ -77,7 +77,7 @@ export default function LoginPage() {
             className="bg-blue-500 text-white px-4 py-2 rounded cursor-pointer hover:bg-blue-700 active:bg-blue-700"
             disabled={loading}
           >
-            <span className="font-PottiSreeramulu font-semibold">
+            <span className="font-telugu font-semibold">
               {" "}
               {loading ? "Signing in..." : "లాగిన్"}
             </span>
