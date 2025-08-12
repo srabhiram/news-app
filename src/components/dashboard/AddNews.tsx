@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { categories, districts } from "@/lib/navbar-items";
 import { CloudUploadIcon } from "lucide-react";
+import { revalidateNews } from "@/app/action";
 
 export default function AddNewsPageComponent() {
   const [newsData, setNewsData] = React.useState({
@@ -125,6 +126,7 @@ export default function AddNewsPageComponent() {
       });
       if (fileInputRef.current) fileInputRef.current.value = "";
       setLoading(false);
+       revalidateNews()
       router.push("/");
       router.refresh();
     } catch (error) {

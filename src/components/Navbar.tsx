@@ -86,7 +86,7 @@ function Navbar({ userData }: userDataProps) {
       <div className=" px-0.5 lg:px-4 py-3 mx-1">
         <div className="container mx-auto flex items-center justify-between gap-3">
           {/* Logo */}
-          <Link href="/" className="flex items-center shrink-0 ml-1">
+          <Link  href="/" className="flex items-center shrink-0 ml-1">
             <Image
               src="/images/logo.png"
               alt="SRS News"

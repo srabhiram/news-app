@@ -1,8 +1,8 @@
 import React from "react";
-import AddNewsPageComponent from "../../../../../components/dashboard/AddnewsPageComponent";
 import AddNews from "@/components/dashboard/AddNews";
+import { revalidateTag } from "next/cache";
 
-export default function AddNewsPage() {
+export default async function AddNewsPage() {
   
   return <AddNews/>
 }
