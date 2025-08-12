@@ -269,15 +269,21 @@ export const DeleteNews = async (req: NextRequest, newsId: string) => {
   }
 };
 
-export const GetNews = async () => {
+export const GetNews = async (req:NextRequest) => {
   try {
     await connectDB();
+  
+    const { searchParams } = new URL(req.url);
+    const includeContent = searchParams.get("content") === "true";
 
-    const news = await News.find({}).sort({
-      createdAt: -1,
-    })  .select("newsTitle image district category createdAt") // only needed fields
-      .lean(); // plain JS objects, faster;
+    let query = News.find({}).sort({ createdAt: -1 });
 
+    if (!includeContent) {
+      // Lightweight response
+      query = query.select("newsTitle image district category createdAt");
+    } // else, fetch everything (including content)
+
+    const news = await query.lean(); // plain JS objects, faster
     return NextResponse.json(
       {
         newsArticles: news,

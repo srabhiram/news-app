@@ -149,7 +149,7 @@ export default function AllNewsShowcase({
   return (
     <div>
       <div className=" rounded-xl space-y-2 grid md:grid-cols-4 md:gap-2">
-        {newsArticles.length &&
+        {newsArticles?.length &&
           newsArticles.map((article, index) => (
             <Card key={article._id}>
               <Link href={`/news/${article._id}`} key={article._id}>

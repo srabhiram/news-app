@@ -13,7 +13,6 @@ import {
 import { NewsArticle } from "@/interface/all-interfaces";
 import { LucideLoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { fetcNews } from "@/lib/fetchNews";
 
 interface deleteDailogProps {
   articles: NewsArticle;

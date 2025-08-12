@@ -54,6 +54,9 @@ export function EditDialog(props: EditDialogProps) {
     loading,
     newsData,
   } = props;
+const safeContent = typeof newsData.content === "object" && newsData.content !== null
+  ? newsData.content
+  : { box1: newsData.content || "", box2: "" };
 
   const [open, setOpen] = React.useState(false);
 
@@ -80,7 +83,7 @@ export function EditDialog(props: EditDialogProps) {
               name="newsTitle"
               fullWidth
               required
-              value={newsData.newsTitle}
+              value={newsData?.newsTitle}
               onChange={handleChange}
               margin="normal"
             />
@@ -92,11 +95,11 @@ export function EditDialog(props: EditDialogProps) {
               required
               multiline
               rows={6}
-              value={newsData.content.box1 || newsData.content}
+              value={safeContent.box1}
               onChange={handleChange}
               margin="normal"
             />
-          {newsData.content.box2 && (
+          {safeContent.box2 && (
              <TextField
               label="కంటెంట్ 2"
               name="box2"
@@ -104,7 +107,7 @@ export function EditDialog(props: EditDialogProps) {
               required
               multiline
               rows={6}
-              value={newsData.content.box2}
+              value={safeContent?.box2}
               onChange={handleChange}
               margin="normal"
             />
@@ -114,7 +117,7 @@ export function EditDialog(props: EditDialogProps) {
               name="author"
               fullWidth
               required
-              value={newsData.author}
+              value={newsData?.author}
               onChange={handleChange}
               margin="normal"
             />
@@ -133,7 +136,7 @@ export function EditDialog(props: EditDialogProps) {
             </FormControl>
 
             <Box mt={2}>
-              {newsData.image ? (
+              {newsData?.image ? (
                 <>
                   <Typography variant="body2">Image Preview:</Typography>
                   <Image
@@ -144,7 +147,7 @@ export function EditDialog(props: EditDialogProps) {
                     className="rounded-md object-cover"
                   />
                 </>
-              ) : articles.image ? (
+              ) : articles?.image ? (
                 <>
                   <Typography variant="body2">Current Image:</Typography>
                   <Image
@@ -162,7 +165,7 @@ export function EditDialog(props: EditDialogProps) {
               <FormLabel>Select Type</FormLabel>
               <RadioGroup
                 row
-                value={newsData.selectionType}
+                value={newsData?.selectionType}
                 onChange={handleSelectionTypeChange}
               >
                 <FormControlLabel
@@ -183,14 +186,14 @@ export function EditDialog(props: EditDialogProps) {
                 <InputLabel>District</InputLabel>
                 <Select
                   name="district"
-                  value={newsData.district}
+                  value={newsData?.district}
                   onChange={handleSelectChange}
                   label="District"
                   required
                 >
                   {districts.map((item) => (
-                    <MenuItem key={item.value} value={item.value}>
-                      {item.label}
+                    <MenuItem key={item?.value} value={item?.value}>
+                      {item?.label}
                     </MenuItem>
                   ))}
                 </Select>
@@ -200,14 +203,14 @@ export function EditDialog(props: EditDialogProps) {
                 <InputLabel>Category</InputLabel>
                 <Select
                   name="category"
-                  value={newsData.category}
+                  value={newsData?.category}
                   onChange={handleSelectChange}
                   label="Category"
                   required
                 >
                   {categories.map((item) => (
-                    <MenuItem key={item.value} value={item.value}>
-                      {item.label}
+                    <MenuItem key={item?.value} value={item?.value}>
+                      {item?.label}
                     </MenuItem>
                   ))}
                 </Select>

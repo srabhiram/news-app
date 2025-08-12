@@ -126,7 +126,7 @@ export default function AddNewsPageComponent() {
       });
       if (fileInputRef.current) fileInputRef.current.value = "";
       setLoading(false);
-       revalidateNews()
+       await revalidateNews()
       router.push("/");
       router.refresh();
     } catch (error) {

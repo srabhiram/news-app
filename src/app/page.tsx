@@ -9,7 +9,7 @@ const CarouselWithPagination = dynamic(
 );
 
 export default async function Home() {
-  const { newsArticles } = await fetcNews("no-cache");
+  const { newsArticles } = await fetcNews();
   return (
     <>
       <main className="m-0.5 mx-0">

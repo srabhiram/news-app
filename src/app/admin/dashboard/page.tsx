@@ -12,9 +12,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Dashboardpage() {
-  const {newsArticles} = await fetcNews("no-store")
+  const {newsArticles} = await fetcNews(true)
   const currentUser = await getTokenData()
-
   return (
    <AdminDashboard newsArticles={newsArticles} currentUser={currentUser}/>
   )
