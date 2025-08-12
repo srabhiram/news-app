@@ -33,16 +33,15 @@ export default function RelatedPost({
               className="flex sm:flex-col max-sm:items-center bg-white dark:bg-zinc-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:scale-[1.02] hover:bg-gray-50 dark:hover:bg-zinc-700 transition-all duration-300 overflow-hidden"
             >
               <div className="max-sm:w-1/3">
-                {/* <Image
+                <Image
                   src={post.image}
                   alt={post.newsTitle}
-                  width={300}
-                  height={96}
-                  style={{ height: "auto", width: "auto" }}
+                  width={250}
+                  height={100}
                   className="rounded-t-lg object-cover object-top sm:aspect-video mx-auto"
                   priority
-                /> */}
-                <CldImage
+                />
+                {/* <CldImage
                   src={extractPublicId(post.image)}
                   alt={post.newsTitle}
                   width={300}
@@ -64,7 +63,7 @@ export default function RelatedPost({
                     console.log("Image load started:", Date.now())
                   }
                   decoding="async"
-                />
+                /> */}
               </div>
               <div className="p-2 max-sm:w-full">
                 <h4 className="text-sm font-telugu font-bold line-clamp-2 leading-normal active:text-blue-600 active:underline hover:text-blue-600 hover:underline">

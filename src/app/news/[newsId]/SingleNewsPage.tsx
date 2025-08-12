@@ -16,6 +16,7 @@ import {
 } from "@/lib/share-features";
 import { FacebookShareButton } from "react-share";
 import { CldImage } from "next-cloudinary";
+import Image from "next/image";
 export default function SingleNewsPage({
   params,
   newsArticles,
@@ -41,15 +42,15 @@ export default function SingleNewsPage({
           <div className="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-gray-700 rounded-md min-h-fit shadow-md ">
             {/* Article Image */}
             <div className="w-full  flex justify-center items-center">
-              {/* <Image
+              <Image
                 src={article?.image}
                 alt={article?.newsTitle}
-                width={700}
-                height={250}
-                style={{ height: "auto", width: "auto" }}
-                className="rounded-t-md object-cover w-full mx-auto"
-              /> */}
-              <CldImage
+                width={250}
+                height={150}
+                className="rounded-t-md object-cover mx-auto lg:w-[300px]"
+                priority
+              />
+              {/* <CldImage
                 src={article.image}
                 alt={article.newsTitle}
                 preserveTransformations={true}
@@ -61,7 +62,7 @@ export default function SingleNewsPage({
                 sizes="(max-width: 768px) 100vw, 80vw"
                 className="w-full h-full object-cover"
                 priority
-              />
+              /> */}
             </div>
 
             {/* Article Content */}
