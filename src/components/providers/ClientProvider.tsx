@@ -5,6 +5,7 @@ import React, { useEffect } from "react";
 import { Provider } from "react-redux";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import NotificationBanner from "../web-push-notification";
+import GoogleAnalytics from "./GoogleAnalytics";
 
 export default function ClientProvider({
   children,
@@ -17,6 +18,7 @@ export default function ClientProvider({
   return (
     <Provider store={store}>
       <ErrorBoundary>{children}
+        <GoogleAnalytics/>
         <NotificationBanner/>
       </ErrorBoundary>
     </Provider>
