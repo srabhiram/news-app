@@ -8,6 +8,8 @@ const CarouselWithPagination = dynamic(
   () => import("../components/landing/carousel-06")
 );
 
+export const revalidate = false;
+
 export default async function Home() {
   const { newsArticles } = await fetcNews();
   return (
