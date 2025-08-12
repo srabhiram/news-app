@@ -3,6 +3,8 @@ import News from "@/db/models/news.models";
 import { NextRequest } from "next/server";
 import connectDB from "@/db/connectDB";
 import mongoose from "mongoose";
+
+
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ param: string }> }
@@ -18,7 +20,8 @@ export async function GET(
 } else {
   newsArticles = await News.find({
     $or: [{ district: param }, { category: param }]
-  }).sort({ createdAt: -1 });
+  }).sort({ createdAt: -1 })  .select("newsTitle image district category createdAt") // only needed fields
+      .lean(); // plain JS objects, faster;
 }
 
 if (!newsArticles || newsArticles.length === 0) {

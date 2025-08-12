@@ -60,6 +60,7 @@ export default function SingleNewsPage({
                 dpr="auto"
                 sizes="(max-width: 768px) 100vw, 80vw"
                 className="w-full h-full object-cover"
+                priority
               />
             </div>
 

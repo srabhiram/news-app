@@ -275,7 +275,8 @@ export const GetNews = async () => {
 
     const news = await News.find({}).sort({
       createdAt: -1,
-    });
+    })  .select("newsTitle image district category createdAt") // only needed fields
+      .lean(); // plain JS objects, faster;
 
     return NextResponse.json(
       {
