@@ -3,8 +3,8 @@ import connectDB from "@/db/connectDB";
 import News from "@/db/models/news.models";
 import cloudinary from "@/lib/cloudinary";
 import { NextRequest, NextResponse } from "next/server";
-import webPush from 'web-push';
-import {PushSubscription} from "@/db/models/pushnotification.models"; // Adjust path to your PushSubscription model
+import webPush from "web-push";
+import { PushSubscription } from "@/db/models/pushnotification.models"; // Adjust path to your PushSubscription model
 
 // Configure web-push with VAPID keys
 webPush.setVapidDetails(
@@ -17,17 +17,17 @@ export const AddNews = async (req: NextRequest) => {
   try {
     await connectDB();
     const body = await req.formData();
-    const newsTitle = body.get('newsTitle') as string;
-    const content = JSON.parse(body.get('content') as string);
-    const file = body.get('image') as File;
-    const district = body.get('district') as string;
-    const author = body.get('author') as string;
-    const category = body.get('category') as string;
+    const newsTitle = body.get("newsTitle") as string;
+    const content = JSON.parse(body.get("content") as string);
+    const file = body.get("image") as File;
+    const district = body.get("district") as string;
+    const author = body.get("author") as string;
+    const category = body.get("category") as string;
 
     // Validate input data
-    if (!newsTitle  || !author || !file) {
+    if (!newsTitle || !author || !file) {
       return NextResponse.json(
-        { error: 'All fields are required' },
+        { error: "All fields are required" },
         { status: 400 }
       );
     }
@@ -41,18 +41,18 @@ export const AddNews = async (req: NextRequest) => {
       cloudinary.uploader
         .upload_stream(
           {
-            folder: 'news-images',
+            folder: "news-images",
             transformation: [
               {
                 width: 800,
                 height: 600,
-                crop: 'limit',
-                quality: 'auto',
-                fetch_format: 'auto',
+                crop: "limit",
+                quality: "auto",
+                fetch_format: "auto",
               },
               {
-                overlay: 'logo_oecpww',
-                gravity: 'south_east',
+                overlay: "logo_oecpww",
+                gravity: "south_east",
                 width: 200,
                 opacity: 50,
               },
@@ -71,7 +71,7 @@ export const AddNews = async (req: NextRequest) => {
     // Create news item
     const addNews = await News.create({
       newsTitle,
-      content : {box1: content.box1, box2:content.box2},
+      content: { box1: content.box1, box2: content.box2 },
       image: secure_url,
       district,
       category,
@@ -83,7 +83,7 @@ export const AddNews = async (req: NextRequest) => {
     const payload = JSON.stringify({
       title: `${newsTitle}`,
       body: `Click here to read..`,
-      icon: secure_url ,// Use news image or fallback
+      icon: secure_url, // Use news image or fallback
       url: `/news/${addNews._id}`, // Adjust URL to match your news page route
     });
 
@@ -91,7 +91,7 @@ export const AddNews = async (req: NextRequest) => {
       subscriptions.map(async (sub) => {
         try {
           await webPush.sendNotification(sub, payload);
-        } catch (error:any) {
+        } catch (error: any) {
           console.error(`Failed to send notification to ${sub._id}:`, error);
           // Optionally remove invalid subscriptions
           if (error.statusCode === 410) {
@@ -101,15 +101,13 @@ export const AddNews = async (req: NextRequest) => {
       })
     );
 
-    return NextResponse.json(
-      { addNews },
-      { status: 201 }
-    );
+    return NextResponse.json({ addNews }, { status: 201 });
   } catch (error) {
     return NextResponse.json(
       {
         success: false,
-        message: error instanceof Error ? error.message : 'An unknown error occurred',
+        message:
+          error instanceof Error ? error.message : "An unknown error occurred",
       },
       { status: 500 }
     );
@@ -121,7 +119,7 @@ export const EditNews = async (req: NextRequest, newsID: string) => {
     await connectDB();
     const body = await req.formData();
     const newsTitle = body.get("newsTitle");
-    const content = JSON.parse(body.get('content') as string);
+    const content = JSON.parse(body.get("content") as string);
     const file = body.get("image") as File;
     const district = body.get("district");
     const author = body.get("author");
@@ -148,7 +146,7 @@ export const EditNews = async (req: NextRequest, newsID: string) => {
     }
 
     // validate the input data
-    if (!newsTitle  || !file || !author) {
+    if (!newsTitle || !file || !author) {
       return NextResponse.json(
         {
           message: "All fields are required",
@@ -194,7 +192,7 @@ export const EditNews = async (req: NextRequest, newsID: string) => {
       newsID,
       {
         newsTitle,
-        content: {box1:content.box1, box2:content.box2},
+        content: { box1: content.box1, box2: content.box2 },
         image: secure_url,
         district,
         category,
@@ -269,31 +267,44 @@ export const DeleteNews = async (req: NextRequest, newsId: string) => {
   }
 };
 
-export const GetNews = async (req:NextRequest) => {
+export const GetNews = async (req: NextRequest) => {
   try {
     await connectDB();
-  
+
     const { searchParams } = new URL(req.url);
     const includeContent = searchParams.get("content") === "true";
+    const page = parseInt(searchParams.get("page") || "1");
+    const limit = parseInt(searchParams.get("limit") || "10");
+    const noLimit = searchParams.get("noLimit")==="true";
+    const skip = (page - 1) * limit;
 
     let query = News.find({}).sort({ createdAt: -1 });
 
-    if (!includeContent) {
-      // Lightweight response
-      query = query.select("newsTitle image district category createdAt");
-    } // else, fetch everything (including content)
+    // Apply pagination only if noLimit is false
+    if (!noLimit) {
+      query = query.limit(limit).skip(skip);
+    }
 
-    const news = await query.lean(); // plain JS objects, faster
+    if (!includeContent) {
+      query = query.select(
+        "newsTitle image district author views category createdAt"
+      );
+    }
+
+    const news = await query.lean();
+    const totalCount = await News.countDocuments();
+
     return NextResponse.json(
       {
         newsArticles: news,
+        totalPages: Math.ceil(totalCount / limit),
       },
       { status: 200 }
     );
   } catch (error) {
     return NextResponse.json({
       error:
-        error instanceof Error ? error.message : "An unknown error occured",
+        error instanceof Error ? error.message : "An unknown error occurred",
     });
   }
 };

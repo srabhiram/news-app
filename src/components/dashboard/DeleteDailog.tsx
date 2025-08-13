@@ -13,6 +13,7 @@ import {
 import { NewsArticle } from "@/interface/all-interfaces";
 import { LucideLoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { revalidateNews } from "@/app/action";
 
 interface deleteDailogProps {
   articles: NewsArticle;
@@ -33,8 +34,7 @@ export const DeleteDailog = ({ articles }: deleteDailogProps) => {
       if (!response.ok) {
         return console.log(data.error || "Something went wrong");
       }
-     
-      
+     await revalidateNews()
       await router.refresh();
     } catch (error) {
       console.error(error);

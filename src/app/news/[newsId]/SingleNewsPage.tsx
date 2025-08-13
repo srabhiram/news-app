@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { format } from "date-fns";
 import { FaWhatsapp, FaLink, FaFacebook, FaTwitter } from "react-icons/fa";
 
@@ -17,6 +17,7 @@ import {
 import { FacebookShareButton } from "react-share";
 import { CldImage } from "next-cloudinary";
 import Image from "next/image";
+import RelatedPostSkeleton from "@/components/skeletons/related-posts-skeleton";
 export default function SingleNewsPage({
   params,
   newsArticles,
@@ -167,7 +168,9 @@ export default function SingleNewsPage({
             </div>
           </div>
         </div>
+<Suspense fallback={<RelatedPostSkeleton/>}>
         <RelatedPost relatedPosts={relatedArticles} />
+</Suspense>
       </div>
     </div>
   );

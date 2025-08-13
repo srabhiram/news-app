@@ -9,7 +9,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 export default async function LatestNewsPage() {
-  const { newsArticles } = await fetcNews();
+  const { newsArticles } = await fetcNews({});
 
   return (
     <div>

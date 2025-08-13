@@ -8,10 +8,8 @@ const CarouselWithPagination = dynamic(
   () => import("../components/landing/carousel-06")
 );
 
-
-
 export default async function Home() {
-  const { newsArticles } = await fetcNews();
+  const { newsArticles } = await fetcNews({noLimit:true});
   return (
     <>
       <main className="m-0.5 mx-0">
@@ -22,8 +20,9 @@ export default async function Home() {
           <div className="md:col-span-1">
             <LatestNewsLanding newsArticles={newsArticles} />
           </div>
+             <TredningNewsLanding data={newsArticles}/>
           <div className="md:col-span-3">
-            <TredningNewsLanding data={newsArticles}/>
+         
             <TechnologyLanding newsArticles={newsArticles} />
             <SportsLanding newsArticles={newsArticles} />
           </div>

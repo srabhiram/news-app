@@ -1,7 +1,15 @@
-"use server"
+"use server";
 
-import { getSingleNews } from "./getSingleNews"
+export async function getRelatedPosts(params: string) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/news/${params}`,
+    {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      cache: "no-store",
+    }
+  );
 
-export async function getRelatedPosts(params:string) {
-    return await getSingleNews(params)
+  const data = await res.json();
+  return data.newsArticles;
 }

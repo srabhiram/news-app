@@ -12,7 +12,7 @@ export async function generateMetadata({
 }) {
   const { newsId } = await params;
   try {
-    const newsArticle = await getSingleNews(newsId);
+    const newsArticle = await getSingleNews({newsId:newsId,content:true});
     const news: NewsArticle = await newsArticle[0];
 
     // Trim content to the first 150 characters for description
@@ -76,13 +76,15 @@ export default async function NewsIdPage({
   params: Promise<{ newsId: string }>;
 }) {
   const param = await params;
-  const newsArticle: NewsArticle[] = await getSingleNews(param.newsId);
+  const newsArticle: NewsArticle[] = await getSingleNews({newsId:param.newsId,content:true});
   const res: NewsArticle[] = await getRelatedPosts(
     newsArticle[0].district || newsArticle[0].category
   );
-  const relatedPosts = res
-    .filter((article) => article._id !== param.newsId)
-    .slice(0, 5);
+const relatedPosts = res
+  .filter((article) => article._id !== param.newsId)
+  .sort(() => Math.random() - 0.5) // shuffle
+  .slice(0, 5); // pick first 5 from shuffled
+
   return (
     <SingleNewsPage
       params={param}

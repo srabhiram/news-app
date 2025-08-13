@@ -153,7 +153,7 @@ export default function AllNewsShowcase({
       <div className=" rounded-xl space-y-2 grid md:grid-cols-4 md:gap-2">
         {newsArticles?.length &&
           newsArticles.map((article, index) => (
-            <Card key={article._id}>
+            <Card key={`${article._id}-${index}`}>
               <Link href={`/news/${article._id}`} key={article._id}>
                 <CardContent className="flex flex-row">
                   <div aria-label={`Read more about ${article.newsTitle}`}>

@@ -11,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 export default async function page() {
-    const newsArticles:NewsArticle[] = await getSingleNews("sports")
+    const newsArticles:NewsArticle[] = await getSingleNews({newsId:"sports", content:false})
   return (
    <LatestNewsCard newsArticles={newsArticles} categoryType='sports' heading='స్పోర్ట్స్' />
   )
