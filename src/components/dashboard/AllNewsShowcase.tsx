@@ -14,6 +14,7 @@ import { EditDialog } from "./EditDailog";
 import { DeleteDailog } from "./DeleteDailog";
 import Link from "next/link";
 import { SelectChangeEvent } from "@mui/material";
+import { revalidateNews } from "@/app/action";
 
 export default function AllNewsShowcase({
   newsArticles,
@@ -137,6 +138,7 @@ export default function AllNewsShowcase({
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
+      await revalidateNews()
       await router.push("/");
     } catch (error) {
       console.error("Error submitting form:", error);

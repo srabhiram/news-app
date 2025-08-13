@@ -34,7 +34,7 @@ export const DeleteDailog = ({ articles }: deleteDailogProps) => {
         return console.log(data.error || "Something went wrong");
       }
      
-
+      
       await router.refresh();
     } catch (error) {
       console.error(error);
