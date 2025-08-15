@@ -1,28 +1,11 @@
-"use client"
-import { useState, useEffect } from 'react';
-import { CldImage } from 'next-cloudinary';
-import { categoryNames, distname } from '@/lib/navbar-items';
-import { FaEye } from 'react-icons/fa';
-import Link from 'next/link';
-
-// Define the interface to match your data structure
-interface NewsArticle {
-  _id: string;
-  newsTitle: string;
-  content: {
-    box1: string;
-    box2: string;
-  };
-  image: string;
-  district: string;
-  category: string;
-  author: string;
-  comments: string[];
-  likes: number;
-  views: number;
-  createdAt: string;
-  updatedAt: string;
-}
+"use client";
+import { useState, useEffect } from "react";
+import { CldImage } from "next-cloudinary";
+import { categoryNames, distname } from "@/lib/navbar-items";
+import { FaEye } from "react-icons/fa";
+import Link from "next/link";
+import { NewsArticle } from "@/interface/all-interfaces";
+import Image from "next/image";
 
 interface CarouselProps {
   newsArticles: NewsArticle[];
@@ -31,7 +14,7 @@ interface CarouselProps {
 const CarouselWithPagination: React.FC<CarouselProps> = ({ newsArticles }) => {
   const [mounted, setMounted] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const articles = newsArticles.slice(0,5)
+  const articles = newsArticles.slice(0, 5);
   // Prevent hydration mismatches
   useEffect(() => {
     setMounted(true);
@@ -53,7 +36,7 @@ const CarouselWithPagination: React.FC<CarouselProps> = ({ newsArticles }) => {
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prevIndex) => 
+    setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? articles.length - 1 : prevIndex - 1
     );
   };
@@ -62,21 +45,6 @@ const CarouselWithPagination: React.FC<CarouselProps> = ({ newsArticles }) => {
     setCurrentIndex(index);
   };
 
-  // Server-side render: Static version without interactive elements
-  if (!mounted) {
-    return (
-      <div className="relative w-full h-64 md:h-[30rem] bg-gray-100 rounded-lg overflow-hidden">
-        <div className="animate-pulse bg-gray-300 w-full h-full"></div>
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-          <div className="flex space-x-2">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="w-3 h-3 bg-gray-400 rounded-full animate-pulse"></div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   // No articles state
   if (articles.length === 0) {
@@ -91,53 +59,47 @@ const CarouselWithPagination: React.FC<CarouselProps> = ({ newsArticles }) => {
   return (
     <div className="relative w-full h-64 md:h-[30rem] bg-gray-100 rounded-lg overflow-hidden group">
       {/* Carousel Images */}
-      <div 
+      <div
         className="flex transition-transform duration-500 ease-in-out h-full"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
         {articles.map((article, index) => (
-          <div key={article._id} className="w-full h-full flex-shrink-0 relative">
+          <div
+            key={article._id}
+            className="w-full h-full flex-shrink-0 relative"
+          >
             <Link href={`/news/${article._id}`}>
-            <CldImage
-              src={article.image}
-              alt={article.newsTitle}
-              preserveTransformations={true}
-              width={800}
-              height={400}
-              quality="auto:eco"
-              format="auto"
-              dpr="auto"
-              sizes="(max-width: 768px) 100vw, 80vw"
-              className="w-full h-full object-cover"
-              priority={index === 0}
-              loading={index === 0 ? "eager" : "lazy"}
-            />
-            
-            {/* Overlay with article info */}
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-             
-              
-              <h3 className="text-white text-sm md:text-base font-semibold line-clamp-2 mb-1">
-                {article.newsTitle}
-              </h3>
-              
-             
-              
-              <div className="flex items-center justify-between mt-2">
-                <span className="text-white/70 text-xs">
-                  By {article.author}
-                </span>
-                <div className="flex items-center space-x-3 text-white/70 text-xs">
-                <b className="inline">
-                                  {article.district
-                                    ? distname(article.district)
-                                    : categoryNames(article.category)}
-                                </b>
-                  <span className='flex gap-1.5 items-center font-medium'><FaEye/> {article.views}</span>
-                 
+              <Image
+                src={article.image}
+                alt={article.newsTitle}
+                width={800}
+                height={400}
+                className="w-full h-full object-cover"
+                priority={index === 0}
+              />
+
+              {/* Overlay with article info */}
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                <h3 className="text-white text-sm md:text-base font-semibold line-clamp-2 mb-1">
+                  {article.newsTitle}
+                </h3>
+
+                <div className="flex items-center justify-between mt-2">
+                  <span className="text-white/70 text-xs">
+                    By {article.author}
+                  </span>
+                  <div className="flex items-center space-x-3 text-white/70 text-xs">
+                    <b className="inline">
+                      {article.district
+                        ? distname(article.district)
+                        : categoryNames(article.category)}
+                    </b>
+                    <span className="flex gap-1.5 items-center font-medium">
+                      <FaEye /> {article.views}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
             </Link>
           </div>
         ))}
@@ -149,18 +111,38 @@ const CarouselWithPagination: React.FC<CarouselProps> = ({ newsArticles }) => {
         className="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors opacity-0 group-hover:opacity-100 duration-300"
         aria-label="Previous slide"
       >
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        <svg
+          className="w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15 19l-7-7 7-7"
+          />
         </svg>
       </button>
-      
+
       <button
         onClick={nextSlide}
         className="absolute right-2 md:right-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors opacity-0 group-hover:opacity-100 duration-300"
         aria-label="Next slide"
       >
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        <svg
+          className="w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
+          />
         </svg>
       </button>
 
@@ -172,7 +154,9 @@ const CarouselWithPagination: React.FC<CarouselProps> = ({ newsArticles }) => {
               key={index}
               onClick={() => goToSlide(index)}
               className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-                index === currentIndex ? 'bg-white' : 'bg-white/50 hover:bg-white/75'
+                index === currentIndex
+                  ? "bg-white"
+                  : "bg-white/50 hover:bg-white/75"
               }`}
               aria-label={`Go to slide ${index + 1}`}
             />

@@ -6,7 +6,7 @@ export async function getRelatedPosts(params: string) {
     {
       method: "GET",
       headers: { "Content-Type": "application/json" },
-      cache: "no-store",
+      cache: "no-cache",
     }
   );
 

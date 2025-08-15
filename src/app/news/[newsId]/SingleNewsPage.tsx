@@ -15,7 +15,6 @@ import {
   handleWhatsAppShare,
 } from "@/lib/share-features";
 import { FacebookShareButton } from "react-share";
-import { CldImage } from "next-cloudinary";
 import Image from "next/image";
 import RelatedPostSkeleton from "@/components/skeletons/related-posts-skeleton";
 export default function SingleNewsPage({
@@ -168,9 +167,9 @@ export default function SingleNewsPage({
             </div>
           </div>
         </div>
-<Suspense fallback={<RelatedPostSkeleton/>}>
-        <RelatedPost relatedPosts={relatedArticles} />
-</Suspense>
+        <Suspense fallback={<RelatedPostSkeleton />}>
+          <RelatedPost relatedPosts={relatedArticles} />
+        </Suspense>
       </div>
     </div>
   );

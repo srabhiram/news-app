@@ -9,7 +9,16 @@ const CarouselWithPagination = dynamic(
 );
 
 export default async function Home() {
-  const { newsArticles } = await fetcNews({noLimit:true});
+  const { newsArticles } = await fetcNews({});
+  const trending_news = await fetcNews({ type: "trending" }).then(
+    (data) => data.newsArticles
+  );
+  const sports = await fetcNews({ type: "sports" }).then(
+    (data) => data.newsArticles
+  );
+  const technology = await fetcNews({ type: "technology" }).then(
+    (data) => data.newsArticles
+  );
   return (
     <>
       <main className="m-0.5 mx-0">
@@ -20,11 +29,10 @@ export default async function Home() {
           <div className="md:col-span-1">
             <LatestNewsLanding newsArticles={newsArticles} />
           </div>
-             <TredningNewsLanding data={newsArticles}/>
+          <TredningNewsLanding data={trending_news} />
           <div className="md:col-span-3">
-         
-            <TechnologyLanding newsArticles={newsArticles} />
-            <SportsLanding newsArticles={newsArticles} />
+            <TechnologyLanding newsArticles={technology} />
+            <SportsLanding newsArticles={sports} />
           </div>
         </div>
       </main>

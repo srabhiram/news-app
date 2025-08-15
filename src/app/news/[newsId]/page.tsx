@@ -4,6 +4,7 @@ import { NewsArticle } from "@/interface/all-interfaces";
 import SingleNewsPage from "./SingleNewsPage";
 import { getSingleNews } from "@/lib/getSingleNews";
 import { getRelatedPosts } from "@/lib/getRelatedPosts";
+import { fetcAllArticles } from "@/utils/server-actions";
 
 export async function generateMetadata({
   params,
@@ -84,7 +85,6 @@ const relatedPosts = res
   .filter((article) => article._id !== param.newsId)
   .sort(() => Math.random() - 0.5) // shuffle
   .slice(0, 5); // pick first 5 from shuffled
-
   return (
     <SingleNewsPage
       params={param}

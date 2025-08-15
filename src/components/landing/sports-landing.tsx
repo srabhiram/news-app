@@ -10,7 +10,6 @@ import { categoryNames } from "@/lib/navbar-items";
 import { useFormattedDates } from "@/hooks/useFormatdatetime";
 import { cn } from "@/lib/utils";
 import { CldImage } from "next-cloudinary";
-import { extractPublicId } from "@/lib/extract-publiIds";
 
 export const SportsLanding = ({
   newsArticles,

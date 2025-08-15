@@ -18,7 +18,9 @@ export const AddNews = async (req: NextRequest) => {
     await connectDB();
     const body = await req.formData();
     const newsTitle = body.get("newsTitle") as string;
-    const content = JSON.parse(body.get("content") as string);
+    const content_1 = body.get("content_1") as string
+        const content_2 = body.get("content_2") as string
+
     const file = body.get("image") as File;
     const district = body.get("district") as string;
     const author = body.get("author") as string;
@@ -71,7 +73,7 @@ export const AddNews = async (req: NextRequest) => {
     // Create news item
     const addNews = await News.create({
       newsTitle,
-      content: { box1: content.box1, box2: content.box2 },
+      content: { box1: content_1, box2: content_2 },
       image: secure_url,
       district,
       category,
@@ -275,20 +277,41 @@ export const GetNews = async (req: NextRequest) => {
     const includeContent = searchParams.get("content") === "true";
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "10");
-    const noLimit = searchParams.get("noLimit")==="true";
+    const noLimit = searchParams.get("noLimit") === "true";
+    const type = searchParams.get("type");
     const skip = (page - 1) * limit;
-
-    let query = News.find({}).sort({ createdAt: -1 });
-
+    let query = News.find({});
+    // If trending, sort by views first
+    if (type === "trending") {
+      query = query
+        .select("newsTitle image district author category createdAt")
+        .sort({ views: -1, createdAt: -1 });
+    }
+    if (type === "technology") {
+      query = query
+        .find({ category: "technology" })
+        .select("newsTitle image district author category createdAt")
+        .sort({ createdAt: -1 });
+    }
+    if (type === "sports") {
+      
+        query = query
+          .find({ category: "sports" })
+          .select("newsTitle image district author category createdAt")
+          .sort({ createdAt: -1 })
+      
+    }else{
+     query.sort({createdAt:-1})
+    }
     // Apply pagination only if noLimit is false
     if (!noLimit) {
-      query = query.limit(limit).skip(skip);
+      query = query.sort({ createdAt: -1 }).limit(limit).skip(skip);
     }
 
     if (!includeContent) {
-      query = query.select(
-        "newsTitle image district author views category createdAt"
-      );
+      query = query
+        .select("newsTitle image district author views category createdAt")
+        .sort({ createdAt: -1 });
     }
 
     const news = await query.lean();
